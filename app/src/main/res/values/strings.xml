@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Movie Catalogue</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tv_year">2019</string>
+    <string name="title_movie">Title Movie</string>
+    <string name="poster_image">Poster Image</string>
+    <string name="refresh">Refresh</string>
+    <string name="tn_poster">tn_poster</string>
+    <string name="image_backdrop">Image Backdrop</string>
+    <string name="overview">Overview</string>
+    <string name="the_overview_movie">The Overview Movie</string>
+
+</resources>
