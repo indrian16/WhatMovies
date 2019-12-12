@@ -14,6 +14,7 @@ import io.indrian.moviecatalogue.R
 import io.indrian.moviecatalogue.data.model.Movie
 import io.indrian.moviecatalogue.ui.adapter.MovieAdapter
 import io.indrian.moviecatalogue.ui.moviedetail.DetailMovieActivity
+import io.indrian.moviecatalogue.utils.showToast
 import io.indrian.moviecatalogue.utils.visible
 import kotlinx.android.synthetic.main.fragment_movie.*
 import org.koin.android.ext.android.inject
@@ -42,6 +43,7 @@ class MovieFragment : Fragment(), MovieAdapter.OnMovieClickListener {
             is MoviesListState.Error -> {
 
                 Timber.d { "MovieError" }
+                showToast("Error: ${state.message}")
                 stopShimmer()
                 isMoviesLoaded(arrayListOf())
             }
