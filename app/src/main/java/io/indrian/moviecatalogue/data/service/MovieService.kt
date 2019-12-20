@@ -18,10 +18,10 @@ class MovieService {
         Movie(
             id = 1,
             title = "Jumanji: The Next Level",
-            poster = "/xJUILftRf6TJxloOgrilOTJfeOn.jpg",
-            backdrop = "/5BwqwxMEjeFtdknRV792Svo0K1v.jpg",
+            poster = "/l4iknLOenijaB85Zyb5SxH1gGz8.jpg",
+            backdrop = "/zTxHf9iIOCqRbxvl8W5QYKrsMLq.jpg",
             year = "2019",
-            overview = "An astronaut travels to the outer edges of the solar system to find his father and unravel a mystery that threatens the survival of Earth. In doing so, he uncovers secrets which challenge the nature of human existence and our place in the cosmos."
+            overview = "In Jumanji: The Next Level, the gang is back but the game has changed. As they return to rescue one of their own, the players will have to brave parts unknown from arid deserts to snowy mountains, to escape the world's most dangerous game."
         ),
         Movie(
             id = 2,
@@ -62,7 +62,8 @@ class MovieService {
             backdrop = "/aQLygZOIKai6aaiBAeeKpIWO5nc.jpg",
             year = "2019",
             overview = "Los Angeles, 1969. TV star Rick Dalton, a struggling actor specialized in westerns, and stuntman Cliff Booth, his best friend, try to survive to a constantly changing movie industry. Dalton is neighbor of the young and promising actress and model Sharon Tate, who has just married the prestigious Polish director Roman Polanski…"
-        ),Movie(
+        ),
+        Movie(
             id = 7,
             title = "Terminator: Dark Fate",
             poster = "/vqzNJRH4YyquRiWxCCOH0aXggHI.jpg",
@@ -77,7 +78,8 @@ class MovieService {
             backdrop = "/8moTOzunF7p40oR5XhlDvJckOSW.jpg",
             year = "2019",
             overview = "27 years after overcoming the malevolent supernatural entity Pennywise, the former members of the Losers' Club, who have grown up and moved away from Derry, are brought back together by a devastating phone call."
-        ),Movie(
+        ),
+        Movie(
             id = 9,
             title = "Abominable",
             poster =  "/20djTLqppfBx5WYA67Y300S6aPD.jpg",
