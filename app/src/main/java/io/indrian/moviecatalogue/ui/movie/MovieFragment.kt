@@ -12,7 +12,7 @@ import com.github.ajalt.timberkt.Timber
 
 import io.indrian.moviecatalogue.R
 import io.indrian.moviecatalogue.data.model.Movie
-import io.indrian.moviecatalogue.ui.adapter.MovieAdapter
+import io.indrian.moviecatalogue.adapter.MovieAdapter
 import io.indrian.moviecatalogue.ui.moviedetail.DetailMovieActivity
 import io.indrian.moviecatalogue.utils.showToast
 import io.indrian.moviecatalogue.utils.visible

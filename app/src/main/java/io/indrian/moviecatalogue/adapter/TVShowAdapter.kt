@@ -1,4 +1,4 @@
-package io.indrian.moviecatalogue.ui.adapter
+package io.indrian.moviecatalogue.adapter
 
 import android.view.LayoutInflater
 import android.view.View

@@ -12,7 +12,7 @@ import com.github.ajalt.timberkt.Timber
 
 import io.indrian.moviecatalogue.R
 import io.indrian.moviecatalogue.data.model.TVShow
-import io.indrian.moviecatalogue.ui.adapter.TVShowAdapter
+import io.indrian.moviecatalogue.adapter.TVShowAdapter
 import io.indrian.moviecatalogue.ui.tvshowdetail.TVShowDetailActivity
 import io.indrian.moviecatalogue.utils.visible
 import kotlinx.android.synthetic.main.fragment_tvshow.*
