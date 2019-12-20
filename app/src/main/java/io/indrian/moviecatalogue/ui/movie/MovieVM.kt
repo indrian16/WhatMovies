@@ -27,8 +27,7 @@ class MovieVM(private val repository: Repository) : ViewModel() {
             .subscribe(
                 { movies ->
 
-                    d { "MovieLoaded" }
-                    print(movies)
+                    d { "MovieLoaded: ${movies.size} size" }
                     mutMovieListState.value = MoviesListState.Loaded(movies)
                 },
                 { error ->

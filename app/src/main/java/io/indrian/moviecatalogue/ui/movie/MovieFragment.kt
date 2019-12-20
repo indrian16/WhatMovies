@@ -90,7 +90,7 @@ class MovieFragment : Fragment(), MovieAdapter.OnMovieClickListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-        if (item.itemId == R.id.menu_refresh) {
+        if (item.itemId == R.id.action_movie_refresh) {
 
             movieVM.getMovies()
             rv_movie.smoothScrollToPosition( 0)

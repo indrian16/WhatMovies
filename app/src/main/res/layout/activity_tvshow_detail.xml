@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.moviedetail.DetailMovieActivity"
-    android:fillViewport="true">
+    tools:context=".ui.tvshowdetail.TVShowDetailActivity">
 
     <ImageView
         android:id="@+id/img_backdrop"
@@ -51,7 +50,7 @@
         app:layout_constraintTop_toBottomOf="@+id/img_backdrop" />
 
     <TextView
-        android:id="@+id/tv_title"
+        android:id="@+id/tv_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"

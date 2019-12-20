@@ -2,24 +2,29 @@ package io.indrian.moviecatalogue
 
 import android.app.Application
 import com.github.ajalt.timberkt.Timber
+import com.yariksoffice.lingver.Lingver
 import io.indrian.moviecatalogue.di.appModule
 import io.indrian.moviecatalogue.di.repoModule
 import io.indrian.moviecatalogue.di.serviceModule
+import io.indrian.moviecatalogue.utils.Constant
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 
 /**
- *
  *  @author: INDRIAN(rg16)
  *  @github: https://github.com/indrian16
  *  @dicoding: https://www.dicoding.com/users/229215
+ *  @submission: 2
+ *  @repository: https://github.com/indrian16/MovieCatalogClean
  * */
 
 class MovieApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
+        Lingver.init(this, Constant.DEFAULT_LAUNGUAGE)
 
         if (BuildConfig.DEBUG) {
 
