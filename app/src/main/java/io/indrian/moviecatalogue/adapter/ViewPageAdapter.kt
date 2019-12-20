@@ -1,4 +1,4 @@
-package io.indrian.moviecatalogue.ui.main.adapter
+package io.indrian.moviecatalogue.adapter
 
 import android.content.Context
 import androidx.annotation.StringRes

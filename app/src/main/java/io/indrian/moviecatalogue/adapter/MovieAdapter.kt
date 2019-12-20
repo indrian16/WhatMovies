@@ -10,7 +10,7 @@ import io.indrian.moviecatalogue.data.model.Movie
 import io.indrian.moviecatalogue.di.GlideApp
 import kotlinx.android.synthetic.main.movie_item.view.*
 
-class MovieAdapter(private val listener: OnMovieClickListener): RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
+class MovieAdapter(private val callback: OnMovieClickCallback): RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
 
     private var movies: List<Movie> = arrayListOf()
 
@@ -50,10 +50,10 @@ class MovieAdapter(private val listener: OnMovieClickListener): RecyclerView.Ada
             tv_title.text = movie.title
             tv_year.text = movie.year
 
-        }.setOnClickListener { listener.onMovieClickItem(movie, imgPoster!!) }
+        }.setOnClickListener { callback.onMovieClickItem(movie, imgPoster!!) }
     }
 
-    interface OnMovieClickListener {
+    interface OnMovieClickCallback {
 
         fun onMovieClickItem(movie: Movie, imgPoster: ImageView)
     }

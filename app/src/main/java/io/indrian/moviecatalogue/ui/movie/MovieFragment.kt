@@ -19,7 +19,7 @@ import io.indrian.moviecatalogue.utils.visible
 import kotlinx.android.synthetic.main.fragment_movie.*
 import org.koin.android.ext.android.inject
 
-class MovieFragment : Fragment(), MovieAdapter.OnMovieClickListener {
+class MovieFragment : Fragment(), MovieAdapter.OnMovieClickCallback {
 
     companion object {
 
@@ -37,7 +37,7 @@ class MovieFragment : Fragment(), MovieAdapter.OnMovieClickListener {
 
                 Timber.d { "MovieLoading" }
                 startShimmer()
-                isMoviesLoaded(arrayListOf())
+                isMoviesLoaded()
             }
 
             is MoviesListState.Error -> {
@@ -45,7 +45,7 @@ class MovieFragment : Fragment(), MovieAdapter.OnMovieClickListener {
                 Timber.d { "MovieError" }
                 showToast("Error: ${state.message}")
                 stopShimmer()
-                isMoviesLoaded(arrayListOf())
+                isMoviesLoaded()
             }
 
             is MoviesListState.Loaded -> {
@@ -138,7 +138,7 @@ class MovieFragment : Fragment(), MovieAdapter.OnMovieClickListener {
         shimmer_movie_container.visible(indicator = false)
     }
 
-    private fun isMoviesLoaded(movies: List<Movie>) {
+    private fun isMoviesLoaded(movies: List<Movie> = arrayListOf()) {
 
         if (movies.isNotEmpty()) {
 
