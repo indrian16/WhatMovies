@@ -6,9 +6,9 @@ import androidx.fragment.app.Fragment
 
 fun Fragment.showToast(message: String) = Toast.makeText(activity, message, Toast.LENGTH_LONG).show()
 
-fun View.visible(indicator: Boolean) {
+fun View.toVisible(visible: Boolean = true) {
 
-    if (indicator) {
+    if (visible) {
 
         this.visibility = View.VISIBLE
     } else {

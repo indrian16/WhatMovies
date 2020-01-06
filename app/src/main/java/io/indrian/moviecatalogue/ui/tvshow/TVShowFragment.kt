@@ -14,7 +14,7 @@ import io.indrian.moviecatalogue.R
 import io.indrian.moviecatalogue.data.model.TVShow
 import io.indrian.moviecatalogue.adapter.TVShowAdapter
 import io.indrian.moviecatalogue.ui.tvshowdetail.TVShowDetailActivity
-import io.indrian.moviecatalogue.utils.visible
+import io.indrian.moviecatalogue.utils.toVisible
 import kotlinx.android.synthetic.main.fragment_tvshow.*
 import org.koin.android.ext.android.inject
 
@@ -128,25 +128,25 @@ class TVShowFragment : Fragment(), TVShowAdapter.OnTVShowClickCallBack {
     private fun startShimmer() {
 
         shimmer_tv_show_container.startShimmer()
-        shimmer_tv_show_container.visible(indicator = true)
+        shimmer_tv_show_container.toVisible(visible = true)
     }
 
     private fun stopShimmer() {
 
         shimmer_tv_show_container.stopShimmer()
-        shimmer_tv_show_container.visible(indicator = false)
+        shimmer_tv_show_container.toVisible(visible = false)
     }
 
     private fun isTVShowLoaded(movies: List<TVShow> = arrayListOf()) {
 
         if (movies.isNotEmpty()) {
 
-            rv_tv_show.visible(indicator = true)
+            rv_tv_show.toVisible(visible = true)
             mAdapter.updateItem(movies)
 
         } else {
 
-            rv_tv_show.visible(indicator = false)
+            rv_tv_show.toVisible(visible = false)
         }
     }
 }
