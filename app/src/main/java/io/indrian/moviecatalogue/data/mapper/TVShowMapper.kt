@@ -1,20 +1,20 @@
 package io.indrian.moviecatalogue.data.mapper
 
-import io.indrian.moviecatalogue.data.entity.MovieEntity
-import io.indrian.moviecatalogue.data.model.Movie
+import io.indrian.moviecatalogue.data.entity.TVShowEntity
+import io.indrian.moviecatalogue.data.model.TVShow
 import java.text.SimpleDateFormat
 import java.util.*
 
-class MovieMapper : BaseMapper<MovieEntity, Movie> {
+class TVShowMapper : BaseMapper<TVShowEntity, TVShow> {
 
-    override fun toModel(entity: MovieEntity): Movie {
+    override fun toModel(entity: TVShowEntity): TVShow {
 
-        return Movie(
+        return TVShow(
             id = entity.id!!,
-            title = entity.title!!,
+            name = entity.name!!,
             poster = "https://image.tmdb.org/t/p/w342"+(entity.posterPath ?: ""),
-            backdrop = "https://image.tmdb.org/t/p/w780"+(entity.backdropPath ?: ""),
-            releaseDate = parseDate(entity.releaseDate!!),
+            backdrop = "https://image.tmdb.org/t/p/w342"+(entity.backdropPath ?: ""),
+            releaseDate = parseDate(entity.firstAirDate!!),
             overview = safeOverview(entity.overview!!)
         )
     }

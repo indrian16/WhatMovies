@@ -9,6 +9,8 @@ import io.indrian.moviecatalogue.R
 import io.indrian.moviecatalogue.data.model.TVShow
 import io.indrian.moviecatalogue.di.GlideApp
 import kotlinx.android.synthetic.main.tv_show_item.view.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class TVShowAdapter(private val onTVShowClickCallBack: OnTVShowClickCallBack) : RecyclerView.Adapter<TVShowAdapter.ViewHolder>() {
 
@@ -47,7 +49,7 @@ class TVShowAdapter(private val onTVShowClickCallBack: OnTVShowClickCallBack) : 
                     .into(imgPoster)
 
                 tv_name.text = tvShow.name
-                tv_year.text = tvShow.year
+                tv_year.text = tvShow.releaseDate[Calendar.YEAR].toString()
 
                 this.setOnClickListener { onTVShowClickCallBack.onClickTVShow(tvShow, imgPoster) }
             }

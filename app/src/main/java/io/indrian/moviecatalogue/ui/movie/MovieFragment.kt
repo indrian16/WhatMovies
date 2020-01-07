@@ -152,7 +152,6 @@ class MovieFragment : Fragment(), MovieAdapter.OnMovieClickCallback {
 
     private fun isMoviesLoaded(movies: List<Movie> = arrayListOf()) {
 
-        stopShimmer()
         if (movies.isNotEmpty()) {
 
             rv_movie.toVisible()

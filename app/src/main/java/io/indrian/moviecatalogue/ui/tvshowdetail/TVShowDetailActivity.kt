@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide
 import io.indrian.moviecatalogue.R
 import io.indrian.moviecatalogue.data.model.TVShow
 import kotlinx.android.synthetic.main.activity_tvshow_detail.*
+import java.util.*
 
 class TVShowDetailActivity : AppCompatActivity() {
 
@@ -29,7 +30,7 @@ class TVShowDetailActivity : AppCompatActivity() {
                 .load(tvShow.backdrop)
                 .into(img_backdrop)
 
-            tv_year.text = tvShow.year
+            tv_year.text = tvShow.releaseDate[Calendar.YEAR].toString()
             tv_name.text = tvShow.name
             tv_overview.text = tvShow.overview
         }

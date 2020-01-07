@@ -27,6 +27,15 @@ android {
     androidExtensions {
         experimental = true
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
 }
 
 repositories {
@@ -49,6 +58,11 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.7.1'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.7.1'
     implementation 'com.squareup.retrofit2:converter-moshi:2.7.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.3.0'
+
+    // Moshi
+    implementation 'com.squareup.moshi:moshi-kotlin:1.9.2'
+    kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.9.2'
 
     // Material
     implementation group: 'com.google.android.material', name: 'material', version: '1.2.0-alpha03'

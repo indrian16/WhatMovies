@@ -3,9 +3,7 @@ package io.indrian.moviecatalogue
 import android.app.Application
 import com.github.ajalt.timberkt.Timber
 import com.yariksoffice.lingver.Lingver
-import io.indrian.moviecatalogue.di.appModule
-import io.indrian.moviecatalogue.di.repoModule
-import io.indrian.moviecatalogue.di.serviceModule
+import io.indrian.moviecatalogue.di.*
 import io.indrian.moviecatalogue.utils.Constant
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -35,7 +33,9 @@ class MovieApp : Application() {
 
             androidLogger(Level.DEBUG)
             modules(listOf(
+                networkModule,
                 serviceModule,
+                mapperModule,
                 repoModule,
                 appModule
             ))
