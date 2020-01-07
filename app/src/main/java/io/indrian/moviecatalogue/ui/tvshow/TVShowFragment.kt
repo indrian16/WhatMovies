@@ -9,12 +9,13 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.ajalt.timberkt.Timber
+import com.github.ajalt.timberkt.d
 
 import io.indrian.moviecatalogue.R
 import io.indrian.moviecatalogue.data.model.TVShow
 import io.indrian.moviecatalogue.adapter.TVShowAdapter
 import io.indrian.moviecatalogue.ui.tvshowdetail.TVShowDetailActivity
-import io.indrian.moviecatalogue.utils.visible
+import io.indrian.moviecatalogue.utils.toVisible
 import kotlinx.android.synthetic.main.fragment_tvshow.*
 import org.koin.android.ext.android.inject
 
@@ -24,6 +25,8 @@ class TVShowFragment : Fragment(), TVShowAdapter.OnTVShowClickCallBack {
     companion object {
 
         fun newInstance() = TVShowFragment()
+
+        private const val EXTRA_TV_SHOW = "extra_tv_show"
     }
 
     private val viewModel: TVShowVM by inject()
@@ -50,8 +53,8 @@ class TVShowFragment : Fragment(), TVShowAdapter.OnTVShowClickCallBack {
             is TVShowListState.Loaded -> {
 
                 Timber.d { "TVShowLoaded" }
-                stopShimmer()
                 isTVShowLoaded(state.tvShows)
+                saveMoviesState(ArrayList(state.tvShows))
             }
         }
     }
@@ -60,6 +63,7 @@ class TVShowFragment : Fragment(), TVShowAdapter.OnTVShowClickCallBack {
         super.onCreate(savedInstanceState)
 
         setHasOptionsMenu(true)
+        if (savedInstanceState == null) viewModel.getTVShows()
     }
 
     override fun onCreateView(
@@ -74,6 +78,7 @@ class TVShowFragment : Fragment(), TVShowAdapter.OnTVShowClickCallBack {
 
         setupView()
         setupVM()
+        if (savedInstanceState != null) rollBackMoviesState()
     }
 
     private fun setupView() {
@@ -87,7 +92,6 @@ class TVShowFragment : Fragment(), TVShowAdapter.OnTVShowClickCallBack {
 
     private fun setupVM() {
 
-        viewModel.getTVShows()
         viewModel.tvShowListState.observe(this, tvShowListStateObserver)
     }
 
@@ -128,25 +132,41 @@ class TVShowFragment : Fragment(), TVShowAdapter.OnTVShowClickCallBack {
     private fun startShimmer() {
 
         shimmer_tv_show_container.startShimmer()
-        shimmer_tv_show_container.visible(indicator = true)
+        shimmer_tv_show_container.toVisible(visible = true)
     }
 
     private fun stopShimmer() {
 
         shimmer_tv_show_container.stopShimmer()
-        shimmer_tv_show_container.visible(indicator = false)
+        shimmer_tv_show_container.toVisible(visible = false)
     }
 
     private fun isTVShowLoaded(movies: List<TVShow> = arrayListOf()) {
 
         if (movies.isNotEmpty()) {
 
-            rv_tv_show.visible(indicator = true)
+            rv_tv_show.toVisible(visible = true)
             mAdapter.updateItem(movies)
-
+            stopShimmer()
         } else {
 
-            rv_tv_show.visible(indicator = false)
+            rv_tv_show.toVisible(visible = false)
         }
+    }
+
+    private fun saveMoviesState(tvShowList: List<TVShow>) {
+
+        d { "saveMoviesState: $tvShowList" }
+        arguments = Bundle().apply {
+
+            putParcelableArrayList(EXTRA_TV_SHOW, ArrayList(tvShowList))
+        }
+    }
+
+    private fun rollBackMoviesState() {
+
+        d { "rollBackMoviesState" }
+        val movies = arguments?.getParcelableArrayList<TVShow>(EXTRA_TV_SHOW)
+        movies?.let { isTVShowLoaded(it) }
     }
 }

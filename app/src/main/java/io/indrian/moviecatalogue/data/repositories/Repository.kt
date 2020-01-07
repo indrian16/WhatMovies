@@ -1,38 +1,31 @@
 package io.indrian.moviecatalogue.data.repositories
 
+import io.indrian.moviecatalogue.data.mapper.MovieMapper
+import io.indrian.moviecatalogue.data.mapper.TVShowMapper
 import io.indrian.moviecatalogue.data.model.Movie
 import io.indrian.moviecatalogue.data.model.TVShow
 import io.indrian.moviecatalogue.data.service.MovieService
 import io.indrian.moviecatalogue.data.service.TVShowService
+import io.reactivex.Observable
 
 class Repository(private val movieService: MovieService,
-                 private val tvShowService: TVShowService) {
+                 private val tvShowService: TVShowService,
+                 private val movieMapper: MovieMapper,
+                 private val tvShowMapper: TVShowMapper) {
 
-    fun getMovies() = movieService.getMovies()
-        .flatMapIterable { it }
-        .map { mapMovieImagePath(it) }
-        .toList()!!
+    fun getMovies(language: String): Observable<MutableList<Movie>> =
 
-    fun getTVShows() = tvShowService.getTVShows()
-        .flatMapIterable { it }
-        .map { mapTVImagePath(it) }
-        .toList()!!
+        movieService.getMovies(language)
+            .flatMapIterable { it.results!! }
+            .map { movieMapper.toModel(it) }
+            .toList()
+            .toObservable()
 
-    private fun mapMovieImagePath(movie: Movie) = Movie(
-        id = movie.id,
-        title = movie.title,
-        poster = "https://image.tmdb.org/t/p/w342"+movie.poster,
-        backdrop = "https://image.tmdb.org/t/p/w780"+movie.backdrop,
-        year = movie.year,
-        overview = movie.overview
-    )
+    fun getTVShow(language: String): Observable<MutableList<TVShow>> =
 
-    private fun mapTVImagePath(tvShow: TVShow) = TVShow(
-        id = tvShow.id,
-        name = tvShow.name,
-        poster = "https://image.tmdb.org/t/p/w342"+tvShow.poster,
-        backdrop = "https://image.tmdb.org/t/p/w780"+tvShow.backdrop,
-        year = tvShow.year,
-        overview = tvShow.overview
-    )
+        tvShowService.getTVShow(language)
+            .flatMapIterable { it.results!! }
+            .map { tvShowMapper.toModel(it) }
+            .toList()
+            .toObservable()!!
 }

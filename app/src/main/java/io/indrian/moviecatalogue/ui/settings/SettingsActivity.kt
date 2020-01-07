@@ -54,7 +54,7 @@ class SettingsActivity : AppCompatActivity() {
 
                 R.id.rb_en -> {
 
-                    viewModel.changeLanguage(baseContext, Constant.DEFAULT_LAUNGUAGE)
+                    viewModel.changeLanguage(baseContext, Constant.DEFAULT_LANGUAGE)
                 }
 
                 R.id.rb_id -> {

@@ -9,13 +9,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.ajalt.timberkt.Timber
+import com.github.ajalt.timberkt.d
 
 import io.indrian.moviecatalogue.R
 import io.indrian.moviecatalogue.data.model.Movie
 import io.indrian.moviecatalogue.adapter.MovieAdapter
 import io.indrian.moviecatalogue.ui.moviedetail.DetailMovieActivity
 import io.indrian.moviecatalogue.utils.showToast
-import io.indrian.moviecatalogue.utils.visible
+import io.indrian.moviecatalogue.utils.toVisible
 import kotlinx.android.synthetic.main.fragment_movie.*
 import org.koin.android.ext.android.inject
 
@@ -24,9 +25,11 @@ class MovieFragment : Fragment(), MovieAdapter.OnMovieClickCallback {
     companion object {
 
         fun newInstance() = MovieFragment()
+
+        private const val EXTRA_MOVIE_LIST = "extra_movie_list"
     }
 
-    private val movieVM: MovieVM by inject()
+    private val viewModel: MovieVM by inject()
     private val mAdapter = MovieAdapter(this)
 
     private val movieListStateObserver = Observer<MoviesListState> { state ->
@@ -51,15 +54,20 @@ class MovieFragment : Fragment(), MovieAdapter.OnMovieClickCallback {
             is MoviesListState.Loaded -> {
 
                 Timber.d { "MovieLoaded" }
-                stopShimmer()
                 isMoviesLoaded(state.movies)
+                saveMoviesState(state.movies)
             }
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setHasOptionsMenu(true)
+        if (savedInstanceState == null) {
+
+            viewModel.getMovies()
+        }
     }
 
     override fun onCreateView(
@@ -74,12 +82,16 @@ class MovieFragment : Fragment(), MovieAdapter.OnMovieClickCallback {
 
         setupView()
         setupVM()
+
+        if (savedInstanceState != null) {
+
+            rollBackMoviesState()
+        }
     }
 
     private fun setupVM() {
 
-        movieVM.getMovies()
-        movieVM.movieListState.observe(this, movieListStateObserver)
+        viewModel.movieListState.observe(this, movieListStateObserver)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -92,7 +104,7 @@ class MovieFragment : Fragment(), MovieAdapter.OnMovieClickCallback {
 
         if (item.itemId == R.id.action_movie_refresh) {
 
-            movieVM.getMovies()
+            viewModel.getMovies()
             rv_movie.smoothScrollToPosition( 0)
             return true
         }
@@ -122,32 +134,48 @@ class MovieFragment : Fragment(), MovieAdapter.OnMovieClickCallback {
 
     override fun onDetach() {
 
-        movieVM.movieListState.removeObserver(movieListStateObserver)
+        viewModel.movieListState.removeObserver(movieListStateObserver)
         super.onDetach()
     }
 
     private fun startShimmer() {
 
         shimmer_movie_container.startShimmer()
-        shimmer_movie_container.visible(indicator = true)
+        shimmer_movie_container.toVisible()
     }
 
     private fun stopShimmer() {
 
         shimmer_movie_container.stopShimmer()
-        shimmer_movie_container.visible(indicator = false)
+        shimmer_movie_container.toVisible(visible = false)
     }
 
     private fun isMoviesLoaded(movies: List<Movie> = arrayListOf()) {
 
         if (movies.isNotEmpty()) {
 
-            rv_movie.visible(indicator = true)
+            rv_movie.toVisible()
             mAdapter.update(movies)
-
+            stopShimmer()
         } else {
 
-            rv_movie.visible(indicator = false)
+            rv_movie.toVisible(visible = false)
         }
+    }
+
+    private fun saveMoviesState(movies: List<Movie>) {
+
+        d { "saveMovieListState: $movies" }
+        arguments = Bundle().apply {
+
+            putParcelableArrayList(EXTRA_MOVIE_LIST, ArrayList(movies))
+        }
+    }
+
+    private fun rollBackMoviesState() {
+
+        d { "rollBackMoviesState" }
+        val movies = arguments?.getParcelableArrayList<Movie>(EXTRA_MOVIE_LIST)
+        movies?.let { isMoviesLoaded(it) }
     }
 }

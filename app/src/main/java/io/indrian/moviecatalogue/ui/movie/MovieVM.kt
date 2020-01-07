@@ -2,17 +2,14 @@ package io.indrian.moviecatalogue.ui.movie
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.github.ajalt.timberkt.Timber.e
 import com.github.ajalt.timberkt.Timber.d
 import io.indrian.moviecatalogue.data.repositories.Repository
+import io.indrian.moviecatalogue.ui.base.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class MovieVM(private val repository: Repository) : ViewModel() {
-
-    private val compositeDisposable = CompositeDisposable()
+class MovieVM(private val repository: Repository) : BaseViewModel() {
 
     private val mutMovieListState = MutableLiveData<MoviesListState>()
     val movieListState: LiveData<MoviesListState>
@@ -20,7 +17,7 @@ class MovieVM(private val repository: Repository) : ViewModel() {
 
     fun getMovies() {
 
-        val disposable = repository.getMovies()
+        val disposable = repository.getMovies(getLanguage())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { mutMovieListState.value = MoviesListState.Loading }
@@ -32,17 +29,11 @@ class MovieVM(private val repository: Repository) : ViewModel() {
                 },
                 { error ->
 
-                    e { error.message.toString() }
+                    e { "Error: "+error.message }
                     mutMovieListState.value = MoviesListState.Error(error.message.toString())
                 }
             )
 
-        compositeDisposable.addAll(disposable)
-    }
-
-    override fun onCleared() {
-
-        compositeDisposable.clear()
-        super.onCleared()
+        compositeDisposable.add(disposable)
     }
 }

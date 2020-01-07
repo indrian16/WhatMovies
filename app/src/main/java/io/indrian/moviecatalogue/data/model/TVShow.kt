@@ -2,6 +2,7 @@ package io.indrian.moviecatalogue.data.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
+import java.util.*
 
 @Parcelize
 data class TVShow(
@@ -9,6 +10,6 @@ data class TVShow(
     val name: String,
     val poster: String,
     val backdrop: String,
-    val year: String,
+    val releaseDate: Calendar,
     val overview: String
 ): Parcelable
