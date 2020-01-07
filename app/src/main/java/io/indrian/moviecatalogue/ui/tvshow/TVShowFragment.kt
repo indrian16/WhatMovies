@@ -9,6 +9,7 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.ajalt.timberkt.Timber
+import com.github.ajalt.timberkt.d
 
 import io.indrian.moviecatalogue.R
 import io.indrian.moviecatalogue.data.model.TVShow
@@ -24,6 +25,8 @@ class TVShowFragment : Fragment(), TVShowAdapter.OnTVShowClickCallBack {
     companion object {
 
         fun newInstance() = TVShowFragment()
+
+        private const val EXTRA_TV_SHOW = "extra_tv_show"
     }
 
     private val viewModel: TVShowVM by inject()
@@ -50,8 +53,8 @@ class TVShowFragment : Fragment(), TVShowAdapter.OnTVShowClickCallBack {
             is TVShowListState.Loaded -> {
 
                 Timber.d { "TVShowLoaded" }
-                stopShimmer()
                 isTVShowLoaded(state.tvShows)
+                saveMoviesState(ArrayList(state.tvShows))
             }
         }
     }
@@ -60,6 +63,7 @@ class TVShowFragment : Fragment(), TVShowAdapter.OnTVShowClickCallBack {
         super.onCreate(savedInstanceState)
 
         setHasOptionsMenu(true)
+        if (savedInstanceState == null) viewModel.getTVShows()
     }
 
     override fun onCreateView(
@@ -74,6 +78,7 @@ class TVShowFragment : Fragment(), TVShowAdapter.OnTVShowClickCallBack {
 
         setupView()
         setupVM()
+        if (savedInstanceState != null) rollBackMoviesState()
     }
 
     private fun setupView() {
@@ -87,7 +92,6 @@ class TVShowFragment : Fragment(), TVShowAdapter.OnTVShowClickCallBack {
 
     private fun setupVM() {
 
-        viewModel.getTVShows()
         viewModel.tvShowListState.observe(this, tvShowListStateObserver)
     }
 
@@ -143,10 +147,26 @@ class TVShowFragment : Fragment(), TVShowAdapter.OnTVShowClickCallBack {
 
             rv_tv_show.toVisible(visible = true)
             mAdapter.updateItem(movies)
-
+            stopShimmer()
         } else {
 
             rv_tv_show.toVisible(visible = false)
         }
+    }
+
+    private fun saveMoviesState(tvShowList: List<TVShow>) {
+
+        d { "saveMoviesState: $tvShowList" }
+        arguments = Bundle().apply {
+
+            putParcelableArrayList(EXTRA_TV_SHOW, ArrayList(tvShowList))
+        }
+    }
+
+    private fun rollBackMoviesState() {
+
+        d { "rollBackMoviesState" }
+        val movies = arguments?.getParcelableArrayList<TVShow>(EXTRA_TV_SHOW)
+        movies?.let { isTVShowLoaded(it) }
     }
 }

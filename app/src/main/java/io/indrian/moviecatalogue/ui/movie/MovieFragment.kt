@@ -26,7 +26,7 @@ class MovieFragment : Fragment(), MovieAdapter.OnMovieClickCallback {
 
         fun newInstance() = MovieFragment()
 
-        const val EXTRA_MOVIE_LIST = "extra_movie_list"
+        private const val EXTRA_MOVIE_LIST = "extra_movie_list"
     }
 
     private val viewModel: MovieVM by inject()
