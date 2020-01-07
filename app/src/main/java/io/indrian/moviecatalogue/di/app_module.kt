@@ -9,6 +9,11 @@ import io.indrian.moviecatalogue.ui.tvshow.TVShowVM
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
+val networkModule = module {
+
+
+}
+
 val serviceModule = module {
 
     single { MovieService() }

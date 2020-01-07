@@ -30,7 +30,7 @@ class SettingsVM : ViewModel() {
 
         when (language) {
 
-            Constant.DEFAULT_LAUNGUAGE -> {
+            Constant.DEFAULT_LANGUAGE -> {
 
                 mutLanguageState.value = LanguageState.English
             }

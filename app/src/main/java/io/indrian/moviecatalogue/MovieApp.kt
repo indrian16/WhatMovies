@@ -24,7 +24,7 @@ class MovieApp : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        Lingver.init(this, Constant.DEFAULT_LAUNGUAGE)
+        Lingver.init(this, Constant.DEFAULT_LANGUAGE)
 
         if (BuildConfig.DEBUG) {
 
