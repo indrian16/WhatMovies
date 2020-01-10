@@ -14,7 +14,7 @@ import com.github.ajalt.timberkt.d
 import io.indrian.moviecatalogue.R
 import io.indrian.moviecatalogue.data.model.Movie
 import io.indrian.moviecatalogue.adapter.MovieAdapter
-import io.indrian.moviecatalogue.ui.moviedetail.DetailMovieActivity
+import io.indrian.moviecatalogue.ui.moviedetail.MovieDetailActivity
 import io.indrian.moviecatalogue.utils.showToast
 import io.indrian.moviecatalogue.utils.toVisible
 import kotlinx.android.synthetic.main.fragment_movie.*
@@ -123,10 +123,10 @@ class MovieFragment : Fragment(), MovieAdapter.OnMovieClickCallback {
 
     override fun onMovieClickItem(movie: Movie, imgPoster: ImageView) {
 
-        val intent = Intent(activity, DetailMovieActivity::class.java)
+        val intent = Intent(activity, MovieDetailActivity::class.java)
         intent.run {
 
-            this.putExtra(DetailMovieActivity.EXTRA_MOVIE, movie)
+            this.putExtra(MovieDetailActivity.EXTRA_MOVIE, movie)
             val option = ActivityOptionsCompat.makeSceneTransitionAnimation(activity!!, imgPoster, getString(R.string.tn_poster))
             startActivity(intent, option.toBundle())
         }

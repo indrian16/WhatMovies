@@ -6,25 +6,25 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import io.indrian.moviecatalogue.R
-import io.indrian.moviecatalogue.ui.movie.MovieFragment
-import io.indrian.moviecatalogue.ui.tvshow.TVShowFragment
+import io.indrian.moviecatalogue.ui.cast.CastFragment
+import io.indrian.moviecatalogue.ui.info.InfoFragment
 
-class ViewPageAdapter(private val mContext: Context,fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+class ViewPagerDetailAdapter(private val mContext: Context, fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     @StringRes
-    private val tabTitles = intArrayOf(R.string.movie, R.string.tv_show)
+    private val tabTitles = intArrayOf(R.string.info, R.string.cast)
 
     override fun getItem(position: Int): Fragment {
 
         return when (position) {
 
-            0 -> MovieFragment.newInstance()
-            1 -> TVShowFragment.newInstance()
-            else -> MovieFragment.newInstance()
+            0 -> InfoFragment()
+            1 -> CastFragment()
+            else -> InfoFragment()
         }
     }
 
-    override fun getCount(): Int = 2
+    override fun getCount(): Int = tabTitles.size
 
     override fun getPageTitle(position: Int): CharSequence? {
 
