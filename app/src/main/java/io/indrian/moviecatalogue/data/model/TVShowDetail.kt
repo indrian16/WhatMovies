@@ -2,7 +2,7 @@ package io.indrian.moviecatalogue.data.model
 
 import java.util.*
 
-data class DetailTVShow(
+data class TVShowDetail(
     val backdrop: String,
     val firstAirDate: Calendar,
     val genres: List<Genre>,

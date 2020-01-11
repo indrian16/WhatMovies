@@ -16,7 +16,7 @@ class TVShowDetailVM(private val repository: Repository) : BaseViewModel() {
 
     fun getDetailTVShow(id: Int) {
 
-        val disposable = repository.getDetailTVShow(
+        val disposable = repository.getTVShowDetail(
             id,
             getLanguage()
         )

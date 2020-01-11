@@ -1,5 +1,6 @@
 package io.indrian.moviecatalogue.ui.moviedetail
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.KeyEvent
@@ -11,6 +12,8 @@ import io.indrian.moviecatalogue.adapter.GenreChipAdapter
 import io.indrian.moviecatalogue.adapter.ViewPagerDetailAdapter
 import io.indrian.moviecatalogue.data.model.Genre
 import io.indrian.moviecatalogue.data.model.Movie
+import io.indrian.moviecatalogue.ui.moviecast.MovieCastFragment
+import io.indrian.moviecatalogue.ui.movieinfo.MovieInfoFragment
 import io.indrian.moviecatalogue.utils.toVisible
 import kotlinx.android.synthetic.main.activity_detail_movie.*
 import org.koin.android.ext.android.inject
@@ -46,6 +49,7 @@ class MovieDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBac
         }
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_movie)
@@ -61,13 +65,16 @@ class MovieDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBac
 
             tv_year.text = movie.releaseDate[Calendar.YEAR].toString()
             tv_title.text = movie.title
+            tv_vote_average.text = movie.voteAverage.toString()
+            rb_vote_average.rating = (movie.voteAverage / 2).toFloat()
+            tv_vote_count.text = "${movie.voteCount} ${getString(R.string.voters)}"
 
             setToolbar(movie.title)
             setViewModel(movie.id)
+            setViewPager(movie.id)
         }
 
         setRv()
-        setViewPager()
     }
 
     private fun setRv() {
@@ -114,9 +121,14 @@ class MovieDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBac
         })
     }
 
-    private fun setViewPager() {
+    private fun setViewPager(id: Int) {
 
+        val pages = arrayListOf(
+            MovieInfoFragment.newInstance(id),
+            MovieCastFragment()
+        )
         val mAdapter = ViewPagerDetailAdapter(baseContext, supportFragmentManager)
+        mAdapter.addPages(pages)
         view_pager_detail.adapter = mAdapter
         tab_layout_detail.setupWithViewPager(view_pager_detail)
     }
@@ -155,7 +167,6 @@ class MovieDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBac
     }
 
     override fun onClickItem(genre: Genre) {
-
 
     }
 

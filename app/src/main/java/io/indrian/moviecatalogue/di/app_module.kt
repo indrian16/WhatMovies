@@ -9,9 +9,11 @@ import io.indrian.moviecatalogue.data.service.MovieService
 import io.indrian.moviecatalogue.data.service.TVShowService
 import io.indrian.moviecatalogue.ui.movie.MovieVM
 import io.indrian.moviecatalogue.ui.moviedetail.MovieDetailVM
+import io.indrian.moviecatalogue.ui.movieinfo.MovieInfoVM
 import io.indrian.moviecatalogue.ui.settings.SettingsVM
 import io.indrian.moviecatalogue.ui.tvshow.TVShowVM
 import io.indrian.moviecatalogue.ui.tvshowdetail.TVShowDetailVM
+import io.indrian.moviecatalogue.ui.tvshowinfo.TVShowInfoVM
 import io.indrian.moviecatalogue.utils.Constant
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -97,4 +99,6 @@ val appModule = module {
     viewModel { SettingsVM() }
     viewModel { TVShowDetailVM(get()) }
     viewModel { MovieDetailVM(get()) }
+    viewModel { MovieInfoVM(get()) }
+    viewModel { TVShowInfoVM(get()) }
 }

@@ -4,7 +4,7 @@ import io.indrian.moviecatalogue.data.mapper.DetailTVShowMapper
 import io.indrian.moviecatalogue.data.mapper.MovieDetailMapper
 import io.indrian.moviecatalogue.data.mapper.MovieMapper
 import io.indrian.moviecatalogue.data.mapper.TVShowMapper
-import io.indrian.moviecatalogue.data.model.DetailTVShow
+import io.indrian.moviecatalogue.data.model.TVShowDetail
 import io.indrian.moviecatalogue.data.model.Movie
 import io.indrian.moviecatalogue.data.model.MovieDetail
 import io.indrian.moviecatalogue.data.model.TVShow
@@ -35,7 +35,7 @@ class Repository(private val movieService: MovieService,
             .toList()
             .toObservable()!!
 
-    fun getDetailTVShow(id: Int, language: String): Observable<DetailTVShow> =
+    fun getTVShowDetail(id: Int, language: String): Observable<TVShowDetail> =
 
         tvShowService.getDetailTVShow(id, language)
             .map { detailTVShowMapper.toModel(it) }

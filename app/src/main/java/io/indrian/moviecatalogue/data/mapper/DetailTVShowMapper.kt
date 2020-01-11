@@ -1,14 +1,14 @@
 package io.indrian.moviecatalogue.data.mapper
 
 import io.indrian.moviecatalogue.data.entity.DetailTVShowEntity
-import io.indrian.moviecatalogue.data.model.DetailTVShow
+import io.indrian.moviecatalogue.data.model.TVShowDetail
 import io.indrian.moviecatalogue.data.model.Genre
 
-class DetailTVShowMapper : BaseMapper<DetailTVShowEntity, DetailTVShow>() {
+class DetailTVShowMapper : BaseMapper<DetailTVShowEntity, TVShowDetail>() {
 
-    override fun toModel(entity: DetailTVShowEntity): DetailTVShow {
+    override fun toModel(entity: DetailTVShowEntity): TVShowDetail {
 
-        return DetailTVShow(
+        return TVShowDetail(
             backdrop = "https://image.tmdb.org/t/p/w780"+entity.backdropPath,
             posterPath = "https://image.tmdb.org/t/p/w342"+entity.posterPath,
             firstAirDate = parseDate(entity.firstAirDate!!),

@@ -13,7 +13,9 @@ class MovieMapper : BaseMapper<MovieEntity, Movie>() {
             poster = posterUrl+(entity.posterPath ?: ""),
             backdrop = backdropUrl+(entity.backdropPath ?: ""),
             releaseDate = parseDate(entity.releaseDate!!),
-            overview = safeOverview(entity.overview!!)
+            overview = safeOverview(entity.overview!!),
+            voteCount = entity.voteCount!!,
+            voteAverage = entity.voteAverage!!
         )
     }
 }

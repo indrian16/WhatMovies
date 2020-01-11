@@ -13,6 +13,8 @@ import io.indrian.moviecatalogue.adapter.GenreChipAdapter
 import io.indrian.moviecatalogue.adapter.ViewPagerDetailAdapter
 import io.indrian.moviecatalogue.data.model.Genre
 import io.indrian.moviecatalogue.data.model.TVShow
+import io.indrian.moviecatalogue.ui.tvshowcast.TVShowCastFragment
+import io.indrian.moviecatalogue.ui.tvshowinfo.TVShowInfoFragment
 import io.indrian.moviecatalogue.utils.showToast
 import io.indrian.moviecatalogue.utils.toVisible
 import kotlinx.android.synthetic.main.activity_tvshow_detail.*
@@ -78,9 +80,9 @@ class TVShowDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBa
 
             setToolbar(tvShow.name)
             setViewModel(tvShow.id)
+            setViewPager(tvShow.id)
         }
         setRv()
-        setViewPager()
     }
 
     private fun setRv() {
@@ -127,9 +129,14 @@ class TVShowDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBa
         })
     }
 
-    private fun setViewPager() {
+    private fun setViewPager(id: Int) {
 
+        val pages = arrayListOf(
+            TVShowInfoFragment.newInstance(id),
+            TVShowCastFragment()
+        )
         val mAdapter = ViewPagerDetailAdapter(baseContext, supportFragmentManager)
+        mAdapter.addPages(pages)
         view_pager_detail.adapter = mAdapter
         tab_layout_detail.setupWithViewPager(view_pager_detail)
     }

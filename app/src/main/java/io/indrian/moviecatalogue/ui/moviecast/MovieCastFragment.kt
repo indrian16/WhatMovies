@@ -1,4 +1,4 @@
-package io.indrian.moviecatalogue.ui.info
+package io.indrian.moviecatalogue.ui.moviecast
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,13 +8,13 @@ import android.view.ViewGroup
 
 import io.indrian.moviecatalogue.R
 
-class InfoFragment : Fragment() {
+class MovieCastFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_info, container, false)
+        return inflater.inflate(R.layout.fragment_movie_cast, container, false)
     }
 
 }
