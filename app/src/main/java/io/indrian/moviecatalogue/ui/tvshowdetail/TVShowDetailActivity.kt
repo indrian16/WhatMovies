@@ -20,15 +20,18 @@ import io.indrian.moviecatalogue.utils.toVisible
 import kotlinx.android.synthetic.main.activity_tvshow_detail.*
 import org.koin.android.ext.android.inject
 import java.util.*
+import kotlin.collections.ArrayList
 
 class TVShowDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBack {
 
     companion object {
 
         const val EXTRA_TV_SHOW = "extra_tv_show"
+        const val EXTRA_GENRES = "extra_genres"
     }
 
     private val mAdapter = GenreChipAdapter(this)
+    private var genres = ArrayList<Genre>()
 
     private val viewModel: TVShowDetailVM by inject()
     private val genreTVShowStateObserver = Observer<GenreTVShowState> { state ->
@@ -46,6 +49,7 @@ class TVShowDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBa
                 d { "GenreState: Loaded" }
                 stopShimmer()
                 genreIsLoaded(state.genres)
+                genres = ArrayList(state.genres)
             }
 
             is GenreTVShowState.Error -> {
@@ -79,8 +83,12 @@ class TVShowDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBa
             tv_vote_count.text = "${tvShow.voteCount} ${getString(R.string.voters)}"
 
             setToolbar(tvShow.name)
-            setViewModel(tvShow.id)
             setViewPager(tvShow.id)
+
+            if (savedInstanceState == null) {
+
+                setViewModel(tvShow.id)
+            }
         }
         setRv()
     }
@@ -183,6 +191,21 @@ class TVShowDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBa
             rv_genre.toVisible()
             mAdapter.addNewItem(genres)
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+
+        outState.putParcelableArrayList(EXTRA_GENRES, genres)
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        stopShimmer()
+        val genres = savedInstanceState.getParcelableArrayList<Genre>(EXTRA_GENRES)
+        this.genres = genres!!
+        genreIsLoaded(genres)
     }
 
     override fun onClickItem(genre: Genre) {

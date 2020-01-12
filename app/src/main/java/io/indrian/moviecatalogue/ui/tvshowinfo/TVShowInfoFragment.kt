@@ -21,6 +21,7 @@ class TVShowInfoFragment : Fragment() {
     companion object {
 
         private const val EXTRA_ID = "extra_id"
+        private const val EXTRA_TV_SHOW = "extra_tv_show"
 
         fun newInstance(id: Int) = TVShowInfoFragment().apply {
 
@@ -54,6 +55,7 @@ class TVShowInfoFragment : Fragment() {
                 d { "TVShowDetailState.Loaded" }
                 stopLoading()
                 loadedMovieDetail(state.tvShowDetail)
+                saveState(state.tvShowDetail)
             }
         }
     }
@@ -68,8 +70,14 @@ class TVShowInfoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        arguments?.getInt(EXTRA_ID)?.let { viewModel.getTVShowDetail(it) }
-        viewModel.tvShowDetailState.observe(this, tvShowDetailStateObServer)
+        if (savedInstanceState == null) {
+
+            arguments?.getInt(EXTRA_ID)?.let { viewModel.getTVShowDetail(it) }
+            viewModel.tvShowDetailState.observe(this, tvShowDetailStateObServer)
+        } else {
+
+            restoreState()
+        }
     }
 
     private fun startLoading() {
@@ -89,6 +97,18 @@ class TVShowInfoFragment : Fragment() {
     private fun errorState(message: String) {
 
         showToast("Error: $message")
+    }
+
+    private fun saveState(tvShowDetail: TVShowDetail) {
+
+        arguments?.putParcelable(EXTRA_TV_SHOW, tvShowDetail)
+    }
+
+    private fun restoreState() {
+
+        stopLoading()
+        val tvShowDetail = arguments?.getParcelable<TVShowDetail>(EXTRA_TV_SHOW)
+        tv_overview.text = tvShowDetail?.overview
     }
 
     override fun onDetach() {

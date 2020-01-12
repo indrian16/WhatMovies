@@ -20,6 +20,7 @@ class MovieInfoFragment : Fragment() {
     companion object {
 
         private const val EXTRA_ID = "extra_id"
+        private const val EXTRA_MOVIE_DETAIL = "extra_movie_detail"
 
         fun newInstance(id: Int) = MovieInfoFragment().apply {
 
@@ -51,6 +52,7 @@ class MovieInfoFragment : Fragment() {
                 d { "MovieDetailState.Loaded" }
                 stopLoading()
                 loadedMovieDetail(state.movieDetail)
+                saveState(state.movieDetail)
             }
         }
     }
@@ -65,8 +67,14 @@ class MovieInfoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        arguments?.getInt(EXTRA_ID)?.let { viewMode.getMovieDetail(it) }
-        viewMode.movieDetailState.observe(this, movieDetailStateObserver)
+        if (savedInstanceState == null) {
+
+            arguments?.getInt(EXTRA_ID)?.let { viewMode.getMovieDetail(it) }
+            viewMode.movieDetailState.observe(this, movieDetailStateObserver)
+        } else {
+
+            restoreState()
+        }
     }
 
     private fun startLoading() {
@@ -86,6 +94,18 @@ class MovieInfoFragment : Fragment() {
     private fun errorState(message: String) {
 
         showToast("Error: $message")
+    }
+
+    private fun saveState(movieDetail: MovieDetail) {
+
+        arguments?.putParcelable(EXTRA_MOVIE_DETAIL, movieDetail)
+    }
+
+    private fun restoreState() {
+
+        stopLoading()
+        val movieDetail = arguments?.getParcelable<MovieDetail>(EXTRA_MOVIE_DETAIL)
+        tv_overview.text = movieDetail?.overview
     }
 
     override fun onDetach() {

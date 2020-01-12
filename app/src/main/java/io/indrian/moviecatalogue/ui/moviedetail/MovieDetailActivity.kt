@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.KeyEvent
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
+import com.github.ajalt.timberkt.d
 import com.google.android.material.appbar.AppBarLayout
 import io.indrian.moviecatalogue.R
 import io.indrian.moviecatalogue.adapter.GenreChipAdapter
@@ -14,10 +15,12 @@ import io.indrian.moviecatalogue.data.model.Genre
 import io.indrian.moviecatalogue.data.model.Movie
 import io.indrian.moviecatalogue.ui.moviecast.MovieCastFragment
 import io.indrian.moviecatalogue.ui.movieinfo.MovieInfoFragment
+import io.indrian.moviecatalogue.utils.showToast
 import io.indrian.moviecatalogue.utils.toVisible
 import kotlinx.android.synthetic.main.activity_detail_movie.*
 import org.koin.android.ext.android.inject
 import java.util.*
+import kotlin.collections.ArrayList
 
 class MovieDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBack {
 
@@ -27,24 +30,30 @@ class MovieDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBac
     companion object {
 
         const val EXTRA_MOVIE = "extra_movie"
+        const val EXTRA_GENRES = "extra_genres"
     }
 
+    private var genreArray = ArrayList<Genre>()
     private val movieGenreStateObserver = Observer<MovieGenreState> { state ->
 
         when (state) {
 
             is MovieGenreState.Loading -> {
 
+                d { "MovieGenreState.Loading" }
                 startShimmer()
             }
             is MovieGenreState.Error -> {
 
+                d { "MovieGenreState.Error" }
                 stopShimmer()
             }
             is MovieGenreState.Loaded -> {
 
+                d { "MovieGenreState.Loaded" }
                 stopShimmer()
                 genreMovieIsLoaded(state.genres)
+                genreArray = ArrayList(state.genres)
             }
         }
     }
@@ -70,8 +79,12 @@ class MovieDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBac
             tv_vote_count.text = "${movie.voteCount} ${getString(R.string.voters)}"
 
             setToolbar(movie.title)
-            setViewModel(movie.id)
             setViewPager(movie.id)
+
+            if (savedInstanceState == null) {
+
+                setViewModel(movie.id)
+            }
         }
 
         setRv()
@@ -166,10 +179,6 @@ class MovieDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBac
         shimmer_genre.toVisible(false)
     }
 
-    override fun onClickItem(genre: Genre) {
-
-    }
-
     private fun genreMovieIsLoaded(genres: List<Genre> = arrayListOf()) {
 
         if (genres.isNotEmpty()) {
@@ -177,5 +186,25 @@ class MovieDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBac
             rv_genre.toVisible()
             mAdapter.addNewItem(genres)
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+
+        outState.putParcelableArrayList(EXTRA_GENRES, genreArray)
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        stopShimmer()
+        val restoreGenre = savedInstanceState.getParcelableArrayList<Genre>(EXTRA_GENRES)
+        genreArray = restoreGenre!!
+        genreMovieIsLoaded(restoreGenre.toList())
+    }
+
+    override fun onClickItem(genre: Genre) {
+
+        showToast("You click ${genre.name} | ${getString(R.string.coming_soon)}")
     }
 }
