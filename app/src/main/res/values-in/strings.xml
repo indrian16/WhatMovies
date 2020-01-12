@@ -3,22 +3,29 @@
 
     <string name = "app_name"> Katalog Film </string>
 
-     <string name = "hello_blank_fragment">Halo blank fragment</string>
-     <string name = "tv_year">2019</string>
-     <string name = "title_movie">Judul Film</string>
-     <string name = "poster_image">Gambar Poster</string>
-     <string name = "refresh">Muat ulang</string>
-     <string name = "tn_poster">tn_poster</string>
-     <string name = "image_backdrop">Latar Belakang Gambar</string>
-     <string name = "overview">Ikhtisar</string>
-     <string name = "the_overview_movie">Film Tinjauan Umum</string>
+    <string name = "hello_blank_fragment">Halo blank fragment</string>
+    <string name = "tv_year">2019</string>
+    <string name = "title_movie">Judul Film</string>
+    <string name = "poster_image">Gambar Poster</string>
+    <string name = "refresh">Muat ulang</string>
+    <string name = "tn_poster">tn_poster</string>
+    <string name = "image_backdrop">Latar Belakang Gambar</string>
+    <string name = "overview">Ikhtisar</string>
+    <string name = "the_overview_movie">Film Tinjauan Umum</string>
 
-     <string name = "movie">Film</string>
-     <string name = "tv_show">Acara TV</string>
-     <string name = "settings">Pengaturan</string>
-     <string name = "english">Bahasa Inggris</string>
-     <string name = "indonesia">Indonesia</string>
-     <string name = "change_language">Ubah Bahasa</string>
-     <string name="restart_app">Muat Ulang Aplikasi</string>
+    <string name = "movie">Film</string>
+    <string name = "tv_show">Acara TV</string>
+    <string name = "settings">Pengaturan</string>
+    <string name = "english">Bahasa Inggris</string>
+    <string name = "indonesia">Indonesia</string>
+    <string name = "change_language">Ubah Bahasa</string>
+    <string name="restart_app">Muat Ulang Aplikasi</string>
+    <string name = "name_movie">Name Film</string>
+    <string name = "year">Tahun</string>
+    <string name = "_0_0"> 0,0 </string>
+    <string name = "voters">Pemilih</string>
+    <string name = "info">Info</string>
+    <string name = "cast">Pemeran</string>
+    <string name = "coming_soon">Segera hadir</string>
 
 </resources>
