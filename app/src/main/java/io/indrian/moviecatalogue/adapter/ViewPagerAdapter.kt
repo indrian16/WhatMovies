@@ -9,7 +9,7 @@ import io.indrian.moviecatalogue.R
 import io.indrian.moviecatalogue.ui.movie.MovieFragment
 import io.indrian.moviecatalogue.ui.tvshow.TVShowFragment
 
-class ViewPageAdapter(private val mContext: Context,fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+class ViewPagerAdapter(private val mContext: Context, fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     @StringRes
     private val tabTitles = intArrayOf(R.string.movie, R.string.tv_show)
@@ -24,7 +24,7 @@ class ViewPageAdapter(private val mContext: Context,fm: FragmentManager) : Fragm
         }
     }
 
-    override fun getCount(): Int = 2
+    override fun getCount(): Int = tabTitles.size
 
     override fun getPageTitle(position: Int): CharSequence? {
 

@@ -16,7 +16,7 @@
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity android:name=".ui.settings.SettingsActivity"/>
         <activity android:name=".ui.tvshowdetail.TVShowDetailActivity" />
-        <activity android:name=".ui.moviedetail.DetailMovieActivity" />
+        <activity android:name=".ui.moviedetail.MovieDetailActivity" />
         <activity android:name=".ui.main.MainActivity"
             android:configChanges="keyboardHidden|orientation">
             <intent-filter>

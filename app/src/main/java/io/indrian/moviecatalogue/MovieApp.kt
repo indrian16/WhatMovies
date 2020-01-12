@@ -13,7 +13,7 @@ import org.koin.core.logger.Level
  *  @author: INDRIAN(rg16)
  *  @github: https://github.com/indrian16
  *  @dicoding: https://www.dicoding.com/users/229215
- *  @submission: 2
+ *  @submission: 3
  *  @repository: https://github.com/indrian16/MovieCatalogClean
  * */
 

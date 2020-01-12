@@ -1,9 +1,9 @@
-package io.indrian.moviecatalogue.ui.tvshowdetail
+package io.indrian.moviecatalogue.ui.moviedetail
 
 import android.annotation.SuppressLint
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.KeyEvent
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.github.ajalt.timberkt.d
@@ -12,51 +12,48 @@ import io.indrian.moviecatalogue.R
 import io.indrian.moviecatalogue.adapter.GenreChipAdapter
 import io.indrian.moviecatalogue.adapter.ViewPagerDetailAdapter
 import io.indrian.moviecatalogue.data.model.Genre
-import io.indrian.moviecatalogue.data.model.TVShow
-import io.indrian.moviecatalogue.ui.tvshowcast.TVShowCastFragment
-import io.indrian.moviecatalogue.ui.tvshowinfo.TVShowInfoFragment
+import io.indrian.moviecatalogue.data.model.Movie
+import io.indrian.moviecatalogue.ui.moviecast.MovieCastFragment
+import io.indrian.moviecatalogue.ui.movieinfo.MovieInfoFragment
 import io.indrian.moviecatalogue.utils.showToast
 import io.indrian.moviecatalogue.utils.toVisible
-import kotlinx.android.synthetic.main.activity_tvshow_detail.*
+import kotlinx.android.synthetic.main.activity_detail_movie.*
 import org.koin.android.ext.android.inject
 import java.util.*
 import kotlin.collections.ArrayList
 
-class TVShowDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBack {
+class MovieDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBack {
+
+    private val viewModel: MovieDetailVM by inject()
+    private val mAdapter = GenreChipAdapter(this)
 
     companion object {
 
-        const val EXTRA_TV_SHOW = "extra_tv_show"
+        const val EXTRA_MOVIE = "extra_movie"
         const val EXTRA_GENRES = "extra_genres"
     }
 
-    private val mAdapter = GenreChipAdapter(this)
-    private var genres = ArrayList<Genre>()
-
-    private val viewModel: TVShowDetailVM by inject()
-    private val genreTVShowStateObserver = Observer<GenreTVShowState> { state ->
+    private var genreArray = ArrayList<Genre>()
+    private val movieGenreStateObserver = Observer<MovieGenreState> { state ->
 
         when (state) {
 
-            is GenreTVShowState.Loading -> {
+            is MovieGenreState.Loading -> {
 
-                d { "GenreState: Loading" }
+                d { "MovieGenreState.Loading" }
                 startShimmer()
             }
+            is MovieGenreState.Error -> {
 
-            is GenreTVShowState.Loaded -> {
-
-                d { "GenreState: Loaded" }
+                d { "MovieGenreState.Error" }
                 stopShimmer()
-                genreIsLoaded(state.genres)
-                genres = ArrayList(state.genres)
             }
+            is MovieGenreState.Loaded -> {
 
-            is GenreTVShowState.Error -> {
-
-                d { "GenreState: Error" }
+                d { "MovieGenreState.Loaded" }
                 stopShimmer()
-                showToast("error")
+                genreMovieIsLoaded(state.genres)
+                genreArray = ArrayList(state.genres)
             }
         }
     }
@@ -64,32 +61,32 @@ class TVShowDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBa
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_tvshow_detail)
+        setContentView(R.layout.activity_detail_movie)
 
-        intent.getParcelableExtra<TVShow>(EXTRA_TV_SHOW)?.let { tvShow ->
+        intent.getParcelableExtra<Movie>(EXTRA_MOVIE)?.let { movie ->
 
             Glide.with(this)
-                .load(tvShow.backdrop)
+                .load(movie.poster)
+                .into(img_poster)
+            Glide.with(this)
+                .load(movie.backdrop)
                 .into(img_backdrop)
 
-            Glide.with(this)
-                .load(tvShow.poster)
-                .into(img_poster)
+            tv_year.text = movie.releaseDate[Calendar.YEAR].toString()
+            tv_title.text = movie.title
+            tv_vote_average.text = movie.voteAverage.toString()
+            rb_vote_average.rating = (movie.voteAverage / 2).toFloat()
+            tv_vote_count.text = "${movie.voteCount} ${getString(R.string.voters)}"
 
-            tv_name.text = tvShow.name
-            tv_year.text = tvShow.releaseDate[Calendar.YEAR].toString()
-            tv_vote_average.text = tvShow.voteAverage.toString()
-            rb_vote_average.rating = (tvShow.voteAverage / 2).toFloat()
-            tv_vote_count.text = "${tvShow.voteCount} ${getString(R.string.voters)}"
-
-            setToolbar(tvShow.name)
-            setViewPager(tvShow.id)
+            setToolbar(movie.title)
+            setViewPager(movie.id)
 
             if (savedInstanceState == null) {
 
-                setViewModel(tvShow.id)
+                setViewModel(movie.id)
             }
         }
+
         setRv()
     }
 
@@ -100,8 +97,8 @@ class TVShowDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBa
 
     private fun setViewModel(id: Int) {
 
-        viewModel.getDetailTVShow(id)
-        viewModel.genreTVShowState.observe(this, genreTVShowStateObserver)
+        viewModel.getMovieGenres(id)
+        viewModel.movieGenreState.observe(this, movieGenreStateObserver)
     }
 
     private fun setToolbar(name: String) {
@@ -140,8 +137,8 @@ class TVShowDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBa
     private fun setViewPager(id: Int) {
 
         val pages = arrayListOf(
-            TVShowInfoFragment.newInstance(id),
-            TVShowCastFragment()
+            MovieInfoFragment.newInstance(id),
+            MovieCastFragment()
         )
         val mAdapter = ViewPagerDetailAdapter(baseContext, supportFragmentManager)
         mAdapter.addPages(pages)
@@ -166,7 +163,7 @@ class TVShowDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBa
 
     override fun onDestroy() {
 
-        viewModel.genreTVShowState.removeObserver(genreTVShowStateObserver)
+        viewModel.movieGenreState.removeObserver(movieGenreStateObserver)
         super.onDestroy()
     }
 
@@ -174,17 +171,15 @@ class TVShowDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBa
 
         shimmer_genre.startShimmer()
         shimmer_genre.toVisible()
-
-        rv_genre.toVisible(false)
     }
 
     private fun stopShimmer() {
 
-        shimmer_genre.stopShimmer()
+        shimmer_genre.startShimmer()
         shimmer_genre.toVisible(false)
     }
 
-    private fun genreIsLoaded(genres: List<Genre> = arrayListOf()) {
+    private fun genreMovieIsLoaded(genres: List<Genre> = arrayListOf()) {
 
         if (genres.isNotEmpty()) {
 
@@ -195,7 +190,7 @@ class TVShowDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBa
 
     override fun onSaveInstanceState(outState: Bundle) {
 
-        outState.putParcelableArrayList(EXTRA_GENRES, genres)
+        outState.putParcelableArrayList(EXTRA_GENRES, genreArray)
         super.onSaveInstanceState(outState)
     }
 
@@ -203,13 +198,13 @@ class TVShowDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBa
         super.onRestoreInstanceState(savedInstanceState)
 
         stopShimmer()
-        val genres = savedInstanceState.getParcelableArrayList<Genre>(EXTRA_GENRES)
-        this.genres = genres!!
-        genreIsLoaded(genres)
+        val restoreGenre = savedInstanceState.getParcelableArrayList<Genre>(EXTRA_GENRES)
+        genreArray = restoreGenre!!
+        genreMovieIsLoaded(restoreGenre.toList())
     }
 
     override fun onClickItem(genre: Genre) {
 
-        showToast("Click: "+genre.name+" | ${getString(R.string.coming_soon)}")
+        showToast("You click ${genre.name} | ${getString(R.string.coming_soon)}")
     }
 }

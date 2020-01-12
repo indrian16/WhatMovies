@@ -6,10 +6,8 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import io.indrian.moviecatalogue.R
-import io.indrian.moviecatalogue.adapter.ViewPageAdapter
-import io.indrian.moviecatalogue.ui.movie.MovieFragment
+import io.indrian.moviecatalogue.adapter.ViewPagerAdapter
 import io.indrian.moviecatalogue.ui.settings.SettingsActivity
-import io.indrian.moviecatalogue.ui.tvshow.TVShowFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
 
@@ -26,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupViewPager() {
 
-        val viewPagerAdapter = ViewPageAdapter(
+        val viewPagerAdapter = ViewPagerAdapter(
             this,
             supportFragmentManager
         )

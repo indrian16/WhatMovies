@@ -18,5 +18,12 @@
     <string name="indonesia">Bahasa Indonesia</string>
     <string name="change_language">Change Language</string>
     <string name="restart_app">Restart App</string>
+    <string name="name_movie">Name Movie</string>
+    <string name="year">Year</string>
+    <string name="_0_0">0.0</string>
+    <string name="voters">Voters</string>
+    <string name="info">Info</string>
+    <string name="cast">Cast</string>
+    <string name="coming_soon">Coming soon</string>
 
 </resources>

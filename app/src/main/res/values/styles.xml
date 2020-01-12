@@ -6,8 +6,44 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-
         <item name="android:windowContentTransitions">true</item>
+
+        <item name="android:fontFamily">@font/rubik_regular</item>
+    </style>
+
+    <style name="AppThemeDetail" parent="Theme.MaterialComponents.Light.DarkActionBar.Bridge">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorWhite</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowContentTransitions">true</item>
+
+        <item name="android:fontFamily">@font/rubik_regular</item>
+
+        <item name="homeAsUpIndicator">@drawable/ic_ionicons_svg_ios_arrow_dropleft_circle</item>
+    </style>
+
+    <style name="ToolbarDetail" parent="Widget.MaterialComponents.Toolbar">
+
+        <item name="android:fontFamily">@font/rubik_bold</item>
+        <item name="titleTextColor">@color/colorPrimaryText</item>
+
+    </style>
+
+    <style name="TabLayoutDetail" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">?attr/colorAccent</item>
+        <item name="tabBackground">@color/colorWhite</item>
+        <item name="tabTextAppearance">@style/TabTextAppearanceDetail</item>
+        <item name="tabSelectedTextColor">@color/colorPrimary</item>
+    </style>
+
+    <!-- for text -->
+    <style name="TabTextAppearanceDetail" parent="TextAppearance.Design.Tab">
+
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/rubik_medium</item>
+        <item name="android:textColor">@color/colorPrimaryText</item>
+        <item name="textAllCaps">false</item>
     </style>
 
 </resources>
