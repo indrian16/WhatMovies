@@ -35,6 +35,8 @@
         <item name="tabBackground">@color/colorWhite</item>
         <item name="tabTextAppearance">@style/TabTextAppearanceDetail</item>
         <item name="tabSelectedTextColor">@color/colorPrimary</item>
+        <item name="android:elevation">4dp</item>
+        <item name="android:background">@color/colorWhite</item>
     </style>
 
     <!-- for text -->
