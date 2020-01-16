@@ -20,7 +20,7 @@ abstract class BaseViewModel : ViewModel() {
         }
     }
 
-    protected fun getLanguageSetting() = Lingver.getInstance().getLanguage()
+    protected fun getLanguageSetting() = lingver.getLanguage()
 
     override fun onCleared() {
 
