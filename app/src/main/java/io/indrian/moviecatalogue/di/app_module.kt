@@ -1,7 +1,7 @@
 package io.indrian.moviecatalogue.di
 
 import androidx.lifecycle.SavedStateHandle
-import io.indrian.moviecatalogue.data.mapper.DetailTVShowMapper
+import io.indrian.moviecatalogue.data.mapper.TVShowDetailMapper
 import io.indrian.moviecatalogue.data.mapper.MovieDetailMapper
 import io.indrian.moviecatalogue.data.mapper.MovieMapper
 import io.indrian.moviecatalogue.data.mapper.TVShowMapper

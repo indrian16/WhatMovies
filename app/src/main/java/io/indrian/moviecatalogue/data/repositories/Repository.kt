@@ -11,9 +11,8 @@ import io.indrian.moviecatalogue.data.model.TVShow
 import io.indrian.moviecatalogue.data.service.MovieService
 import io.indrian.moviecatalogue.data.service.TVShowService
 import io.reactivex.Observable
-import javax.inject.Inject
 
-class Repository @Inject constructor(
+class Repository(
     private val movieService: MovieService,
     private val tvShowService: TVShowService,
     private val movieMapper: MovieMapper,

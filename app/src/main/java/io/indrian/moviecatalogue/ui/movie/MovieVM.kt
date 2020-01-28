@@ -9,7 +9,6 @@ import io.indrian.moviecatalogue.data.repositories.Repository
 import io.indrian.moviecatalogue.ui.base.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import javax.inject.Inject
 
 class MovieVM(
     val handle: SavedStateHandle,

@@ -5,21 +5,17 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import io.indrian.moviecatalogue.MovieApp
 import io.indrian.moviecatalogue.R
 import io.indrian.moviecatalogue.adapter.ViewPagerAdapter
 import io.indrian.moviecatalogue.ui.settings.SettingsActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
-import javax.inject.Inject
 
-class MainActivity @Inject constructor(): AppCompatActivity() {
+class MainActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        (application as MovieApp).appComponent.inject(this)
 
         setupToolbar()
         setupViewPager()

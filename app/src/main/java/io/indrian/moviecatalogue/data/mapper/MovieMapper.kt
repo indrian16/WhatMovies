@@ -2,9 +2,8 @@ package io.indrian.moviecatalogue.data.mapper
 
 import io.indrian.moviecatalogue.data.entity.MovieEntity
 import io.indrian.moviecatalogue.data.model.Movie
-import javax.inject.Inject
 
-class MovieMapper @Inject constructor(): BaseMapper<MovieEntity, Movie>() {
+class MovieMapper: BaseMapper<MovieEntity, Movie>() {
 
     override fun toModel(entity: MovieEntity): Movie {
 
