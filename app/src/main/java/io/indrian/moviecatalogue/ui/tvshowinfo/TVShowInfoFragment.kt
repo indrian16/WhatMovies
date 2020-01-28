@@ -2,26 +2,25 @@ package io.indrian.moviecatalogue.ui.tvshowinfo
 
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.github.ajalt.timberkt.d
-
 import io.indrian.moviecatalogue.R
 import io.indrian.moviecatalogue.data.model.TVShowDetail
 import io.indrian.moviecatalogue.utils.showToast
 import io.indrian.moviecatalogue.utils.toVisible
 import kotlinx.android.synthetic.main.fragment_tvshow_info.*
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class TVShowInfoFragment : Fragment() {
 
     companion object {
 
         private const val EXTRA_ID = "extra_id"
-        private const val EXTRA_TV_SHOW = "extra_tv_show"
 
         fun newInstance(id: Int) = TVShowInfoFragment().apply {
 
@@ -31,7 +30,7 @@ class TVShowInfoFragment : Fragment() {
         }
     }
 
-    private val viewModel: TVShowInfoVM by inject()
+    private val tvShowInfoVM: TVShowInfoVM by viewModel { parametersOf(Bundle()) }
 
     private val tvShowDetailStateObServer = Observer<TVShowDetailState> { state ->
 
@@ -55,7 +54,6 @@ class TVShowInfoFragment : Fragment() {
                 d { "TVShowDetailState.Loaded" }
                 stopLoading()
                 loadedMovieDetail(state.tvShowDetail)
-                saveState(state.tvShowDetail)
             }
         }
     }
@@ -72,12 +70,10 @@ class TVShowInfoFragment : Fragment() {
 
         if (savedInstanceState == null) {
 
-            arguments?.getInt(EXTRA_ID)?.let { viewModel.getTVShowDetail(it) }
-            viewModel.tvShowDetailState.observe(this, tvShowDetailStateObServer)
-        } else {
-
-            restoreState()
+            arguments?.getInt(EXTRA_ID)?.let { tvShowInfoVM.getTVShowDetail(it) }
         }
+
+        tvShowInfoVM.tvShowDetailState.observe(this, tvShowDetailStateObServer)
     }
 
     private fun startLoading() {
@@ -99,21 +95,9 @@ class TVShowInfoFragment : Fragment() {
         showToast("Error: $message")
     }
 
-    private fun saveState(tvShowDetail: TVShowDetail) {
-
-        arguments?.putParcelable(EXTRA_TV_SHOW, tvShowDetail)
-    }
-
-    private fun restoreState() {
-
-        stopLoading()
-        val tvShowDetail = arguments?.getParcelable<TVShowDetail>(EXTRA_TV_SHOW)
-        tv_overview.text = tvShowDetail?.overview
-    }
-
     override fun onDetach() {
 
-        viewModel.tvShowDetailState.removeObserver(tvShowDetailStateObServer)
+        tvShowInfoVM.tvShowDetailState.removeObserver(tvShowDetailStateObServer)
         super.onDetach()
     }
 }

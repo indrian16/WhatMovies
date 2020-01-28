@@ -1,26 +1,25 @@
 package io.indrian.moviecatalogue.ui.movieinfo
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.github.ajalt.timberkt.d
-
 import io.indrian.moviecatalogue.R
 import io.indrian.moviecatalogue.data.model.MovieDetail
 import io.indrian.moviecatalogue.utils.showToast
 import io.indrian.moviecatalogue.utils.toVisible
 import kotlinx.android.synthetic.main.fragment_movie_info.*
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class MovieInfoFragment : Fragment() {
 
     companion object {
 
         private const val EXTRA_ID = "extra_id"
-        private const val EXTRA_MOVIE_DETAIL = "extra_movie_detail"
 
         fun newInstance(id: Int) = MovieInfoFragment().apply {
 
@@ -30,7 +29,7 @@ class MovieInfoFragment : Fragment() {
         }
     }
 
-    private val viewMode: MovieInfoVM by inject()
+    private val movieInfoVM: MovieInfoVM by viewModel { parametersOf(Bundle()) }
 
     private val movieDetailStateObserver = Observer<MovieDetailState> { state ->
 
@@ -52,7 +51,6 @@ class MovieInfoFragment : Fragment() {
                 d { "MovieDetailState.Loaded" }
                 stopLoading()
                 loadedMovieDetail(state.movieDetail)
-                saveState(state.movieDetail)
             }
         }
     }
@@ -69,12 +67,10 @@ class MovieInfoFragment : Fragment() {
 
         if (savedInstanceState == null) {
 
-            arguments?.getInt(EXTRA_ID)?.let { viewMode.getMovieDetail(it) }
-            viewMode.movieDetailState.observe(this, movieDetailStateObserver)
-        } else {
-
-            restoreState()
+            arguments?.getInt(EXTRA_ID)?.let { movieInfoVM.getMovieDetail(it) }
         }
+
+        movieInfoVM.movieDetailState.observe(this, movieDetailStateObserver)
     }
 
     private fun startLoading() {
@@ -96,21 +92,9 @@ class MovieInfoFragment : Fragment() {
         showToast("Error: $message")
     }
 
-    private fun saveState(movieDetail: MovieDetail) {
-
-        arguments?.putParcelable(EXTRA_MOVIE_DETAIL, movieDetail)
-    }
-
-    private fun restoreState() {
-
-        stopLoading()
-        val movieDetail = arguments?.getParcelable<MovieDetail>(EXTRA_MOVIE_DETAIL)
-        tv_overview.text = movieDetail?.overview
-    }
-
     override fun onDetach() {
 
-        viewMode.movieDetailState.removeObserver(movieDetailStateObserver)
+        movieInfoVM.movieDetailState.removeObserver(movieDetailStateObserver)
         super.onDetach()
     }
 }

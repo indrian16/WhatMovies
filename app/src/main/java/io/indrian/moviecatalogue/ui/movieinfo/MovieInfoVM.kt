@@ -2,6 +2,7 @@ package io.indrian.moviecatalogue.ui.movieinfo
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import com.github.ajalt.timberkt.d
 import com.github.ajalt.timberkt.e
 import io.indrian.moviecatalogue.data.repositories.Repository
@@ -9,7 +10,10 @@ import io.indrian.moviecatalogue.ui.base.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class MovieInfoVM(private val repository: Repository): BaseViewModel() {
+class MovieInfoVM(
+    val handle: SavedStateHandle,
+    private val repository: Repository
+): BaseViewModel() {
 
     private val mutMovieDetailState = MutableLiveData<MovieDetailState>()
     val movieDetailState: LiveData<MovieDetailState>

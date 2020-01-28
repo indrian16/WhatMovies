@@ -18,22 +18,20 @@ import io.indrian.moviecatalogue.ui.tvshowinfo.TVShowInfoFragment
 import io.indrian.moviecatalogue.utils.showToast
 import io.indrian.moviecatalogue.utils.toVisible
 import kotlinx.android.synthetic.main.activity_tvshow_detail.*
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 import java.util.*
-import kotlin.collections.ArrayList
 
 class TVShowDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBack {
 
     companion object {
 
         const val EXTRA_TV_SHOW = "extra_tv_show"
-        const val EXTRA_GENRES = "extra_genres"
     }
 
     private val mAdapter = GenreChipAdapter(this)
-    private var genres = ArrayList<Genre>()
 
-    private val viewModel: TVShowDetailVM by inject()
+    private val tvShowDetailVM: TVShowDetailVM by viewModel { parametersOf(Bundle()) }
     private val genreTVShowStateObserver = Observer<GenreTVShowState> { state ->
 
         when (state) {
@@ -49,7 +47,6 @@ class TVShowDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBa
                 d { "GenreState: Loaded" }
                 stopShimmer()
                 genreIsLoaded(state.genres)
-                genres = ArrayList(state.genres)
             }
 
             is GenreTVShowState.Error -> {
@@ -85,11 +82,9 @@ class TVShowDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBa
             setToolbar(tvShow.name)
             setViewPager(tvShow.id)
 
-            if (savedInstanceState == null) {
-
-                setViewModel(tvShow.id)
-            }
+            if (savedInstanceState == null) tvShowDetailVM.getDetailTVShow(tvShow.id)
         }
+        setViewModel()
         setRv()
     }
 
@@ -98,10 +93,10 @@ class TVShowDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBa
         rv_genre.adapter = mAdapter
     }
 
-    private fun setViewModel(id: Int) {
+    private fun setViewModel() {
 
-        viewModel.getDetailTVShow(id)
-        viewModel.genreTVShowState.observe(this, genreTVShowStateObserver)
+
+        tvShowDetailVM.genreTVShowState.observe(this, genreTVShowStateObserver)
     }
 
     private fun setToolbar(name: String) {
@@ -166,7 +161,7 @@ class TVShowDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBa
 
     override fun onDestroy() {
 
-        viewModel.genreTVShowState.removeObserver(genreTVShowStateObserver)
+        tvShowDetailVM.genreTVShowState.removeObserver(genreTVShowStateObserver)
         super.onDestroy()
     }
 
@@ -191,21 +186,6 @@ class TVShowDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBa
             rv_genre.toVisible()
             mAdapter.addNewItem(genres)
         }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-
-        outState.putParcelableArrayList(EXTRA_GENRES, genres)
-        super.onSaveInstanceState(outState)
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-
-        stopShimmer()
-        val genres = savedInstanceState.getParcelableArrayList<Genre>(EXTRA_GENRES)
-        this.genres = genres!!
-        genreIsLoaded(genres)
     }
 
     override fun onClickItem(genre: Genre) {

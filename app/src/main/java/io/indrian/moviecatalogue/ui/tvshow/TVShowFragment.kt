@@ -3,21 +3,20 @@ package io.indrian.moviecatalogue.ui.tvshow
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
-import androidx.fragment.app.Fragment
 import android.widget.ImageView
 import androidx.core.app.ActivityOptionsCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.ajalt.timberkt.Timber
-import com.github.ajalt.timberkt.d
-
 import io.indrian.moviecatalogue.R
-import io.indrian.moviecatalogue.data.model.TVShow
 import io.indrian.moviecatalogue.adapter.TVShowAdapter
+import io.indrian.moviecatalogue.data.model.TVShow
 import io.indrian.moviecatalogue.ui.tvshowdetail.TVShowDetailActivity
 import io.indrian.moviecatalogue.utils.toVisible
 import kotlinx.android.synthetic.main.fragment_tvshow.*
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 
 class TVShowFragment : Fragment(), TVShowAdapter.OnTVShowClickCallBack {
@@ -25,11 +24,9 @@ class TVShowFragment : Fragment(), TVShowAdapter.OnTVShowClickCallBack {
     companion object {
 
         fun newInstance() = TVShowFragment()
-
-        private const val EXTRA_TV_SHOW = "extra_tv_show"
     }
 
-    private val viewModel: TVShowVM by inject()
+    private val tvShowVM: TVShowVM by viewModel { parametersOf(Bundle()) }
     private val mAdapter = TVShowAdapter(this)
 
     private val tvShowListStateObserver = Observer<TVShowListState> { state ->
@@ -53,8 +50,8 @@ class TVShowFragment : Fragment(), TVShowAdapter.OnTVShowClickCallBack {
             is TVShowListState.Loaded -> {
 
                 Timber.d { "TVShowLoaded" }
+                stopShimmer()
                 isTVShowLoaded(state.tvShows)
-                saveMoviesState(ArrayList(state.tvShows))
             }
         }
     }
@@ -63,7 +60,7 @@ class TVShowFragment : Fragment(), TVShowAdapter.OnTVShowClickCallBack {
         super.onCreate(savedInstanceState)
 
         setHasOptionsMenu(true)
-        if (savedInstanceState == null) viewModel.getTVShows()
+        if (savedInstanceState == null) tvShowVM.getTVShows()
     }
 
     override fun onCreateView(
@@ -78,7 +75,6 @@ class TVShowFragment : Fragment(), TVShowAdapter.OnTVShowClickCallBack {
 
         setupView()
         setupVM()
-        if (savedInstanceState != null) rollBackMoviesState()
     }
 
     private fun setupView() {
@@ -92,7 +88,7 @@ class TVShowFragment : Fragment(), TVShowAdapter.OnTVShowClickCallBack {
 
     private fun setupVM() {
 
-        viewModel.tvShowListState.observe(this, tvShowListStateObserver)
+        tvShowVM.tvShowListState.observe(this, tvShowListStateObserver)
     }
 
     override fun onClickTVShow(tvShow: TVShow, imgPoster: ImageView) {
@@ -116,7 +112,7 @@ class TVShowFragment : Fragment(), TVShowAdapter.OnTVShowClickCallBack {
 
         if (item.itemId == R.id.action_tv_show_refresh) {
 
-            viewModel.getTVShows()
+            tvShowVM.getTVShows()
             rv_tv_show.smoothScrollToPosition( 0)
             return true
         }
@@ -125,7 +121,7 @@ class TVShowFragment : Fragment(), TVShowAdapter.OnTVShowClickCallBack {
 
     override fun onDetach() {
 
-        viewModel.tvShowListState.removeObserver(tvShowListStateObserver)
+        tvShowVM.tvShowListState.removeObserver(tvShowListStateObserver)
         super.onDetach()
     }
 
@@ -147,26 +143,9 @@ class TVShowFragment : Fragment(), TVShowAdapter.OnTVShowClickCallBack {
 
             rv_tv_show.toVisible(visible = true)
             mAdapter.updateItem(movies)
-            stopShimmer()
         } else {
 
             rv_tv_show.toVisible(visible = false)
         }
-    }
-
-    private fun saveMoviesState(tvShowList: List<TVShow>) {
-
-        d { "saveMoviesState: $tvShowList" }
-        arguments = Bundle().apply {
-
-            putParcelableArrayList(EXTRA_TV_SHOW, ArrayList(tvShowList))
-        }
-    }
-
-    private fun rollBackMoviesState() {
-
-        d { "rollBackMoviesState" }
-        val movies = arguments?.getParcelableArrayList<TVShow>(EXTRA_TV_SHOW)
-        movies?.let { isTVShowLoaded(it) }
     }
 }
