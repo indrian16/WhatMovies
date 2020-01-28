@@ -8,8 +8,9 @@ import io.indrian.moviecatalogue.data.repositories.Repository
 import io.indrian.moviecatalogue.ui.base.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class MovieVM(private val repository: Repository) : BaseViewModel() {
+class MovieVM @Inject constructor(private val repository: Repository) : BaseViewModel() {
 
     private val mutMovieListState = MutableLiveData<MoviesListState>()
     val movieListState: LiveData<MoviesListState>

@@ -2,8 +2,9 @@ package io.indrian.moviecatalogue.data.mapper
 
 import io.indrian.moviecatalogue.data.entity.TVShowEntity
 import io.indrian.moviecatalogue.data.model.TVShow
+import javax.inject.Inject
 
-class TVShowMapper : BaseMapper<TVShowEntity, TVShow>() {
+class TVShowMapper @Inject constructor() : BaseMapper<TVShowEntity, TVShow>() {
 
     override fun toModel(entity: TVShowEntity): TVShow {
 

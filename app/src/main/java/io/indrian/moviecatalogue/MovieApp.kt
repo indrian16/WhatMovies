@@ -19,6 +19,11 @@ import org.koin.core.logger.Level
 
 class MovieApp : Application() {
 
+    val appComponent: AppComponent by lazy {
+
+        DaggerAppComponent.factory().create(applicationContext)
+    }
+
     override fun onCreate() {
         super.onCreate()
 

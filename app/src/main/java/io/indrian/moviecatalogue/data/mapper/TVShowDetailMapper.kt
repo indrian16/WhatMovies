@@ -3,8 +3,9 @@ package io.indrian.moviecatalogue.data.mapper
 import io.indrian.moviecatalogue.data.entity.DetailTVShowEntity
 import io.indrian.moviecatalogue.data.model.TVShowDetail
 import io.indrian.moviecatalogue.data.model.Genre
+import javax.inject.Inject
 
-class DetailTVShowMapper : BaseMapper<DetailTVShowEntity, TVShowDetail>() {
+class TVShowDetailMapper @Inject constructor() : BaseMapper<DetailTVShowEntity, TVShowDetail>() {
 
     override fun toModel(entity: DetailTVShowEntity): TVShowDetail {
 

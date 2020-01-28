@@ -1,5 +1,6 @@
 package io.indrian.moviecatalogue.ui.movie
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
@@ -14,13 +15,14 @@ import com.github.ajalt.timberkt.d
 import io.indrian.moviecatalogue.R
 import io.indrian.moviecatalogue.data.model.Movie
 import io.indrian.moviecatalogue.adapter.MovieAdapter
+import io.indrian.moviecatalogue.ui.base.BaseFragment
 import io.indrian.moviecatalogue.ui.moviedetail.MovieDetailActivity
 import io.indrian.moviecatalogue.utils.showToast
 import io.indrian.moviecatalogue.utils.toVisible
 import kotlinx.android.synthetic.main.fragment_movie.*
-import org.koin.android.ext.android.inject
+import javax.inject.Inject
 
-class MovieFragment : Fragment(), MovieAdapter.OnMovieClickCallback {
+class MovieFragment : BaseFragment(), MovieAdapter.OnMovieClickCallback {
 
     companion object {
 
@@ -29,7 +31,8 @@ class MovieFragment : Fragment(), MovieAdapter.OnMovieClickCallback {
         private const val EXTRA_MOVIE_LIST = "extra_movie_list"
     }
 
-    private val viewModel: MovieVM by inject()
+    @Inject
+    lateinit var viewModel: MovieVM
     private val mAdapter = MovieAdapter(this)
 
     private val movieListStateObserver = Observer<MoviesListState> { state ->
@@ -58,6 +61,12 @@ class MovieFragment : Fragment(), MovieAdapter.OnMovieClickCallback {
                 saveMoviesState(state.movies)
             }
         }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+//        appComponent().inject(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
