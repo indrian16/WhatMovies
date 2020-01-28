@@ -74,7 +74,7 @@ val mapperModule = module {
 
     single { MovieMapper() }
     single { TVShowMapper() }
-    single { DetailTVShowMapper() }
+    single { TVShowDetailMapper() }
     single { MovieDetailMapper() }
 }
 

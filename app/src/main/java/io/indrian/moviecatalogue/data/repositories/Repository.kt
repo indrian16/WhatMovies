@@ -1,6 +1,6 @@
 package io.indrian.moviecatalogue.data.repositories
 
-import io.indrian.moviecatalogue.data.mapper.DetailTVShowMapper
+import io.indrian.moviecatalogue.data.mapper.TVShowDetailMapper
 import io.indrian.moviecatalogue.data.mapper.MovieDetailMapper
 import io.indrian.moviecatalogue.data.mapper.MovieMapper
 import io.indrian.moviecatalogue.data.mapper.TVShowMapper
@@ -11,13 +11,15 @@ import io.indrian.moviecatalogue.data.model.TVShow
 import io.indrian.moviecatalogue.data.service.MovieService
 import io.indrian.moviecatalogue.data.service.TVShowService
 import io.reactivex.Observable
+import javax.inject.Inject
 
-class Repository(private val movieService: MovieService,
-                 private val tvShowService: TVShowService,
-                 private val movieMapper: MovieMapper,
-                 private val tvShowMapper: TVShowMapper,
-                 private val detailTVShowMapper: DetailTVShowMapper,
-                 private val movieDetailMapper: MovieDetailMapper) {
+class Repository @Inject constructor(
+    private val movieService: MovieService,
+    private val tvShowService: TVShowService,
+    private val movieMapper: MovieMapper,
+    private val tvShowMapper: TVShowMapper,
+    private val TVShowDetailMapper: TVShowDetailMapper,
+    private val movieDetailMapper: MovieDetailMapper) {
 
     fun getMovies(language: String): Observable<MutableList<Movie>> =
 
@@ -38,7 +40,7 @@ class Repository(private val movieService: MovieService,
     fun getTVShowDetail(id: Int, language: String): Observable<TVShowDetail> =
 
         tvShowService.getDetailTVShow(id, language)
-            .map { detailTVShowMapper.toModel(it) }
+            .map { TVShowDetailMapper.toModel(it) }
 
     fun getMovieDetail(id: Int, language: String): Observable<MovieDetail> =
 
