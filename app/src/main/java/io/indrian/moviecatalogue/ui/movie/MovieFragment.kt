@@ -9,27 +9,24 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.ajalt.timberkt.Timber
-import com.github.ajalt.timberkt.d
-
 import io.indrian.moviecatalogue.R
-import io.indrian.moviecatalogue.data.model.Movie
 import io.indrian.moviecatalogue.adapter.MovieAdapter
+import io.indrian.moviecatalogue.data.model.Movie
 import io.indrian.moviecatalogue.ui.moviedetail.MovieDetailActivity
 import io.indrian.moviecatalogue.utils.showToast
 import io.indrian.moviecatalogue.utils.toVisible
 import kotlinx.android.synthetic.main.fragment_movie.*
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class MovieFragment : Fragment(), MovieAdapter.OnMovieClickCallback {
 
     companion object {
 
         fun newInstance() = MovieFragment()
-
-        private const val EXTRA_MOVIE_LIST = "extra_movie_list"
     }
 
-    private val viewModel: MovieVM by inject()
+    private val movieVM: MovieVM by viewModel { parametersOf(Bundle()) }
     private val mAdapter = MovieAdapter(this)
 
     private val movieListStateObserver = Observer<MoviesListState> { state ->
@@ -54,8 +51,8 @@ class MovieFragment : Fragment(), MovieAdapter.OnMovieClickCallback {
             is MoviesListState.Loaded -> {
 
                 Timber.d { "MovieLoaded" }
+                stopShimmer()
                 isMoviesLoaded(state.movies)
-                saveMoviesState(state.movies)
             }
         }
     }
@@ -64,10 +61,7 @@ class MovieFragment : Fragment(), MovieAdapter.OnMovieClickCallback {
         super.onCreate(savedInstanceState)
 
         setHasOptionsMenu(true)
-        if (savedInstanceState == null) {
-
-            viewModel.getMovies()
-        }
+        if (savedInstanceState == null) movieVM.getMovies()
     }
 
     override fun onCreateView(
@@ -82,16 +76,11 @@ class MovieFragment : Fragment(), MovieAdapter.OnMovieClickCallback {
 
         setupView()
         setupVM()
-
-        if (savedInstanceState != null) {
-
-            rollBackMoviesState()
-        }
     }
 
     private fun setupVM() {
 
-        viewModel.movieListState.observe(this, movieListStateObserver)
+        movieVM.movieListState.observe(this, movieListStateObserver)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -104,7 +93,7 @@ class MovieFragment : Fragment(), MovieAdapter.OnMovieClickCallback {
 
         if (item.itemId == R.id.action_movie_refresh) {
 
-            viewModel.getMovies()
+            movieVM.getMovies()
             rv_movie.smoothScrollToPosition( 0)
             return true
         }
@@ -134,7 +123,7 @@ class MovieFragment : Fragment(), MovieAdapter.OnMovieClickCallback {
 
     override fun onDetach() {
 
-        viewModel.movieListState.removeObserver(movieListStateObserver)
+        movieVM.movieListState.removeObserver(movieListStateObserver)
         super.onDetach()
     }
 
@@ -156,26 +145,9 @@ class MovieFragment : Fragment(), MovieAdapter.OnMovieClickCallback {
 
             rv_movie.toVisible()
             mAdapter.update(movies)
-            stopShimmer()
         } else {
 
             rv_movie.toVisible(visible = false)
         }
-    }
-
-    private fun saveMoviesState(movies: List<Movie>) {
-
-        d { "saveMovieListState: $movies" }
-        arguments = Bundle().apply {
-
-            putParcelableArrayList(EXTRA_MOVIE_LIST, ArrayList(movies))
-        }
-    }
-
-    private fun rollBackMoviesState() {
-
-        d { "rollBackMoviesState" }
-        val movies = arguments?.getParcelableArrayList<Movie>(EXTRA_MOVIE_LIST)
-        movies?.let { isMoviesLoaded(it) }
     }
 }

@@ -1,9 +1,9 @@
 package io.indrian.moviecatalogue.ui.moviedetail
 
 import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.KeyEvent
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.github.ajalt.timberkt.d
@@ -18,22 +18,20 @@ import io.indrian.moviecatalogue.ui.movieinfo.MovieInfoFragment
 import io.indrian.moviecatalogue.utils.showToast
 import io.indrian.moviecatalogue.utils.toVisible
 import kotlinx.android.synthetic.main.activity_detail_movie.*
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 import java.util.*
-import kotlin.collections.ArrayList
 
 class MovieDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBack {
 
-    private val viewModel: MovieDetailVM by inject()
+    private val movieDetailVM: MovieDetailVM by viewModel { parametersOf(Bundle()) }
     private val mAdapter = GenreChipAdapter(this)
 
     companion object {
 
         const val EXTRA_MOVIE = "extra_movie"
-        const val EXTRA_GENRES = "extra_genres"
     }
 
-    private var genreArray = ArrayList<Genre>()
     private val movieGenreStateObserver = Observer<MovieGenreState> { state ->
 
         when (state) {
@@ -53,7 +51,6 @@ class MovieDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBac
                 d { "MovieGenreState.Loaded" }
                 stopShimmer()
                 genreMovieIsLoaded(state.genres)
-                genreArray = ArrayList(state.genres)
             }
         }
     }
@@ -81,12 +78,10 @@ class MovieDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBac
             setToolbar(movie.title)
             setViewPager(movie.id)
 
-            if (savedInstanceState == null) {
-
-                setViewModel(movie.id)
-            }
+            if (savedInstanceState == null) movieDetailVM.getMovieGenres(movie.id)
         }
 
+        setViewModel()
         setRv()
     }
 
@@ -95,10 +90,10 @@ class MovieDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBac
         rv_genre.adapter = mAdapter
     }
 
-    private fun setViewModel(id: Int) {
+    private fun setViewModel() {
 
-        viewModel.getMovieGenres(id)
-        viewModel.movieGenreState.observe(this, movieGenreStateObserver)
+
+        movieDetailVM.movieGenreState.observe(this, movieGenreStateObserver)
     }
 
     private fun setToolbar(name: String) {
@@ -163,7 +158,7 @@ class MovieDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBac
 
     override fun onDestroy() {
 
-        viewModel.movieGenreState.removeObserver(movieGenreStateObserver)
+        movieDetailVM.movieGenreState.removeObserver(movieGenreStateObserver)
         super.onDestroy()
     }
 
@@ -186,21 +181,6 @@ class MovieDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBac
             rv_genre.toVisible()
             mAdapter.addNewItem(genres)
         }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-
-        outState.putParcelableArrayList(EXTRA_GENRES, genreArray)
-        super.onSaveInstanceState(outState)
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-
-        stopShimmer()
-        val restoreGenre = savedInstanceState.getParcelableArrayList<Genre>(EXTRA_GENRES)
-        genreArray = restoreGenre!!
-        genreMovieIsLoaded(restoreGenre.toList())
     }
 
     override fun onClickItem(genre: Genre) {

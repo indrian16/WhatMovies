@@ -2,13 +2,17 @@ package io.indrian.moviecatalogue.ui.tvshowdetail
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import com.github.ajalt.timberkt.Timber.e
 import io.indrian.moviecatalogue.data.repositories.Repository
 import io.indrian.moviecatalogue.ui.base.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class TVShowDetailVM(private val repository: Repository) : BaseViewModel() {
+class TVShowDetailVM(
+    val handle: SavedStateHandle,
+    private val repository: Repository
+) : BaseViewModel() {
 
     private val mutGenreTVShowState = MutableLiveData<GenreTVShowState>()
     val genreTVShowState: LiveData<GenreTVShowState>

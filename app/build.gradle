@@ -68,7 +68,7 @@ dependencies {
     implementation group: 'com.google.android.material', name: 'material', version: '1.2.0-alpha04'
 
     // Insert Koin
-    implementation 'org.koin:koin-androidx-viewmodel:2.0.1'
+    implementation 'org.koin:koin-androidx-viewmodel:2.1.0-alpha-3'
 
     // ViewModel
     implementation 'androidx.lifecycle:lifecycle-viewmodel-savedstate:1.0.0'
@@ -88,7 +88,7 @@ dependencies {
     implementation 'com.github.ajalt:timberkt:1.5.1'
 
     // Lingver - Change Language
-    implementation "com.github.YarikSOffice:lingver:1.2.0"
+    implementation "com.github.YarikSOffice:lingver:1.2.1"
 
     // Testing
     testImplementation 'junit:junit:4.12'

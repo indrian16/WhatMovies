@@ -1,5 +1,6 @@
 package io.indrian.moviecatalogue.di
 
+import androidx.lifecycle.SavedStateHandle
 import io.indrian.moviecatalogue.data.mapper.DetailTVShowMapper
 import io.indrian.moviecatalogue.data.mapper.MovieDetailMapper
 import io.indrian.moviecatalogue.data.mapper.MovieMapper
@@ -94,11 +95,11 @@ val repoModule = module {
 
 val appModule = module {
 
-    viewModel { MovieVM(get()) }
-    viewModel { TVShowVM(get()) }
+    viewModel { (handle: SavedStateHandle) -> MovieVM(handle, get()) }
+    viewModel { (handle: SavedStateHandle) -> TVShowVM(handle, get()) }
     viewModel { SettingsVM() }
-    viewModel { TVShowDetailVM(get()) }
-    viewModel { MovieDetailVM(get()) }
-    viewModel { MovieInfoVM(get()) }
-    viewModel { TVShowInfoVM(get()) }
+    viewModel { (handle: SavedStateHandle) -> TVShowDetailVM(handle, get()) }
+    viewModel { (handle: SavedStateHandle) -> MovieDetailVM(handle, get()) }
+    viewModel { (handle: SavedStateHandle) -> MovieInfoVM(handle, get()) }
+    viewModel { (handle: SavedStateHandle) -> TVShowInfoVM(handle, get()) }
 }
