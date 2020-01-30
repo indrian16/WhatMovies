@@ -15,6 +15,7 @@
 
     <string name = "movie">Film</string>
     <string name = "tv_show">Acara TV</string>
+    <string name = "discover">Jelajahi</string>
     <string name = "settings">Pengaturan</string>
     <string name = "english">Bahasa Inggris</string>
     <string name = "indonesia">Indonesia</string>
@@ -27,5 +28,7 @@
     <string name = "info">Info</string>
     <string name = "cast">Pemeran</string>
     <string name = "coming_soon">Segera hadir</string>
+    <string name = "search">Cari</string>
+    <string name = "favorite">Favorite</string>
 
 </resources>

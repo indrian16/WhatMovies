@@ -10,6 +10,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import io.indrian.moviecatalogue.R
+import io.indrian.moviecatalogue.ui.favorite.FavoriteActivity
 import io.indrian.moviecatalogue.ui.settings.SettingsActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -53,10 +54,24 @@ class MainActivity: AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-        if (item.itemId == R.id.action_setting) {
+        when (item.itemId) {
 
-            startActivity(Intent(this, SettingsActivity::class.java))
-            return true
+            R.id.action_setting -> {
+
+                startActivity(Intent(this, SettingsActivity::class.java))
+                return true
+            }
+
+            R.id.action_search -> {
+
+                return true
+            }
+
+            R.id.action_favorite -> {
+
+                startActivity(Intent(this, FavoriteActivity::class.java))
+                return true
+            }
         }
         return super.onOptionsItemSelected(item)
     }

@@ -26,5 +26,7 @@
     <string name="info">Info</string>
     <string name="cast">Cast</string>
     <string name="coming_soon">Coming soon</string>
+    <string name="search">Search</string>
+    <string name="favorite">Favorite</string>
 
 </resources>

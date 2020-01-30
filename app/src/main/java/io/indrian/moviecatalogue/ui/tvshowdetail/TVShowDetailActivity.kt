@@ -95,7 +95,6 @@ class TVShowDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBa
 
     private fun setViewModel() {
 
-
         tvShowDetailVM.genreTVShowState.observe(this, genreTVShowStateObserver)
     }
 

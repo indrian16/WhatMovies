@@ -88,7 +88,7 @@ class TVShowFragment : Fragment(), TVShowAdapter.OnTVShowClickCallBack {
 
     private fun setupVM() {
 
-        tvShowVM.tvShowListState.observe(this, tvShowListStateObserver)
+        activity?.let { tvShowVM.tvShowListState.observe(it, tvShowListStateObserver) }
     }
 
     override fun onClickTVShow(tvShow: TVShow, imgPoster: ImageView) {
