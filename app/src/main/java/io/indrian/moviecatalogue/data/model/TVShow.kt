@@ -19,4 +19,8 @@ data class TVShow(
     @ColumnInfo(name = "overview") val overview: String,
     @ColumnInfo(name = "vote_average") val voteAverage: Double,
     @ColumnInfo(name = "vote_count") val voteCount: Int
-): Parcelable
+): Parcelable, BaseModel() {
+
+    override val year: String
+        get() = getYear(releaseDate).toString()
+}

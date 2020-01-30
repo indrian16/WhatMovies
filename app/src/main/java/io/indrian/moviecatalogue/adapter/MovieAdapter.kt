@@ -48,7 +48,7 @@ class MovieAdapter(private val callback: OnMovieClickCallback): RecyclerView.Ada
                 .into(img_poster)
 
             tv_title.text = movie.title
-            tv_year.text = movie.releaseDate.year.toString()
+            tv_year.text = movie.year
 
         }.setOnClickListener { callback.onMovieClickItem(movie, imgPoster!!) }
     }

@@ -5,8 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import io.indrian.moviecatalogue.R
-import io.indrian.moviecatalogue.adapter.ViewPagerAdapter
 import io.indrian.moviecatalogue.ui.settings.SettingsActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -18,18 +21,20 @@ class MainActivity: AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         setupToolbar()
-        setupViewPager()
+        setNavigationController()
     }
 
-    private fun setupViewPager() {
+    private fun setNavigationController() {
 
-        val viewPagerAdapter = ViewPagerAdapter(
-            this,
-            supportFragmentManager
-        )
+        val mainNavController = findNavController(R.id.main_nav_host)
+        val appBarConfiguration = AppBarConfiguration.Builder(
+            R.id.navigation_movie,
+            R.id.navigation_tv_show,
+            R.id.navigation_discover
+        ).build()
 
-        view_pager.adapter = viewPagerAdapter
-        tab_layout.setupWithViewPager(view_pager)
+        setupActionBarWithNavController(mainNavController, appBarConfiguration)
+        main_bottom_nav.setupWithNavController(mainNavController)
     }
 
     private fun setupToolbar() {
