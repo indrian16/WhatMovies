@@ -80,7 +80,7 @@ class MovieFragment : Fragment(), MovieAdapter.OnMovieClickCallback {
 
     private fun setupVM() {
 
-        movieVM.movieListState.observe(this, movieListStateObserver)
+        activity?.let { movieVM.movieListState.observe(it, movieListStateObserver) }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
