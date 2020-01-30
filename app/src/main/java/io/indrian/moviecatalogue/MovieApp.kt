@@ -5,6 +5,7 @@ import com.github.ajalt.timberkt.Timber
 import com.yariksoffice.lingver.Lingver
 import io.indrian.moviecatalogue.di.*
 import io.indrian.moviecatalogue.utils.Constant
+import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
@@ -32,7 +33,9 @@ class MovieApp : Application() {
         startKoin {
 
             androidLogger(Level.DEBUG)
+            androidContext(applicationContext)
             modules(listOf(
+                dbModule,
                 networkModule,
                 serviceModule,
                 mapperModule,

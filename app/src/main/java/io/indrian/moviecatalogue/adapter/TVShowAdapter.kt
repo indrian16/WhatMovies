@@ -49,7 +49,7 @@ class TVShowAdapter(private val onTVShowClickCallBack: OnTVShowClickCallBack) : 
                     .into(imgPoster)
 
                 tv_name.text = tvShow.name
-                tv_year.text = tvShow.releaseDate[Calendar.YEAR].toString()
+                tv_year.text = tvShow.releaseDate.year.toString()
 
                 this.setOnClickListener { onTVShowClickCallBack.onClickTVShow(tvShow, imgPoster) }
             }

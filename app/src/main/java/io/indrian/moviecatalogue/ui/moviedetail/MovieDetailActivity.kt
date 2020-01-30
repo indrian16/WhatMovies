@@ -69,7 +69,7 @@ class MovieDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBac
                 .load(movie.backdrop)
                 .into(img_backdrop)
 
-            tv_year.text = movie.releaseDate[Calendar.YEAR].toString()
+            tv_year.text = movie.releaseDate.year.toString()
             tv_title.text = movie.title
             tv_vote_average.text = movie.voteAverage.toString()
             rb_vote_average.rating = (movie.voteAverage / 2).toFloat()

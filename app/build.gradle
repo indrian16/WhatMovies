@@ -17,6 +17,7 @@ android {
         versionName "2.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -59,6 +60,13 @@ dependencies {
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.7.1'
     implementation 'com.squareup.retrofit2:converter-moshi:2.7.1'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.3.0'
+
+
+    // Database
+    def room_version = "2.2.3"
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-rxjava2:$room_version"
 
     // Moshi
     implementation 'com.squareup.moshi:moshi-kotlin:1.9.2'

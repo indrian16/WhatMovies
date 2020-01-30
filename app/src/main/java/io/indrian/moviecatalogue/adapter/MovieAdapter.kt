@@ -9,7 +9,6 @@ import io.indrian.moviecatalogue.R
 import io.indrian.moviecatalogue.data.model.Movie
 import io.indrian.moviecatalogue.di.GlideApp
 import kotlinx.android.synthetic.main.movie_item.view.*
-import java.util.*
 
 class MovieAdapter(private val callback: OnMovieClickCallback): RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
 
@@ -49,7 +48,7 @@ class MovieAdapter(private val callback: OnMovieClickCallback): RecyclerView.Ada
                 .into(img_poster)
 
             tv_title.text = movie.title
-            tv_year.text = movie.releaseDate.get(Calendar.YEAR).toString()
+            tv_year.text = movie.releaseDate.year.toString()
 
         }.setOnClickListener { callback.onMovieClickItem(movie, imgPoster!!) }
     }

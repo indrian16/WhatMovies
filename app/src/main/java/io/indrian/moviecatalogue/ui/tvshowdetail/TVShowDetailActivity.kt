@@ -74,7 +74,7 @@ class TVShowDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBa
                 .into(img_poster)
 
             tv_name.text = tvShow.name
-            tv_year.text = tvShow.releaseDate[Calendar.YEAR].toString()
+            tv_year.text = tvShow.releaseDate.year.toString()
             tv_vote_average.text = tvShow.voteAverage.toString()
             rb_vote_average.rating = (tvShow.voteAverage / 2).toFloat()
             tv_vote_count.text = "${tvShow.voteCount} ${getString(R.string.voters)}"

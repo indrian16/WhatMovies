@@ -12,7 +12,7 @@ class TVShowMapper: BaseMapper<TVShowEntity, TVShow>() {
             name = entity.name!!,
             poster = "https://image.tmdb.org/t/p/w342"+(entity.posterPath ?: ""),
             backdrop = "https://image.tmdb.org/t/p/w342"+(entity.backdropPath ?: ""),
-            releaseDate = parseDate(entity.firstAirDate!!),
+            releaseDate = parseDate2(entity.firstAirDate!!),
             overview = safeOverview(entity.overview!!),
             voteAverage = entity.voteAverage!!,
             voteCount = entity.voteCount!!

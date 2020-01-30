@@ -42,6 +42,14 @@ abstract class BaseMapper<E, M> {
         return df.calendar
     }
 
+    protected fun parseDate2(dateStr: String): Date {
+
+        val df = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        df.parse(dateStr)
+
+        return df.calendar.time
+    }
+
     /**
      *
      * Give a message if there is an empty overview

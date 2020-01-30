@@ -1,10 +1,14 @@
 package io.indrian.moviecatalogue.di
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.room.Room
+import io.indrian.moviecatalogue.data.db.AppDatabase
 import io.indrian.moviecatalogue.data.mapper.TVShowDetailMapper
 import io.indrian.moviecatalogue.data.mapper.MovieDetailMapper
 import io.indrian.moviecatalogue.data.mapper.MovieMapper
 import io.indrian.moviecatalogue.data.mapper.TVShowMapper
+import io.indrian.moviecatalogue.data.repositories.LocalRepository
+import io.indrian.moviecatalogue.data.repositories.RemoteRepository
 import io.indrian.moviecatalogue.data.repositories.Repository
 import io.indrian.moviecatalogue.data.service.MovieService
 import io.indrian.moviecatalogue.data.service.TVShowService
@@ -19,11 +23,26 @@ import io.indrian.moviecatalogue.utils.Constant
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
+
+val dbModule = module {
+
+    single {
+
+        Room.databaseBuilder(
+            androidApplication(),
+            AppDatabase::class.java, Constant.DB_NAME
+        ).build()
+    }
+
+    single { get<AppDatabase>().movieDao() }
+    single { get<AppDatabase>().tvShowDao() }
+}
 
 val networkModule = module {
 
@@ -80,9 +99,9 @@ val mapperModule = module {
 
 val repoModule = module {
 
+    single { LocalRepository(get(), get()) }
     single {
-
-        Repository (
+        RemoteRepository(
             get(),
             get(),
             get(),
@@ -90,6 +109,11 @@ val repoModule = module {
             get(),
             get()
         )
+    }
+
+    single {
+
+        Repository (androidApplication(), get(), get())
     }
 }
 
