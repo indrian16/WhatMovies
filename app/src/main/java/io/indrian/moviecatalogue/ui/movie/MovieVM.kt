@@ -11,7 +11,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 class MovieVM(
-    val handle: SavedStateHandle,
     private val repository: Repository
 ) : BaseViewModel() {
 

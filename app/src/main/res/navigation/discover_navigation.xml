@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/discover_navigation"
+    app:startDestination="@id/discoverFragment"
+    tools:ignore="UnusedNavigation">
+
+    <fragment
+        android:id="@+id/discoverFragment"
+        android:name="io.indrian.moviecatalogue.ui.discover.DiscoverFragment"
+        android:label="@string/discover"
+        tools:layout="@layout/fragment_discover" />
+</navigation>

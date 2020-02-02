@@ -26,7 +26,7 @@ class MovieFragment : Fragment(), MovieAdapter.OnMovieClickCallback {
         fun newInstance() = MovieFragment()
     }
 
-    private val movieVM: MovieVM by viewModel { parametersOf(Bundle()) }
+    private val movieVM: MovieVM by viewModel()
     private val mAdapter = MovieAdapter(this)
 
     private val movieListStateObserver = Observer<MoviesListState> { state ->
@@ -61,7 +61,6 @@ class MovieFragment : Fragment(), MovieAdapter.OnMovieClickCallback {
         super.onCreate(savedInstanceState)
 
         setHasOptionsMenu(true)
-        if (savedInstanceState == null) movieVM.getMovies()
     }
 
     override fun onCreateView(
@@ -73,6 +72,8 @@ class MovieFragment : Fragment(), MovieAdapter.OnMovieClickCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if (savedInstanceState == null) movieVM.getMovies()
 
         setupView()
         setupVM()

@@ -2,17 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_movie"
+        android:id="@+id/movie_navigation"
         android:title="@string/movie"
         android:icon="@drawable/icons8_movie"/>
 
     <item
-        android:id="@+id/navigation_tv_show"
+        android:id="@+id/tv_show_navigation"
         android:title="@string/tv_show"
         android:icon="@drawable/icons8_tv"/>
 
     <item
-        android:id="@+id/navigation_discover"
+        android:id="@+id/discover_navigation"
         android:title="@string/discover"
         android:icon="@drawable/icons8_compass"/>
 

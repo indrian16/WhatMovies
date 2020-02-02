@@ -1,9 +1,13 @@
 package io.indrian.moviecatalogue.ui.tvshowdetail
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.github.ajalt.timberkt.d
@@ -13,6 +17,7 @@ import io.indrian.moviecatalogue.adapter.GenreChipAdapter
 import io.indrian.moviecatalogue.adapter.ViewPagerDetailAdapter
 import io.indrian.moviecatalogue.data.model.Genre
 import io.indrian.moviecatalogue.data.model.TVShow
+import io.indrian.moviecatalogue.ui.settings.SettingsActivity
 import io.indrian.moviecatalogue.ui.tvshowcast.TVShowCastFragment
 import io.indrian.moviecatalogue.ui.tvshowinfo.TVShowInfoFragment
 import io.indrian.moviecatalogue.utils.showToast
@@ -100,6 +105,7 @@ class TVShowDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBa
 
     private fun setToolbar(name: String) {
 
+        toolbar_detail.overflowIcon?.setTint(ContextCompat.getColor(baseContext, R.color.colorPrimary))
         setSupportActionBar(toolbar_detail)
         supportActionBar?.let {
 
@@ -141,6 +147,25 @@ class TVShowDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBa
         mAdapter.addPages(pages)
         view_pager_detail.adapter = mAdapter
         tab_layout_detail.setupWithViewPager(view_pager_detail)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
+        menuInflater.inflate(R.menu.menu_detail, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when (item.itemId) {
+
+            R.id.action_setting -> {
+
+                startActivity(Intent(baseContext, SettingsActivity::class.java))
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onSupportNavigateUp(): Boolean {

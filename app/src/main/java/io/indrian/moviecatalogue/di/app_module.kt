@@ -12,6 +12,7 @@ import io.indrian.moviecatalogue.data.repositories.RemoteRepository
 import io.indrian.moviecatalogue.data.repositories.Repository
 import io.indrian.moviecatalogue.data.service.MovieService
 import io.indrian.moviecatalogue.data.service.TVShowService
+import io.indrian.moviecatalogue.ui.main.MainVM
 import io.indrian.moviecatalogue.ui.movie.MovieVM
 import io.indrian.moviecatalogue.ui.moviedetail.MovieDetailVM
 import io.indrian.moviecatalogue.ui.movieinfo.MovieInfoVM
@@ -119,8 +120,9 @@ val repoModule = module {
 
 val appModule = module {
 
-    viewModel { (handle: SavedStateHandle) -> MovieVM(handle, get()) }
-    viewModel { (handle: SavedStateHandle) -> TVShowVM(handle, get()) }
+    viewModel { (handle: SavedStateHandle) -> MainVM(handle) }
+    viewModel { MovieVM(get()) }
+    viewModel { TVShowVM(get()) }
     viewModel { SettingsVM() }
     viewModel { (handle: SavedStateHandle) -> TVShowDetailVM(handle, get()) }
     viewModel { (handle: SavedStateHandle) -> MovieDetailVM(handle, get()) }

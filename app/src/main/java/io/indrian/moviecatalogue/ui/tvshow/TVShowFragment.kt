@@ -26,7 +26,7 @@ class TVShowFragment : Fragment(), TVShowAdapter.OnTVShowClickCallBack {
         fun newInstance() = TVShowFragment()
     }
 
-    private val tvShowVM: TVShowVM by viewModel { parametersOf(Bundle()) }
+    private val tvShowVM: TVShowVM by viewModel()
     private val mAdapter = TVShowAdapter(this)
 
     private val tvShowListStateObserver = Observer<TVShowListState> { state ->
@@ -60,7 +60,6 @@ class TVShowFragment : Fragment(), TVShowAdapter.OnTVShowClickCallBack {
         super.onCreate(savedInstanceState)
 
         setHasOptionsMenu(true)
-        if (savedInstanceState == null) tvShowVM.getTVShows()
     }
 
     override fun onCreateView(
@@ -72,6 +71,8 @@ class TVShowFragment : Fragment(), TVShowAdapter.OnTVShowClickCallBack {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if (savedInstanceState == null) tvShowVM.getTVShows()
 
         setupView()
         setupVM()

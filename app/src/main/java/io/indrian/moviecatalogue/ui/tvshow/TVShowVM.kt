@@ -10,7 +10,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 class TVShowVM(
-    val handle: SavedStateHandle,
     private val repository: Repository
 ) : BaseViewModel() {
 
