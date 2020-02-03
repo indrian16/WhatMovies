@@ -31,18 +31,17 @@ abstract class BaseMapper<E, M> {
 
     /**
      *
+     * From Model to Entity
+     * @param model : M
+     * */
+    abstract fun toEntity(model: M): E
+
+    /**
+     *
      * Parse Date From String
      * @param dateStr : String
      * */
-    protected fun parseDate(dateStr: String): Calendar {
-
-        val df = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        df.parse(dateStr)
-
-        return df.calendar
-    }
-
-    protected fun parseDate2(dateStr: String): Date {
+    protected fun parseDate(dateStr: String): Date {
 
         val df = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         df.parse(dateStr)

@@ -7,7 +7,7 @@ import java.util.*
 @Parcelize
 data class TVShowDetail(
     val backdrop: String,
-    val firstAirDate: Calendar,
+    val firstAirDate: Date,
     val genres: List<Genre>,
     val id: Int,
     val name: String,

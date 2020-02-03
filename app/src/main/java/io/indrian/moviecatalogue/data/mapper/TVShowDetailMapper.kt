@@ -11,20 +11,25 @@ class TVShowDetailMapper: BaseMapper<DetailTVShowEntity, TVShowDetail>() {
         return TVShowDetail(
             backdrop = "https://image.tmdb.org/t/p/w780"+entity.backdropPath,
             posterPath = "https://image.tmdb.org/t/p/w342"+entity.posterPath,
-            firstAirDate = parseDate(entity.firstAirDate!!),
-            genres = entity.genreEntities!!.map {
+            firstAirDate = parseDate(entity.firstAirDate),
+            genres = entity.genreEntities.map {
 
                 Genre(
-                    id = it?.id!!,
-                    name = it.name!!
+                    id = it.id,
+                    name = it.name
                 )
             },
-            id = entity.id!!,
-            name = entity.name!!,
-            overview = safeOverview(entity.overview!!),
+            id = entity.id,
+            name = entity.name,
+            overview = safeOverview(entity.overview),
             popularity = entity.popularity,
             voteAverage = entity.voteAverage,
-            voteCount = entity.voteCount!!
+            voteCount = entity.voteCount
         )
+    }
+
+    override fun toEntity(model: TVShowDetail): DetailTVShowEntity {
+
+        return DetailTVShowEntity()
     }
 }

@@ -16,7 +16,6 @@ import io.indrian.moviecatalogue.ui.tvshowdetail.TVShowDetailActivity
 import io.indrian.moviecatalogue.utils.toVisible
 import kotlinx.android.synthetic.main.fragment_tvshow.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parametersOf
 
 
 class TVShowFragment : Fragment(), TVShowAdapter.OnTVShowClickCallBack {

@@ -11,7 +11,7 @@ data class MovieDetail(
     val id: Int,
     val overview: String,
     val posterPath: String,
-    val releaseDate: Calendar,
+    val releaseDate: Date,
     val title: String,
     val voteAverage: Double,
     val voteCount: Int

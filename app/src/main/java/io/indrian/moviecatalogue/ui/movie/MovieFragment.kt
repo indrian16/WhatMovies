@@ -17,7 +17,6 @@ import io.indrian.moviecatalogue.utils.showToast
 import io.indrian.moviecatalogue.utils.toVisible
 import kotlinx.android.synthetic.main.fragment_movie.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parametersOf
 
 class MovieFragment : Fragment(), MovieAdapter.OnMovieClickCallback {
 
