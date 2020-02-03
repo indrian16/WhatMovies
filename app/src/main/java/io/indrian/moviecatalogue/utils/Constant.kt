@@ -16,6 +16,6 @@ object Constant {
 
     const val TABLE_MOVIE = "movie"
     const val TABLE_TV_SHOW = "tv_show"
-    const val TABLE_MOVIE_FAVORITE = "movie_favorite"
-    const val TABLE_TV_SHOW_FAVORITE = "tv_show_favorite"
+    const val TABLE_MOVIE_FAVORITE = "favorite_movie"
+    const val TABLE_TV_SHOW_FAVORITE = "favorite_tv_show"
 }

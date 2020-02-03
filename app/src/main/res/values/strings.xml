@@ -28,5 +28,8 @@
     <string name="coming_soon">Coming soon</string>
     <string name="search">Search</string>
     <string name="favorite">Favorite</string>
+    <string name="add_favorite">Add Favorite</string>
+    <string name="del_favorite">Delete Favorite</string>
+    <string name="occured_error">Occurred Error</string>
 
 </resources>

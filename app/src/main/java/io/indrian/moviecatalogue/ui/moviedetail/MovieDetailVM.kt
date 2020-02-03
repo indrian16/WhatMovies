@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import com.github.ajalt.timberkt.d
 import com.github.ajalt.timberkt.e
+import io.indrian.moviecatalogue.data.model.Movie
 import io.indrian.moviecatalogue.data.repositories.Repository
 import io.indrian.moviecatalogue.ui.base.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -18,6 +19,10 @@ class MovieDetailVM(
     private val mutMovieGenreState = MutableLiveData<MovieGenreState>()
     val movieGenreState: LiveData<MovieGenreState>
         get() = mutMovieGenreState
+
+    private val mutFavoriteMovieState = MutableLiveData<FavoriteMovieState>()
+    val favoriteMovieState: LiveData<FavoriteMovieState>
+        get() = mutFavoriteMovieState
 
     fun getMovieGenres(id: Int) {
 
@@ -37,6 +42,78 @@ class MovieDetailVM(
                     error.printStackTrace()
                     e { "Error: $error" }
                     mutMovieGenreState.value = MovieGenreState.Error(error.message!!)
+                }
+            )
+
+        compositeDisposable.add(disposable)
+    }
+
+    fun getMoviesIsExist(id: Int) {
+
+        val disposable = repository.getFavoriteMovieIsExit(id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                { exist ->
+
+                    if (exist) {
+
+                        mutFavoriteMovieState.value = FavoriteMovieState.Exist(false)
+                    } else {
+
+                        mutFavoriteMovieState.value = FavoriteMovieState.NotExist(false)
+                    }
+                },
+                { error ->
+
+                    error.printStackTrace()
+                    val errorMessage = error.message.toString()
+                    d { errorMessage }
+                    mutFavoriteMovieState.value = FavoriteMovieState.Error(errorMessage)
+                }
+            )
+
+        compositeDisposable.add(disposable)
+    }
+
+    fun addFavorite(movie: Movie) {
+
+        val disposable = repository.addFavoriteMovie(movie)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    d { "Add id: $it" }
+                    mutFavoriteMovieState.value = FavoriteMovieState.Exist(true)
+                },
+                { error ->
+
+                    error.printStackTrace()
+                    val errorMessage = error.message.toString()
+                    d { errorMessage }
+                    mutFavoriteMovieState.value = FavoriteMovieState.Error(errorMessage)
+                }
+            )
+
+        compositeDisposable.add(disposable)
+    }
+
+    fun delFavorite(movie: Movie) {
+
+        val disposable = repository.deleteFavoriteMovie(movie)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    d { "Delete Status: $it" }
+                    mutFavoriteMovieState.value = FavoriteMovieState.NotExist(true)
+                },
+                { error ->
+
+                    error.printStackTrace()
+                    val errorMessage = error.message.toString()
+                    d { errorMessage }
+                    mutFavoriteMovieState.value = FavoriteMovieState.Error(errorMessage)
                 }
             )
 
