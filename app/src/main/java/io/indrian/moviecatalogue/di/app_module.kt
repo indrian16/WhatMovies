@@ -3,15 +3,14 @@ package io.indrian.moviecatalogue.di
 import androidx.lifecycle.SavedStateHandle
 import androidx.room.Room
 import io.indrian.moviecatalogue.data.db.AppDatabase
-import io.indrian.moviecatalogue.data.mapper.TVShowDetailMapper
-import io.indrian.moviecatalogue.data.mapper.MovieDetailMapper
-import io.indrian.moviecatalogue.data.mapper.MovieMapper
-import io.indrian.moviecatalogue.data.mapper.TVShowMapper
+import io.indrian.moviecatalogue.data.mapper.*
 import io.indrian.moviecatalogue.data.repositories.LocalRepository
 import io.indrian.moviecatalogue.data.repositories.RemoteRepository
 import io.indrian.moviecatalogue.data.repositories.Repository
 import io.indrian.moviecatalogue.data.service.MovieService
 import io.indrian.moviecatalogue.data.service.TVShowService
+import io.indrian.moviecatalogue.ui.favoritemovie.FavoriteMovieVM
+import io.indrian.moviecatalogue.ui.favoritetvshow.FavoriteTVShowVM
 import io.indrian.moviecatalogue.ui.main.MainVM
 import io.indrian.moviecatalogue.ui.movie.MovieVM
 import io.indrian.moviecatalogue.ui.moviedetail.MovieDetailVM
@@ -43,6 +42,7 @@ val dbModule = module {
 
     single { get<AppDatabase>().movieDao() }
     single { get<AppDatabase>().tvShowDao() }
+    single { get<AppDatabase>().favoriteDao() }
 }
 
 val networkModule = module {
@@ -96,11 +96,22 @@ val mapperModule = module {
     single { TVShowMapper() }
     single { TVShowDetailMapper() }
     single { MovieDetailMapper() }
+    single { FavoriteMovieMapper() }
+    single { FavoriteTVShowMapper() }
 }
 
 val repoModule = module {
 
-    single { LocalRepository(get(), get()) }
+    single {
+
+        LocalRepository(
+            get(),
+            get(),
+            get(),
+            get(),
+            get()
+        )
+    }
     single {
         RemoteRepository(
             get(),
@@ -128,4 +139,6 @@ val appModule = module {
     viewModel { (handle: SavedStateHandle) -> MovieDetailVM(handle, get()) }
     viewModel { (handle: SavedStateHandle) -> MovieInfoVM(handle, get()) }
     viewModel { (handle: SavedStateHandle) -> TVShowInfoVM(handle, get()) }
+    viewModel { (handle: SavedStateHandle) -> FavoriteMovieVM(handle, get()) }
+    viewModel { (handle: SavedStateHandle) -> FavoriteTVShowVM(handle, get()) }
 }

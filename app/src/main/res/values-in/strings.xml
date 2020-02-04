@@ -23,12 +23,18 @@
     <string name="restart_app">Muat Ulang Aplikasi</string>
     <string name = "name_movie">Name Film</string>
     <string name = "year">Tahun</string>
-    <string name = "_0_0"> 0,0 </string>
+    <string name = "_0_0">0,0</string>
     <string name = "voters">Pemilih</string>
     <string name = "info">Info</string>
     <string name = "cast">Pemeran</string>
     <string name = "coming_soon">Segera hadir</string>
     <string name = "search">Cari</string>
-    <string name = "favorite">Favorite</string>
+    <string name = "favorite">Favorit</string>
+    <string name = "add_favorite">Menambahkan Favorit</string>
+    <string name = "del_favorite">Menghapus Favorit</string>
+    <string name = "occured_error">Kesalahan Terjadi</string>
+    <string name = "favorite_movie_is_empty">Film favorit kosong</string>
+    <string name = "favorite_tv_show_is_empty">Acara tv favorit kosong</string>
+    <string name = "image_empty_favorite">Favorit Gambar Kosong</string>
 
 </resources>

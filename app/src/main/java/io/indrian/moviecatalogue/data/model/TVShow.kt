@@ -8,7 +8,7 @@ import io.indrian.moviecatalogue.utils.Constant
 import kotlinx.android.parcel.Parcelize
 import java.util.*
 
-@Entity(tableName = Constant.TABLE_TVSHOW)
+@Entity(tableName = Constant.TABLE_TV_SHOW)
 @Parcelize
 data class TVShow(
     @PrimaryKey val id: Int,

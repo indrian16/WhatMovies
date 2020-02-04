@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
@@ -14,6 +13,7 @@ import io.indrian.moviecatalogue.R
 import io.indrian.moviecatalogue.ui.favorite.FavoriteActivity
 import io.indrian.moviecatalogue.ui.settings.SettingsActivity
 import io.indrian.moviecatalogue.utils.setupWithNavController
+import io.indrian.moviecatalogue.utils.showToast
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
 
@@ -26,10 +26,7 @@ class MainActivity: AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         setupToolbar()
-        if (savedInstanceState == null) {
-
-            setupBottomNavigationBar()
-        }
+        if (savedInstanceState == null) setupBottomNavigationBar()
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
@@ -61,14 +58,7 @@ class MainActivity: AppCompatActivity() {
 
     private fun setupToolbar() {
 
-        toolbar.apply {
-
-            this.overflowIcon?.setTint(ContextCompat.getColor(baseContext, R.color.colorWhite))
-
-        }.also {
-
-            setSupportActionBar(it)
-        }
+        setSupportActionBar(toolbar)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -89,6 +79,7 @@ class MainActivity: AppCompatActivity() {
 
             R.id.action_search -> {
 
+                showToast(resources.getString(R.string.coming_soon))
                 return true
             }
 

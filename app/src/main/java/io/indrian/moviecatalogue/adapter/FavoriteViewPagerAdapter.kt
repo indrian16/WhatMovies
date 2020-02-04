@@ -6,10 +6,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import io.indrian.moviecatalogue.R
-import io.indrian.moviecatalogue.ui.movie.MovieFragment
-import io.indrian.moviecatalogue.ui.tvshow.TVShowFragment
+import io.indrian.moviecatalogue.ui.favoritemovie.FavoriteMovieFragment
+import io.indrian.moviecatalogue.ui.favoritetvshow.FavoriteTVShowFragment
 
-class ViewPagerAdapter(private val mContext: Context, fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+class FavoriteViewPagerAdapter(private val mContext: Context, fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     @StringRes
     private val tabTitles = intArrayOf(R.string.movie, R.string.tv_show)
@@ -18,9 +18,9 @@ class ViewPagerAdapter(private val mContext: Context, fm: FragmentManager) : Fra
 
         return when (position) {
 
-            0 -> MovieFragment.newInstance()
-            1 -> TVShowFragment.newInstance()
-            else -> MovieFragment.newInstance()
+            0 -> FavoriteMovieFragment()
+            1 -> FavoriteTVShowFragment()
+            else -> FavoriteMovieFragment()
         }
     }
 

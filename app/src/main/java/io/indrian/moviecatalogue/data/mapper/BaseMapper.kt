@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 /**
- *
+ * @author INDRIAN (rg16)
  * @param E is a Entity Data from json Service
  * @param M is a Model Object Model
  * */
@@ -31,18 +31,17 @@ abstract class BaseMapper<E, M> {
 
     /**
      *
+     * From Model to Entity
+     * @param model : M
+     * */
+    abstract fun toEntity(model: M): E
+
+    /**
+     *
      * Parse Date From String
      * @param dateStr : String
      * */
-    protected fun parseDate(dateStr: String): Calendar {
-
-        val df = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        df.parse(dateStr)
-
-        return df.calendar
-    }
-
-    protected fun parseDate2(dateStr: String): Date {
+    protected fun parseDate(dateStr: String): Date {
 
         val df = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         df.parse(dateStr)

@@ -9,21 +9,26 @@ class MovieDetailMapper : BaseMapper<MovieDetailEntity, MovieDetail>() {
     override fun toModel(entity: MovieDetailEntity): MovieDetail {
 
         return MovieDetail(
-            id = entity.id!!,
+            id = entity.id,
             backdropPath = backdropUrl+entity.backdropPath,
-            overview = safeOverview(entity.overview!!),
-            genres = entity.genres!!.map {
+            overview = safeOverview(entity.overview),
+            genres = entity.genres.map {
 
                 Genre(
-                    id = it?.id!!,
-                    name = it.name!!
+                    id = it.id,
+                    name = it.name
                 )
             },
             posterPath = posterUrl+entity.posterPath,
-            releaseDate = parseDate(entity.releaseDate!!),
-            title = entity.title!!,
-            voteCount = entity.voteCount!!,
-            voteAverage = entity.voteAverage!!
+            releaseDate = parseDate(entity.releaseDate),
+            title = entity.title,
+            voteCount = entity.voteCount,
+            voteAverage = entity.voteAverage
         )
+    }
+
+    override fun toEntity(model: MovieDetail): MovieDetailEntity {
+
+        return MovieDetailEntity()
     }
 }

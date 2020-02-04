@@ -15,5 +15,7 @@ object Constant {
     const val DB_NAME = "movie.db"
 
     const val TABLE_MOVIE = "movie"
-    const val TABLE_TVSHOW = "tv_show"
+    const val TABLE_TV_SHOW = "tv_show"
+    const val TABLE_MOVIE_FAVORITE = "favorite_movie"
+    const val TABLE_TV_SHOW_FAVORITE = "favorite_tv_show"
 }

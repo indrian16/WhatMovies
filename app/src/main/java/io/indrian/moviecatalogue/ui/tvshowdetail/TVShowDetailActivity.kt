@@ -2,6 +2,7 @@ package io.indrian.moviecatalogue.ui.tvshowdetail
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.Menu
@@ -21,22 +22,24 @@ import io.indrian.moviecatalogue.ui.settings.SettingsActivity
 import io.indrian.moviecatalogue.ui.tvshowcast.TVShowCastFragment
 import io.indrian.moviecatalogue.ui.tvshowinfo.TVShowInfoFragment
 import io.indrian.moviecatalogue.utils.showToast
-import io.indrian.moviecatalogue.utils.toVisible
+import io.indrian.moviecatalogue.utils.visibility
 import kotlinx.android.synthetic.main.activity_tvshow_detail.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
-import java.util.*
 
 class TVShowDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBack {
 
     companion object {
 
         const val EXTRA_TV_SHOW = "extra_tv_show"
+        const val RESULT_CODE = 110
     }
 
-    private val mAdapter = GenreChipAdapter(this)
-
     private val tvShowDetailVM: TVShowDetailVM by viewModel { parametersOf(Bundle()) }
+    private val mAdapter = GenreChipAdapter(this)
+    private lateinit var currentTVShow: TVShow
+    private lateinit var favoriteIcon: Drawable
+
     private val genreTVShowStateObserver = Observer<GenreTVShowState> { state ->
 
         when (state) {
@@ -63,12 +66,53 @@ class TVShowDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBa
         }
     }
 
+    private val favoriteTVShowStateObserver = Observer<FavoriteTVShowState> { state ->
+
+        when (state) {
+
+            is FavoriteTVShowState.Exist -> {
+
+                if (state.action) {
+
+                    showToast(resources.getString(R.string.add_favorite))
+                } else {
+
+                    d { "FavoriteTVShowState.Exist" }
+                }
+
+                favoriteIcon = ContextCompat.getDrawable(baseContext, R.drawable.ic_heart)!!
+            }
+            is FavoriteTVShowState.NotExist -> {
+
+                if (state.action) {
+
+                    showToast(resources.getString(R.string.del_favorite))
+                } else {
+
+                    d { "FavoriteTVShowState.NotExist" }
+                }
+
+                favoriteIcon = ContextCompat.getDrawable(baseContext, R.drawable.ic_heart_empty)!!
+            }
+            is FavoriteTVShowState.Error -> {
+
+                d { "FavoriteTVShowState.Error" }
+                showToast(resources.getString(R.string.occured_error))
+                favoriteIcon = ContextCompat.getDrawable(baseContext, R.drawable.ic_heart_empty)!!
+            }
+        }
+
+        invalidateOptionsMenu()
+    }
+
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tvshow_detail)
 
         intent.getParcelableExtra<TVShow>(EXTRA_TV_SHOW)?.let { tvShow ->
+
+            currentTVShow = tvShow
 
             Glide.with(this)
                 .load(tvShow.backdrop)
@@ -87,7 +131,11 @@ class TVShowDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBa
             setToolbar(tvShow.name)
             setViewPager(tvShow.id)
 
-            if (savedInstanceState == null) tvShowDetailVM.getDetailTVShow(tvShow.id)
+            if (savedInstanceState == null) {
+
+                tvShowDetailVM.getDetailTVShow(tvShow.id)
+                tvShowDetailVM.getTVShowIsExist(tvShow.id)
+            }
         }
         setViewModel()
         setRv()
@@ -101,6 +149,7 @@ class TVShowDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBa
     private fun setViewModel() {
 
         tvShowDetailVM.genreTVShowState.observe(this, genreTVShowStateObserver)
+        tvShowDetailVM.favoriteTVShowState.observe(this, favoriteTVShowStateObserver)
     }
 
     private fun setToolbar(name: String) {
@@ -149,6 +198,12 @@ class TVShowDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBa
         tab_layout_detail.setupWithViewPager(view_pager_detail)
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+
+        menu?.findItem(R.id.action_favorite)?.icon = favoriteIcon
+        return super.onPrepareOptionsMenu(menu)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 
         menuInflater.inflate(R.menu.menu_detail, menu)
@@ -163,6 +218,17 @@ class TVShowDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBa
 
                 startActivity(Intent(baseContext, SettingsActivity::class.java))
             }
+
+            R.id.action_favorite -> {
+
+                if (tvShowDetailVM.favoriteTVShowState.value is FavoriteTVShowState.NotExist) {
+
+                    tvShowDetailVM.addFavorite(currentTVShow)
+                } else {
+
+                    tvShowDetailVM.delFavorite(currentTVShow)
+                }
+            }
         }
 
         return super.onOptionsItemSelected(item)
@@ -170,6 +236,7 @@ class TVShowDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBa
 
     override fun onSupportNavigateUp(): Boolean {
 
+        setResult(RESULT_CODE)
         finish()
         return true
     }
@@ -178,7 +245,7 @@ class TVShowDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBa
 
         if (keyCode == KeyEvent.KEYCODE_BACK) {
 
-            finish()
+            onSupportNavigateUp()
         }
         return super.onKeyDown(keyCode, event)
     }
@@ -186,28 +253,29 @@ class TVShowDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBa
     override fun onDestroy() {
 
         tvShowDetailVM.genreTVShowState.removeObserver(genreTVShowStateObserver)
+        tvShowDetailVM.favoriteTVShowState.removeObserver(favoriteTVShowStateObserver)
         super.onDestroy()
     }
 
     private fun startShimmer() {
 
         shimmer_genre.startShimmer()
-        shimmer_genre.toVisible()
+        shimmer_genre.visibility()
 
-        rv_genre.toVisible(false)
+        rv_genre.visibility(false)
     }
 
     private fun stopShimmer() {
 
         shimmer_genre.stopShimmer()
-        shimmer_genre.toVisible(false)
+        shimmer_genre.visibility(false)
     }
 
     private fun genreIsLoaded(genres: List<Genre> = arrayListOf()) {
 
         if (genres.isNotEmpty()) {
 
-            rv_genre.toVisible()
+            rv_genre.visibility()
             mAdapter.addNewItem(genres)
         }
     }

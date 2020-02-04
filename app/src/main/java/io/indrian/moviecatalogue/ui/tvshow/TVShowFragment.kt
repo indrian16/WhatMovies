@@ -13,10 +13,9 @@ import io.indrian.moviecatalogue.R
 import io.indrian.moviecatalogue.adapter.TVShowAdapter
 import io.indrian.moviecatalogue.data.model.TVShow
 import io.indrian.moviecatalogue.ui.tvshowdetail.TVShowDetailActivity
-import io.indrian.moviecatalogue.utils.toVisible
+import io.indrian.moviecatalogue.utils.visibility
 import kotlinx.android.synthetic.main.fragment_tvshow.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parametersOf
 
 
 class TVShowFragment : Fragment(), TVShowAdapter.OnTVShowClickCallBack {
@@ -72,10 +71,16 @@ class TVShowFragment : Fragment(), TVShowAdapter.OnTVShowClickCallBack {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (savedInstanceState == null) tvShowVM.getTVShows()
-
         setupView()
         setupVM()
+
+        if (savedInstanceState == null ||
+            tvShowVM.tvShowListState.value !is TVShowListState.Loaded
+        ) {
+
+            tvShowVM.getTVShows()
+        }
+
     }
 
     private fun setupView() {
@@ -129,24 +134,24 @@ class TVShowFragment : Fragment(), TVShowAdapter.OnTVShowClickCallBack {
     private fun startShimmer() {
 
         shimmer_tv_show_container.startShimmer()
-        shimmer_tv_show_container.toVisible(visible = true)
+        shimmer_tv_show_container.visibility(visible = true)
     }
 
     private fun stopShimmer() {
 
         shimmer_tv_show_container.stopShimmer()
-        shimmer_tv_show_container.toVisible(visible = false)
+        shimmer_tv_show_container.visibility(visible = false)
     }
 
     private fun isTVShowLoaded(movies: List<TVShow> = arrayListOf()) {
 
         if (movies.isNotEmpty()) {
 
-            rv_tv_show.toVisible(visible = true)
+            rv_tv_show.visibility(visible = true)
             mAdapter.updateItem(movies)
         } else {
 
-            rv_tv_show.toVisible(visible = false)
+            rv_tv_show.visibility(visible = false)
         }
     }
 }

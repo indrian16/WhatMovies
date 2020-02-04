@@ -8,15 +8,19 @@ class TVShowMapper: BaseMapper<TVShowEntity, TVShow>() {
     override fun toModel(entity: TVShowEntity): TVShow {
 
         return TVShow(
-            id = entity.id!!,
-            name = entity.name!!,
-            poster = "https://image.tmdb.org/t/p/w342"+(entity.posterPath ?: ""),
-            backdrop = "https://image.tmdb.org/t/p/w342"+(entity.backdropPath ?: ""),
-            releaseDate = parseDate2(entity.firstAirDate!!),
-            overview = safeOverview(entity.overview!!),
-            voteAverage = entity.voteAverage!!,
-            voteCount = entity.voteCount!!
+            id = entity.id,
+            name = entity.name,
+            poster = "https://image.tmdb.org/t/p/w342"+ entity.posterPath,
+            backdrop = "https://image.tmdb.org/t/p/w342"+ entity.backdropPath,
+            releaseDate = parseDate(entity.firstAirDate),
+            overview = safeOverview(entity.overview),
+            voteAverage = entity.voteAverage,
+            voteCount = entity.voteCount
         )
     }
 
+    override fun toEntity(model: TVShow): TVShowEntity {
+
+        return TVShowEntity()
+    }
 }

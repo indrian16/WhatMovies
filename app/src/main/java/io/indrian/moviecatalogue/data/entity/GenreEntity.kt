@@ -7,7 +7,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class GenreEntity(
     @Json(name = "id")
-    var id: Int?,
+    var id: Int = 0,
     @Json(name = "name")
-    var name: String?
+    var name: String = ""
 )

@@ -10,7 +10,7 @@ import com.github.ajalt.timberkt.d
 import io.indrian.moviecatalogue.R
 import io.indrian.moviecatalogue.data.model.MovieDetail
 import io.indrian.moviecatalogue.utils.showToast
-import io.indrian.moviecatalogue.utils.toVisible
+import io.indrian.moviecatalogue.utils.visibility
 import kotlinx.android.synthetic.main.fragment_movie_info.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -75,12 +75,12 @@ class MovieInfoFragment : Fragment() {
 
     private fun startLoading() {
 
-        shimmer_overview.toVisible()
+        shimmer_overview.visibility()
     }
 
     private fun stopLoading() {
 
-        shimmer_overview.toVisible(false)
+        shimmer_overview.visibility(false)
     }
 
     private fun loadedMovieDetail(movieDetail: MovieDetail) {
