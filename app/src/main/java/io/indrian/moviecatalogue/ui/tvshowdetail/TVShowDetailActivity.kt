@@ -22,7 +22,7 @@ import io.indrian.moviecatalogue.ui.settings.SettingsActivity
 import io.indrian.moviecatalogue.ui.tvshowcast.TVShowCastFragment
 import io.indrian.moviecatalogue.ui.tvshowinfo.TVShowInfoFragment
 import io.indrian.moviecatalogue.utils.showToast
-import io.indrian.moviecatalogue.utils.toVisible
+import io.indrian.moviecatalogue.utils.visibility
 import kotlinx.android.synthetic.main.activity_tvshow_detail.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -260,22 +260,22 @@ class TVShowDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBa
     private fun startShimmer() {
 
         shimmer_genre.startShimmer()
-        shimmer_genre.toVisible()
+        shimmer_genre.visibility()
 
-        rv_genre.toVisible(false)
+        rv_genre.visibility(false)
     }
 
     private fun stopShimmer() {
 
         shimmer_genre.stopShimmer()
-        shimmer_genre.toVisible(false)
+        shimmer_genre.visibility(false)
     }
 
     private fun genreIsLoaded(genres: List<Genre> = arrayListOf()) {
 
         if (genres.isNotEmpty()) {
 
-            rv_genre.toVisible()
+            rv_genre.visibility()
             mAdapter.addNewItem(genres)
         }
     }

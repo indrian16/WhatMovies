@@ -22,7 +22,7 @@ import io.indrian.moviecatalogue.ui.moviecast.MovieCastFragment
 import io.indrian.moviecatalogue.ui.movieinfo.MovieInfoFragment
 import io.indrian.moviecatalogue.ui.settings.SettingsActivity
 import io.indrian.moviecatalogue.utils.showToast
-import io.indrian.moviecatalogue.utils.toVisible
+import io.indrian.moviecatalogue.utils.visibility
 import kotlinx.android.synthetic.main.activity_detail_movie.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -257,20 +257,20 @@ class MovieDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBac
     private fun startShimmer() {
 
         shimmer_genre.startShimmer()
-        shimmer_genre.toVisible()
+        shimmer_genre.visibility()
     }
 
     private fun stopShimmer() {
 
         shimmer_genre.startShimmer()
-        shimmer_genre.toVisible(false)
+        shimmer_genre.visibility(false)
     }
 
     private fun genreMovieIsLoaded(genres: List<Genre> = arrayListOf()) {
 
         if (genres.isNotEmpty()) {
 
-            rv_genre.toVisible()
+            rv_genre.visibility()
             mAdapter.addNewItem(genres)
         }
     }
