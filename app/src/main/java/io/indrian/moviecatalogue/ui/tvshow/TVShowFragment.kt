@@ -71,10 +71,16 @@ class TVShowFragment : Fragment(), TVShowAdapter.OnTVShowClickCallBack {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (savedInstanceState == null) tvShowVM.getTVShows()
-
         setupView()
         setupVM()
+
+        if (savedInstanceState == null ||
+            tvShowVM.tvShowListState.value !is TVShowListState.Loaded
+        ) {
+
+            tvShowVM.getTVShows()
+        }
+
     }
 
     private fun setupView() {

@@ -7,7 +7,6 @@ import io.indrian.moviecatalogue.data.model.MovieDetail
 import io.indrian.moviecatalogue.data.model.TVShow
 import io.indrian.moviecatalogue.data.model.TVShowDetail
 import io.indrian.moviecatalogue.utils.isNetworkConnected
-import io.reactivex.Completable
 import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -64,6 +63,9 @@ class Repository(
      * Provide to Detail TV Show ViewModel
      * */
     fun getTVShowDetail(id: Int, language: String): Observable<TVShowDetail> = remoteRepository.getTVShowDetail(id, language)
+    fun getFavoriteTVShowIsExit(id: Int): Observable<Boolean> = localRepository.getFavoriteTVShowIsExist(id)
+    fun addFavoriteTVShow(tvShow: TVShow): Maybe<Long> = localRepository.addFavoriteTVShow(tvShow)
+    fun deleteFavoriteTVShow(tvShow: TVShow): Single<Int> = localRepository.deleteFavoriteTVShow(tvShow)
 
     /**
      *
@@ -75,5 +77,16 @@ class Repository(
     fun deleteFavoriteMovie(movie: Movie): Single<Int> = localRepository.deleteFavoriteMovie(movie)
 
 
-    fun getFavoriteMovies(): Observable<List<Movie>> = localRepository.getFavoritesMovies()
+    /**
+     *
+     * Provide to Favorite Movie ViewModel
+     * */
+    fun getFavoriteMovies(): Observable<List<Movie>> = localRepository.getFavoriteMovies()
+
+    /**
+     *
+     * Provide to Favorite TV Show ViewModel
+     * */
+    fun getFavoriteTVShow(): Observable<List<TVShow>> = localRepository.getFavoriteTVShow()
+
 }

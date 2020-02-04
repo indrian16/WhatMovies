@@ -31,5 +31,8 @@
     <string name="add_favorite">Add Favorite</string>
     <string name="del_favorite">Delete Favorite</string>
     <string name="occured_error">Occurred Error</string>
+    <string name="favorite_movie_is_empty">Favorite movie is empty</string>
+    <string name="favorite_tv_show_is_empty">Favorite tv show is empty</string>
+    <string name="image_empty_favorite">Image Empty Favorite</string>
 
 </resources>

@@ -9,6 +9,8 @@ import io.indrian.moviecatalogue.data.repositories.RemoteRepository
 import io.indrian.moviecatalogue.data.repositories.Repository
 import io.indrian.moviecatalogue.data.service.MovieService
 import io.indrian.moviecatalogue.data.service.TVShowService
+import io.indrian.moviecatalogue.ui.favoritemovie.FavoriteMovieVM
+import io.indrian.moviecatalogue.ui.favoritetvshow.FavoriteTVShowVM
 import io.indrian.moviecatalogue.ui.main.MainVM
 import io.indrian.moviecatalogue.ui.movie.MovieVM
 import io.indrian.moviecatalogue.ui.moviedetail.MovieDetailVM
@@ -95,11 +97,21 @@ val mapperModule = module {
     single { TVShowDetailMapper() }
     single { MovieDetailMapper() }
     single { FavoriteMovieMapper() }
+    single { FavoriteTVShowMapper() }
 }
 
 val repoModule = module {
 
-    single { LocalRepository(get(), get(), get(), get()) }
+    single {
+
+        LocalRepository(
+            get(),
+            get(),
+            get(),
+            get(),
+            get()
+        )
+    }
     single {
         RemoteRepository(
             get(),
@@ -127,4 +139,6 @@ val appModule = module {
     viewModel { (handle: SavedStateHandle) -> MovieDetailVM(handle, get()) }
     viewModel { (handle: SavedStateHandle) -> MovieInfoVM(handle, get()) }
     viewModel { (handle: SavedStateHandle) -> TVShowInfoVM(handle, get()) }
+    viewModel { (handle: SavedStateHandle) -> FavoriteMovieVM(handle, get()) }
+    viewModel { (handle: SavedStateHandle) -> FavoriteTVShowVM(handle, get()) }
 }

@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 /**
- *
+ * @author INDRIAN (rg16)
  * @param E is a Entity Data from json Service
  * @param M is a Model Object Model
  * */

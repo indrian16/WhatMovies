@@ -37,6 +37,7 @@ class MovieDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBac
     companion object {
 
         const val EXTRA_MOVIE = "extra_movie"
+        const val RESULT_CODE = 110
     }
 
     private val movieGenreStateObserver = Observer<MovieGenreState> { state ->
@@ -108,10 +109,7 @@ class MovieDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBac
 
         intent.getParcelableExtra<Movie>(EXTRA_MOVIE)?.let { movie ->
 
-            movie.also {
-
-                currentMovie = it
-            }
+            currentMovie = movie
 
             Glide.with(this)
                 .load(movie.poster)
@@ -199,7 +197,7 @@ class MovieDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBac
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
 
-        menu!!.findItem(R.id.action_favorite).icon = favoriteIcon
+        menu?.findItem(R.id.action_favorite)?.icon = favoriteIcon
         return super.onPrepareOptionsMenu(menu)
     }
 
@@ -235,6 +233,7 @@ class MovieDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBac
 
     override fun onSupportNavigateUp(): Boolean {
 
+        setResult(RESULT_CODE)
         finish()
         return true
     }
@@ -243,7 +242,7 @@ class MovieDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBac
 
         if (keyCode == KeyEvent.KEYCODE_BACK) {
 
-            finish()
+            onSupportNavigateUp()
         }
         return super.onKeyDown(keyCode, event)
     }

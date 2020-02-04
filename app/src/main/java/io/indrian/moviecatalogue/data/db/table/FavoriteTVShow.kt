@@ -9,7 +9,7 @@ import java.util.*
 @Entity(tableName = Constant.TABLE_TV_SHOW_FAVORITE)
 data class FavoriteTVShow(
     @PrimaryKey val id: Int,
-    @ColumnInfo(name = "title") val title: String,
+    @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "poster")val poster: String,
     @ColumnInfo(name = "backdrop")val backdrop: String,
     @ColumnInfo(name = "release_date") val releaseDate: Date,
