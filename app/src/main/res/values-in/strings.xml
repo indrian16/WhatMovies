@@ -3,7 +3,6 @@
 
     <string name = "app_name"> Katalog Film </string>
 
-    <string name = "hello_blank_fragment">Halo blank fragment</string>
     <string name = "tv_year">2019</string>
     <string name = "title_movie">Judul Film</string>
     <string name = "poster_image">Gambar Poster</string>
@@ -11,7 +10,6 @@
     <string name = "tn_poster">tn_poster</string>
     <string name = "image_backdrop">Latar Belakang Gambar</string>
     <string name = "overview">Ikhtisar</string>
-    <string name = "the_overview_movie">Film Tinjauan Umum</string>
 
     <string name = "movie">Film</string>
     <string name = "tv_show">Acara TV</string>
