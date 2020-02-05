@@ -24,6 +24,7 @@ import io.indrian.moviecatalogue.ui.tvshowinfo.TVShowInfoFragment
 import io.indrian.moviecatalogue.utils.showToast
 import io.indrian.moviecatalogue.utils.visibility
 import kotlinx.android.synthetic.main.activity_tvshow_detail.*
+import kotlinx.android.synthetic.main.genre_shimmer.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 

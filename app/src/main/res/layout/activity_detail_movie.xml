@@ -125,7 +125,7 @@
                     android:id="@+id/rv_genre"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginBottom="8dp"
                     android:orientation="horizontal"
                     android:visibility="visible"
@@ -133,35 +133,19 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/card_poster"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_vote_count"
                     tools:listitem="@layout/genre_item" />
 
-                <com.facebook.shimmer.ShimmerFrameLayout
-                    android:id="@+id/shimmer_genre"
+                <include
+                    layout="@layout/genre_shimmer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginBottom="8dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/card_poster">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <include layout="@layout/genre_placeholder_item" />
-
-                        <include layout="@layout/genre_placeholder_item" />
-
-                        <include layout="@layout/genre_placeholder_item" />
-
-                    </LinearLayout>
-
-                </com.facebook.shimmer.ShimmerFrameLayout>
+                    app:layout_constraintTop_toBottomOf="@+id/tv_vote_count" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
