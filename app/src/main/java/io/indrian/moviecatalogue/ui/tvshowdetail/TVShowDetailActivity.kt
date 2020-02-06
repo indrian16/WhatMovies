@@ -129,7 +129,7 @@ class TVShowDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBa
             tv_name.text = tvShow.name
             tv_year.text = tvShow.year
             tv_vote_average.text = tvShow.voteAverage.toString()
-            rb_vote_average.rating = (tvShow.voteAverage / 2).toFloat()
+            rb_vote_average.rating = tvShow.fiveStart
             tv_vote_count.text = "${tvShow.voteCount} ${getString(R.string.voters)}"
 
             setToolbar(tvShow.name)

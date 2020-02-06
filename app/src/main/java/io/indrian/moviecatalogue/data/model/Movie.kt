@@ -23,4 +23,7 @@ data class Movie(
 
     override val year: String
         get() = getYear(releaseDate).toString()
+
+    override val fiveStart: Float
+        get() = calculateFiveStart(voteAverage)
 }

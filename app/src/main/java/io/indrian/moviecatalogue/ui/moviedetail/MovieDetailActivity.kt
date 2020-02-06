@@ -125,7 +125,7 @@ class MovieDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBac
             tv_year.text = movie.year
             tv_title.text = movie.title
             tv_vote_average.text = movie.voteAverage.toString()
-            rb_vote_average.rating = (movie.voteAverage / 2).toFloat()
+            rb_vote_average.rating = movie.fiveStart
             tv_vote_count.text = "${movie.voteCount} ${getString(R.string.voters)}"
 
             setToolbar(movie.title)
