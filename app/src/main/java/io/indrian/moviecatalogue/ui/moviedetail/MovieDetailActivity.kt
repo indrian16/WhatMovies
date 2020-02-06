@@ -108,6 +108,9 @@ class MovieDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBac
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_movie)
 
+        setRv()
+        setViewModel()
+
         intent.getParcelableExtra<Movie>(EXTRA_MOVIE)?.let { movie ->
 
             currentMovie = movie
@@ -134,10 +137,8 @@ class MovieDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBac
                 movieDetailVM.getMoviesIsExist(movie.id)
             }
         }
-
-        setViewModel()
-        setRv()
     }
+
 
     private fun setRv() {
 

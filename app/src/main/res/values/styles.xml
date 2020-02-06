@@ -25,7 +25,7 @@
 
     <style name="ToolbarDetail" parent="Widget.MaterialComponents.Toolbar">
 
-        <item name="android:fontFamily">@font/rubik_bold</item>
+        <item name="android:fontFamily">@font/rubik_regular</item>
         <item name="titleTextColor">@color/colorPrimaryText</item>
 
     </style>

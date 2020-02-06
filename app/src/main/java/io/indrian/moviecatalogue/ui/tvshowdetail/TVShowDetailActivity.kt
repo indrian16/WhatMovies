@@ -111,6 +111,9 @@ class TVShowDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBa
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tvshow_detail)
 
+        setRv()
+        setViewModel()
+
         intent.getParcelableExtra<TVShow>(EXTRA_TV_SHOW)?.let { tvShow ->
 
             currentTVShow = tvShow
@@ -138,8 +141,6 @@ class TVShowDetailActivity : AppCompatActivity(), GenreChipAdapter.OnGenreCallBa
                 tvShowDetailVM.getTVShowIsExist(tvShow.id)
             }
         }
-        setViewModel()
-        setRv()
     }
 
     private fun setRv() {

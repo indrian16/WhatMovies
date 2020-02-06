@@ -24,6 +24,11 @@ class MovieDetailVM(
     val favoriteMovieState: LiveData<FavoriteMovieState>
         get() = mutFavoriteMovieState
 
+    init {
+
+        mutFavoriteMovieState.value = FavoriteMovieState.NotExist(false)
+    }
+
     fun getMovieGenres(id: Int) {
 
         val disposable = repository.getMovieDetail(id, getLanguage())

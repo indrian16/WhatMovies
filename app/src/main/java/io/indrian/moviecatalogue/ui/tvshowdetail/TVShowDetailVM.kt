@@ -24,6 +24,11 @@ class TVShowDetailVM(
     val favoriteTVShowState: LiveData<FavoriteTVShowState>
         get() = mutFavoriteTVShowState
 
+    init {
+
+        mutFavoriteTVShowState.value = FavoriteTVShowState.NotExist(false)
+    }
+
     fun getDetailTVShow(id: Int) {
 
         val disposable = repository.getTVShowDetail(
