@@ -19,7 +19,18 @@ android {
     }
 
     buildTypes {
+
+        debug {
+
+            buildConfigField "String", "BASE_URL", BASE_URL
+            buildConfigField "String", "API_KEY", API_KEY
+        }
+
         release {
+
+            buildConfigField "String", "BASE_URL", BASE_URL
+            buildConfigField "String", "API_KEY", API_KEY
+
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -78,7 +89,7 @@ dependencies {
     implementation 'org.koin:koin-androidx-viewmodel:2.1.0-alpha-3'
 
     // ViewModel
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-savedstate:1.0.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-savedstate:2.2.0'
 
     // RxJava2
     implementation 'io.reactivex.rxjava2:rxjava:2.2.16'
@@ -98,8 +109,8 @@ dependencies {
     implementation "com.github.YarikSOffice:lingver:1.2.1"
 
     // Navigation
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.2.0'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.2.0'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.2.1'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.2.1'
 
     // Testing
     testImplementation 'junit:junit:4.12'
