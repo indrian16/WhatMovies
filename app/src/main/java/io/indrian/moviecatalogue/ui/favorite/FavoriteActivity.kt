@@ -7,6 +7,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import io.indrian.moviecatalogue.R
 import io.indrian.moviecatalogue.adapter.FavoriteViewPagerAdapter
+import io.indrian.moviecatalogue.ui.search.SearchActivity
 import io.indrian.moviecatalogue.ui.settings.SettingsActivity
 import io.indrian.moviecatalogue.utils.showToast
 import kotlinx.android.synthetic.main.activity_favorite.*
@@ -64,7 +65,7 @@ class FavoriteActivity : AppCompatActivity() {
 
             R.id.action_search -> {
 
-                showToast(resources.getString(R.string.coming_soon))
+                startActivity(Intent(this, SearchActivity::class.java))
                 return true
             }
         }

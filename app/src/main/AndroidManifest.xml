@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".ui.favorite.FavoriteActivity"></activity>
+        <activity android:name=".ui.search.SearchActivity"></activity>
+        <activity android:name=".ui.favorite.FavoriteActivity" />
         <activity android:name=".ui.settings.SettingsActivity" />
         <activity android:name=".ui.tvshowdetail.TVShowDetailActivity" />
         <activity android:name=".ui.moviedetail.MovieDetailActivity" />

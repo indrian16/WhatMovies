@@ -11,6 +11,7 @@ import androidx.navigation.NavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import io.indrian.moviecatalogue.R
 import io.indrian.moviecatalogue.ui.favorite.FavoriteActivity
+import io.indrian.moviecatalogue.ui.search.SearchActivity
 import io.indrian.moviecatalogue.ui.settings.SettingsActivity
 import io.indrian.moviecatalogue.utils.setupWithNavController
 import io.indrian.moviecatalogue.utils.showToast
@@ -79,7 +80,7 @@ class MainActivity: AppCompatActivity() {
 
             R.id.action_search -> {
 
-                showToast(resources.getString(R.string.coming_soon))
+                startActivity(Intent(this, SearchActivity::class.java))
                 return true
             }
 
