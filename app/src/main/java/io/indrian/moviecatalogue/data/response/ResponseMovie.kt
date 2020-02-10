@@ -9,7 +9,7 @@ data class ResponseMovie(
     @Json(name = "page")
     var page: Int?,
     @Json(name = "results")
-    var results: List<MovieEntity?>?,
+    var results: List<MovieEntity> = arrayListOf(),
     @Json(name = "total_pages")
     var totalPages: Int?,
     @Json(name = "total_results")

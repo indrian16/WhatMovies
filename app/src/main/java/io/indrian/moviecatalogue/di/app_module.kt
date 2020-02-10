@@ -8,6 +8,7 @@ import io.indrian.moviecatalogue.data.repositories.LocalRepository
 import io.indrian.moviecatalogue.data.repositories.RemoteRepository
 import io.indrian.moviecatalogue.data.repositories.Repository
 import io.indrian.moviecatalogue.data.service.MovieService
+import io.indrian.moviecatalogue.data.service.SearchService
 import io.indrian.moviecatalogue.data.service.TVShowService
 import io.indrian.moviecatalogue.ui.favoritemovie.FavoriteMovieVM
 import io.indrian.moviecatalogue.ui.favoritetvshow.FavoriteTVShowVM
@@ -87,6 +88,7 @@ val serviceModule = module {
 
     single { get<Retrofit>().create(MovieService::class.java) }
     single { get<Retrofit>().create(TVShowService::class.java) }
+    single { get<Retrofit>().create(SearchService::class.java) }
 }
 
 val mapperModule = module {
@@ -113,6 +115,7 @@ val repoModule = module {
     }
     single {
         RemoteRepository(
+            get(),
             get(),
             get(),
             get(),

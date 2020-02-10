@@ -9,12 +9,14 @@ import io.indrian.moviecatalogue.data.model.MovieDetail
 import io.indrian.moviecatalogue.data.model.TVShow
 import io.indrian.moviecatalogue.data.model.TVShowDetail
 import io.indrian.moviecatalogue.data.service.MovieService
+import io.indrian.moviecatalogue.data.service.SearchService
 import io.indrian.moviecatalogue.data.service.TVShowService
 import io.reactivex.Observable
 
 class RemoteRepository(
     private val movieService: MovieService,
     private val tvShowService: TVShowService,
+    private val searchService: SearchService,
     private val movieMapper: MovieMapper,
     private val tvShowMapper: TVShowMapper,
     private val tvShowDetailMapper: TVShowDetailMapper,
@@ -24,7 +26,7 @@ class RemoteRepository(
     fun getMovies(language: String): Observable<List<Movie>> =
 
         movieService.getMovies(language)
-            .flatMapIterable { it.results!! }
+            .flatMapIterable { it.results }
             .map { movieMapper.toModel(it) }
             .toList()
             .toObservable()
@@ -32,7 +34,7 @@ class RemoteRepository(
     fun getTVShow(language: String): Observable<List<TVShow>> =
 
         tvShowService.getTVShow(language)
-            .flatMapIterable { it.results!! }
+            .flatMapIterable { it.results }
             .map { tvShowMapper.toModel(it) }
             .toList()
             .toObservable()!!
@@ -46,4 +48,20 @@ class RemoteRepository(
 
         movieService.getMovieDetail(id, language)
             .map { movieDetailMapper.toModel(it) }
+
+    fun getSearchMovie(query: String): Observable<List<Movie>> =
+
+        searchService.getSearchMovie(query)
+            .flatMapIterable { it.results }
+            .map { movieMapper.toModel(it) }
+            .toList()
+            .toObservable()
+
+    fun getSearchTVShow(query: String): Observable<List<TVShow>> =
+
+        searchService.getSearchTVShow(query)
+            .flatMapIterable { it.results }
+            .map { tvShowMapper.toModel(it) }
+            .toList()
+            .toObservable()
 }
