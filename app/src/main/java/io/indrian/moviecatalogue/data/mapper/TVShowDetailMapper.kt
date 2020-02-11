@@ -9,8 +9,8 @@ class TVShowDetailMapper: BaseMapper<DetailTVShowEntity, TVShowDetail>() {
     override fun toModel(entity: DetailTVShowEntity): TVShowDetail {
 
         return TVShowDetail(
-            backdrop = "https://image.tmdb.org/t/p/w780"+entity.backdropPath,
-            posterPath = "https://image.tmdb.org/t/p/w342"+entity.posterPath,
+            backdrop = getBackdropPath(entity.backdropPath),
+            posterPath = getPosterPath(entity.posterPath),
             firstAirDate = parseDate(entity.firstAirDate),
             genres = entity.genreEntities.map {
 

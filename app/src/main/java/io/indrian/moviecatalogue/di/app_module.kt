@@ -2,6 +2,10 @@ package io.indrian.moviecatalogue.di
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.room.Room
+import com.squareup.moshi.FromJson
+import com.squareup.moshi.JsonReader
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import io.indrian.moviecatalogue.data.db.AppDatabase
 import io.indrian.moviecatalogue.data.mapper.*
 import io.indrian.moviecatalogue.data.repositories.LocalRepository
@@ -15,6 +19,8 @@ import io.indrian.moviecatalogue.ui.favoritetvshow.FavoriteTVShowVM
 import io.indrian.moviecatalogue.ui.movie.MovieVM
 import io.indrian.moviecatalogue.ui.moviedetail.MovieDetailVM
 import io.indrian.moviecatalogue.ui.movieinfo.MovieInfoVM
+import io.indrian.moviecatalogue.ui.searchmovie.SearchMovieVM
+import io.indrian.moviecatalogue.ui.searchtvshow.SearchTVShowVM
 import io.indrian.moviecatalogue.ui.settings.SettingsVM
 import io.indrian.moviecatalogue.ui.tvshow.TVShowVM
 import io.indrian.moviecatalogue.ui.tvshowdetail.TVShowDetailVM
@@ -29,6 +35,18 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
+
+object NullToEmptyStringAdapter {
+
+    @FromJson
+    fun fromJson(reader: JsonReader): String {
+        if (reader.peek() != JsonReader.Token.NULL) {
+            return reader.nextString()
+        }
+        reader.nextNull<Unit>()
+        return ""
+    }
+}
 
 val dbModule = module {
 
@@ -73,10 +91,15 @@ val networkModule = module {
 
     single {
 
+        val moshi = Moshi.Builder()
+            .add(NullToEmptyStringAdapter)
+            .add(KotlinJsonAdapterFactory())
+            .build()
+
         val retrofit = Retrofit.Builder()
             .baseUrl(Constant.BASE_URL)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .addConverterFactory(MoshiConverterFactory.create())
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
             .client(client)
             .build()
 
@@ -142,4 +165,6 @@ val appModule = module {
     viewModel { (handle: SavedStateHandle) -> TVShowInfoVM(handle, get()) }
     viewModel { (handle: SavedStateHandle) -> FavoriteMovieVM(handle, get()) }
     viewModel { (handle: SavedStateHandle) -> FavoriteTVShowVM(handle, get()) }
+    viewModel { (handle: SavedStateHandle) -> SearchMovieVM(handle, get()) }
+    viewModel { (handle: SavedStateHandle) -> SearchTVShowVM(handle, get()) }
 }

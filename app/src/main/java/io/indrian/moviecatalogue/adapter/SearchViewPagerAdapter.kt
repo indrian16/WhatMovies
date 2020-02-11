@@ -5,30 +5,37 @@ import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.fragment.app.FragmentStatePagerAdapter
 import io.indrian.moviecatalogue.R
-import io.indrian.moviecatalogue.ui.searchmovie.SearchMovieFragment
-import io.indrian.moviecatalogue.ui.searchtvshow.SearchTVShowFragment
 
-class SearchViewPagerAdapter(private val mContext: Context, fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+class SearchViewPagerAdapter(private val mContext: Context, fm: FragmentManager) : FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+
+    private var fragments: List<Fragment> = arrayListOf()
+
+    fun changeQueryFragment(newQueryFragment: List<Fragment>) {
+
+        fragments = newQueryFragment
+        notifyDataSetChanged()
+    }
+
+    override fun getItemPosition(`object`: Any): Int {
+
+        return POSITION_NONE
+    }
 
     @StringRes
     private val tabTitles = intArrayOf(R.string.movie, R.string.tv_show)
 
     override fun getItem(position: Int): Fragment {
 
-        return when (position) {
-
-            0 -> SearchMovieFragment()
-            1 -> SearchTVShowFragment()
-
-            else -> SearchMovieFragment()
-        }
+        return fragments[position]
     }
 
-    override fun getCount(): Int = tabTitles.size
+    override fun getCount(): Int = fragments.size
 
     override fun getPageTitle(position: Int): CharSequence? {
 
         return mContext.resources.getString(tabTitles[position])
     }
+
 }

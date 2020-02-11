@@ -1,18 +1,24 @@
 package io.indrian.moviecatalogue.ui.search
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuItemCompat
 import com.github.ajalt.timberkt.Timber.d
 import io.indrian.moviecatalogue.R
 import io.indrian.moviecatalogue.adapter.SearchViewPagerAdapter
+import io.indrian.moviecatalogue.ui.searchmovie.SearchMovieFragment
+import io.indrian.moviecatalogue.ui.searchtvshow.SearchTVShowFragment
 import kotlinx.android.synthetic.main.activity_search.*
 import kotlinx.android.synthetic.main.search_toolbar.*
 
 class SearchActivity : AppCompatActivity() {
+
+    private val viewPagerAdapter = SearchViewPagerAdapter(this, supportFragmentManager)
+    private val mHandler = Handler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,12 +35,11 @@ class SearchActivity : AppCompatActivity() {
 
     private fun setupViewPager() {
 
-        val viewPagerAdapter = SearchViewPagerAdapter(
-            this,
-            supportFragmentManager
-        )
-
         search_view_pager.adapter = viewPagerAdapter
+        viewPagerAdapter.changeQueryFragment(arrayListOf(
+            SearchMovieFragment.newInstance(""),
+            SearchTVShowFragment.newInstance("")
+        ))
         search_tabs.setupWithViewPager(search_view_pager)
     }
 
@@ -66,13 +71,23 @@ class SearchActivity : AppCompatActivity() {
             override fun onQueryTextSubmit(query: String?): Boolean {
 
                 d { "onQueryTextSubmit: $query" }
-                return true
+                return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
 
-                d { "onQueryTextChange: $newText" }
-                return true
+                mHandler.removeCallbacksAndMessages(null)
+                mHandler.postDelayed({
+
+
+                    d { "onQueryTextChange: $newText" }
+                    viewPagerAdapter.changeQueryFragment(arrayListOf(
+                        SearchMovieFragment.newInstance(newText),
+                        SearchTVShowFragment.newInstance(newText)
+                    ))
+
+                }, 500L)
+                return false
             }
         })
 

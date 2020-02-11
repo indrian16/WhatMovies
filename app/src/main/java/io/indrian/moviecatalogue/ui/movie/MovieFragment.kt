@@ -14,7 +14,7 @@ import io.indrian.moviecatalogue.adapter.MovieAdapter
 import io.indrian.moviecatalogue.data.model.Movie
 import io.indrian.moviecatalogue.ui.moviedetail.MovieDetailActivity
 import io.indrian.moviecatalogue.utils.showToast
-import io.indrian.moviecatalogue.utils.visibility
+import io.indrian.moviecatalogue.utils.setVisibility
 import kotlinx.android.synthetic.main.fragment_movie.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -130,24 +130,24 @@ class MovieFragment : Fragment(), MovieAdapter.OnMovieClickCallback {
     private fun startShimmer() {
 
         shimmer_movie_container.startShimmer()
-        shimmer_movie_container.visibility()
+        shimmer_movie_container.setVisibility()
     }
 
     private fun stopShimmer() {
 
         shimmer_movie_container.stopShimmer()
-        shimmer_movie_container.visibility(visible = false)
+        shimmer_movie_container.setVisibility(visible = false)
     }
 
     private fun isMoviesLoaded(movies: List<Movie> = arrayListOf()) {
 
         if (movies.isNotEmpty()) {
 
-            rv_movie.visibility()
+            rv_movie.setVisibility()
             mAdapter.update(movies)
         } else {
 
-            rv_movie.visibility(visible = false)
+            rv_movie.setVisibility(visible = false)
         }
     }
 }

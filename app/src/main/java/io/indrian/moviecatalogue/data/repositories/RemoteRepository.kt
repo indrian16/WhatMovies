@@ -49,17 +49,17 @@ class RemoteRepository(
         movieService.getMovieDetail(id, language)
             .map { movieDetailMapper.toModel(it) }
 
-    fun getSearchMovie(query: String): Observable<List<Movie>> =
+    fun getSearchMovie(query: String, language: String): Observable<List<Movie>> =
 
-        searchService.getSearchMovie(query)
+        searchService.getSearchMovie(query, language)
             .flatMapIterable { it.results }
             .map { movieMapper.toModel(it) }
             .toList()
             .toObservable()
 
-    fun getSearchTVShow(query: String): Observable<List<TVShow>> =
+    fun getSearchTVShow(query: String, language: String): Observable<List<TVShow>> =
 
-        searchService.getSearchTVShow(query)
+        searchService.getSearchTVShow(query, language)
             .flatMapIterable { it.results }
             .map { tvShowMapper.toModel(it) }
             .toList()
