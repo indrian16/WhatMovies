@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">MovieFavorite</string>
+    <string name="poster_image">Poster Image</string>
+    <string name="tv_year">2020</string>
+</resources>

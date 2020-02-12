@@ -13,8 +13,12 @@ class MovieFavoriteContentProvider : ContentProvider() {
 
     companion object {
 
-        const val AUTHORITY = "io.indrian.moviecatalogue.provider"
-        val URI_MOVIE_FAVORITE = Uri.parse("content://$AUTHORITY/${Constant.TABLE_MOVIE_FAVORITE}")
+        const val AUTHORITY = "io.indrian.moviecatalogue"
+        val URI_MOVIE_FAVORITE = Uri.Builder()
+            .scheme("content")
+            .authority(AUTHORITY)
+            .appendPath(Constant.TABLE_MOVIE_FAVORITE)
+            .build()
 
         private const val FAVORITE_MOVIE = 1
 
