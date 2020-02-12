@@ -1,5 +1,6 @@
 package io.indrian.moviecatalogue.data.db.dao
 
+import android.database.Cursor
 import androidx.room.*
 import io.indrian.moviecatalogue.data.db.table.FavoriteMovie
 import io.indrian.moviecatalogue.data.db.table.FavoriteTVShow
@@ -22,6 +23,9 @@ interface FavoriteDao {
     fun insertFavoriteMovie(movie: FavoriteMovie): Maybe<Long>
     @Delete
     fun deleteFavoriteMovie(movie: FavoriteMovie): Single<Int>
+
+    @Query("SELECT * FROM favorite_movie ORDER BY create_at DESC")
+    fun getAllFavoriteMovieCursor(): Cursor
 
     /**
      *
