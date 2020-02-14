@@ -7,8 +7,12 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-    <permission android:name="io.indrian.moviecatalogue.READ_DATABASE" android:protectionLevel="normal" />
-    <permission android:name="io.indrian.moviecatalogue.WRITE_DATABASE" android:protectionLevel="normal" />
+    <permission
+        android:name="io.indrian.moviecatalogue.READ_DATABASE"
+        android:protectionLevel="normal" />
+    <permission
+        android:name="io.indrian.moviecatalogue.WRITE_DATABASE"
+        android:protectionLevel="normal" />
 
     <application
         android:name=".MovieApp"
@@ -18,7 +22,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+        tools:ignore="AllowBackup,GoogleAppIndexingWarning"
+        android:usesCleartextTraffic="true"
+        tools:targetApi="m">
+        <receiver
+            android:name=".notification.LatestMovieTodayReceiver"
+            android:enabled="true"
+            android:exported="true"/>
+        <receiver
+            android:name=".notification.DailyMovieReceiver"
+            android:enabled="true"
+            android:exported="true"
+            tools:ignore="ExportedReceiver" />
 
         <provider
             android:name=".provider.MovieFavoriteContentProvider"
@@ -26,7 +41,7 @@
             android:enabled="true"
             android:exported="true"
             android:readPermission="io.indrian.moviecatalogue.READ_DATABASE"
-            android:writePermission="io.indrian.moviecatalogue.WRITE_DATABASE"/>
+            android:writePermission="io.indrian.moviecatalogue.WRITE_DATABASE" />
 
         <service
             android:name=".widget.favoritemovie.MovieStackWidgetService"

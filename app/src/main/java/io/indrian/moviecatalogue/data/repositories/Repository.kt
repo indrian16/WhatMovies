@@ -107,4 +107,9 @@ class Repository(
         language: String
     ): Observable<List<TVShow>> = remoteRepository.getSearchTVShow(query, language)
 
+    /**
+     *
+     *  Provider New Movie Receiver
+     * */
+    fun getLatestMovieToday(dateGte: String, dateLte: String) = remoteRepository.getLatestMovieToday(dateGte, dateLte)
 }

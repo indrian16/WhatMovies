@@ -41,5 +41,10 @@
     <string name="not_found_image">Not Found Image</string>
     <string name="no_search_found">No search found</string>
     <string name="add_widget">Add widget</string>
+    <string name="daily_notification_remainder">Daily Notification Remainder</string>
+    <string name="daily_notification_content">Lets open the app, there are lots of interesting films</string>
+    <string name="latest_movie_reminders">Latest movie reminders</string>
+    <string name="new_movie">New Movie</string>
+    <string name="more_new_movie">More New Movie</string>
 
 </resources>

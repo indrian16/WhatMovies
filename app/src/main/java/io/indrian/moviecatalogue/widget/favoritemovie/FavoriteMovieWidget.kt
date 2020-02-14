@@ -12,9 +12,6 @@ class FavoriteMovieWidget : AppWidgetProvider() {
 
     companion object {
 
-        private const val TOAST_ACTION = "io.indrian.moviecatalogue.widget.favoritemovie.TOAST_ACTION"
-        const val EXTRA_MOVIE = "io.indrian.moviecatalogue.widget.favoritemovie.EXTRA_ITEM"
-
         private fun updateAppWidget(
             context: Context,
             appWidgetManager: AppWidgetManager,

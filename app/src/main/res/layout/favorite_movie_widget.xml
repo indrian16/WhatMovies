@@ -22,7 +22,7 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="@color/colorPrimaryDark"
-            android:text="@string/favorite_tv_show"
+            android:text="@string/favorite_movie"
             android:textAlignment="center"
             android:textColor="@color/colorWhite"
             android:textSize="18sp"

@@ -11,6 +11,7 @@ import io.indrian.moviecatalogue.data.mapper.*
 import io.indrian.moviecatalogue.data.repositories.LocalRepository
 import io.indrian.moviecatalogue.data.repositories.RemoteRepository
 import io.indrian.moviecatalogue.data.repositories.Repository
+import io.indrian.moviecatalogue.data.service.DiscoverService
 import io.indrian.moviecatalogue.data.service.MovieService
 import io.indrian.moviecatalogue.data.service.SearchService
 import io.indrian.moviecatalogue.data.service.TVShowService
@@ -112,6 +113,7 @@ val serviceModule = module {
     single { get<Retrofit>().create(MovieService::class.java) }
     single { get<Retrofit>().create(TVShowService::class.java) }
     single { get<Retrofit>().create(SearchService::class.java) }
+    single { get<Retrofit>().create(DiscoverService::class.java) }
 }
 
 val mapperModule = module {
@@ -144,6 +146,7 @@ val repoModule = module {
             get(),
             get(),
             get(),
+            get(),
             get()
         )
     }
@@ -158,7 +161,7 @@ val appModule = module {
 
     viewModel { MovieVM(get()) }
     viewModel { TVShowVM(get()) }
-    viewModel { SettingsVM() }
+    viewModel { SettingsVM(androidApplication()) }
     viewModel { (handle: SavedStateHandle) -> TVShowDetailVM(handle, get()) }
     viewModel { (handle: SavedStateHandle) -> MovieDetailVM(handle, get()) }
     viewModel { (handle: SavedStateHandle) -> MovieInfoVM(handle, get()) }
