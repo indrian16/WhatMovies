@@ -10,8 +10,8 @@ class MovieMapper: BaseMapper<MovieEntity, Movie>() {
         return Movie(
             id = entity.id,
             title = entity.title,
-            poster = posterUrl+ entity.posterPath,
-            backdrop = backdropUrl+ entity.backdropPath,
+            poster = getPosterPath(entity.posterPath),
+            backdrop = getBackdropPath(entity.backdropPath),
             releaseDate = parseDate(entity.releaseDate),
             overview = safeOverview(entity.overview),
             voteCount = entity.voteCount,

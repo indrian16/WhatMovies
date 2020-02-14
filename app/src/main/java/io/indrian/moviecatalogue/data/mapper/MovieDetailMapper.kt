@@ -10,7 +10,7 @@ class MovieDetailMapper : BaseMapper<MovieDetailEntity, MovieDetail>() {
 
         return MovieDetail(
             id = entity.id,
-            backdropPath = backdropUrl+entity.backdropPath,
+            backdropPath = getBackdropPath(entity.backdropPath),
             overview = safeOverview(entity.overview),
             genres = entity.genres.map {
 
@@ -19,7 +19,7 @@ class MovieDetailMapper : BaseMapper<MovieDetailEntity, MovieDetail>() {
                     name = it.name
                 )
             },
-            posterPath = posterUrl+entity.posterPath,
+            posterPath = getPosterPath(entity.posterPath),
             releaseDate = parseDate(entity.releaseDate),
             title = entity.title,
             voteCount = entity.voteCount,

@@ -14,7 +14,7 @@ import io.indrian.moviecatalogue.adapter.MovieAdapter
 import io.indrian.moviecatalogue.data.model.Movie
 import io.indrian.moviecatalogue.ui.moviedetail.MovieDetailActivity
 import io.indrian.moviecatalogue.utils.showToast
-import io.indrian.moviecatalogue.utils.visibility
+import io.indrian.moviecatalogue.utils.setVisibility
 import kotlinx.android.synthetic.main.fragment_favorite_movie.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -59,7 +59,7 @@ class FavoriteMovieFragment : Fragment(), MovieAdapter.OnMovieClickCallback {
 
                 d { "FavoriteMovieListState.Empty" }
                 stopShimmer()
-                empty_movie_state.visibility(true)
+                empty_movie_state.setVisibility(true)
             }
         }
     }
@@ -99,27 +99,27 @@ class FavoriteMovieFragment : Fragment(), MovieAdapter.OnMovieClickCallback {
     private fun startShimmer() {
 
         shimmer_favorite_movie_container.startShimmer()
-        shimmer_favorite_movie_container.visibility()
+        shimmer_favorite_movie_container.setVisibility()
 
-        rv_favorite_movie.visibility(visible = false)
-        empty_movie_state.visibility(visible = false)
+        rv_favorite_movie.setVisibility(visible = false)
+        empty_movie_state.setVisibility(visible = false)
     }
 
     private fun stopShimmer() {
 
         shimmer_favorite_movie_container.stopShimmer()
-        shimmer_favorite_movie_container.visibility(visible = false)
+        shimmer_favorite_movie_container.setVisibility(visible = false)
     }
 
     private fun isMoviesLoaded(movies: List<Movie> = arrayListOf()) {
 
         if (movies.isNotEmpty()) {
 
-            rv_favorite_movie.visibility()
+            rv_favorite_movie.setVisibility()
             mAdapter.update(movies)
         } else {
 
-            rv_favorite_movie.visibility(visible = false)
+            rv_favorite_movie.setVisibility(visible = false)
         }
     }
 

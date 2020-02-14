@@ -20,4 +20,8 @@ object Constant {
     const val TABLE_TV_SHOW = "tv_show"
     const val TABLE_MOVIE_FAVORITE = "favorite_movie"
     const val TABLE_TV_SHOW_FAVORITE = "favorite_tv_show"
+
+    const val SETTING_KEY_FILE = "movie_setting"
+    const val DAILY_OPEN_APP = "daily_open_app"
+    const val DAILY_LETEST_MOVIE = "daily_latest_move"
 }

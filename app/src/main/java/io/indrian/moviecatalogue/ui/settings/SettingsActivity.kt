@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import io.indrian.moviecatalogue.R
+import io.indrian.moviecatalogue.notification.DailyMovieReceiver
+import io.indrian.moviecatalogue.notification.LatestMovieTodayReceiver
 import io.indrian.moviecatalogue.ui.main.MainActivity
 import io.indrian.moviecatalogue.utils.Constant
 import kotlinx.android.synthetic.main.activity_settings.*
@@ -31,6 +33,16 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
+    private val dailyRemainderObserver = Observer<Boolean> { state ->
+
+        switch_daily.isChecked = state
+    }
+
+    private val dailyLatestMovieObserver = Observer<Boolean> { state ->
+
+        switch_new_movie.isChecked = state
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
@@ -43,7 +55,10 @@ class SettingsActivity : AppCompatActivity() {
     private fun setViewModel() {
 
         viewModel.getLanguageSettings()
+        viewModel.getSetting()
         viewModel.languageState.observe(this, languageStateObserver)
+        viewModel.dailyRemainder.observe(this, dailyRemainderObserver)
+        viewModel.dailyLatestMovie.observe(this, dailyLatestMovieObserver)
     }
 
     private fun setListener() {
@@ -62,6 +77,15 @@ class SettingsActivity : AppCompatActivity() {
                     viewModel.changeLanguage(baseContext, Constant.ID)
                 }
             }
+        }
+
+        switch_daily.setOnCheckedChangeListener { _, isChecked ->
+
+            viewModel.setDailyRemainder(isChecked)
+        }
+        switch_new_movie.setOnCheckedChangeListener { _, isChecked ->
+
+            viewModel.setLatestMovie(isChecked)
         }
 
         btn_restart_app.setOnClickListener {
@@ -89,6 +113,8 @@ class SettingsActivity : AppCompatActivity() {
     override fun onDestroy() {
 
         viewModel.languageState.removeObserver(languageStateObserver)
+        viewModel.dailyRemainder.removeObserver(dailyRemainderObserver)
+        viewModel.dailyLatestMovie.removeObserver(dailyLatestMovieObserver)
         super.onDestroy()
     }
 }

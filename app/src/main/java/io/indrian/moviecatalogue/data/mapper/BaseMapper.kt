@@ -13,14 +13,33 @@ abstract class BaseMapper<E, M> {
     /**
      *
      * Poster URL + path
+     * @param path : String
      * */
-    protected val posterUrl = "https://image.tmdb.org/t/p/w342"
+    protected fun getPosterPath(path: String): String {
+
+        return if (path.isNotEmpty()) {
+
+            "https://image.tmdb.org/t/p/w342$path"
+        } else {
+
+            ""
+        }
+    }
 
     /**
      *
      * Backdrop URL + path
      * */
-    protected val backdropUrl = "https://image.tmdb.org/t/p/w780"
+    protected fun getBackdropPath(path: String): String {
+
+        return if (path.isNotEmpty()) {
+
+            "https://image.tmdb.org/t/p/w780$path"
+        } else {
+
+            ""
+        }
+    }
 
     /**
      *
@@ -43,10 +62,16 @@ abstract class BaseMapper<E, M> {
      * */
     protected fun parseDate(dateStr: String): Date {
 
-        val df = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        df.parse(dateStr)
+        return if (dateStr == "") {
 
-        return df.calendar.time
+            Date()
+        } else {
+
+            val df = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            df.parse(dateStr)
+
+            df.calendar.time
+        }
     }
 
     /**

@@ -10,8 +10,8 @@ class TVShowMapper: BaseMapper<TVShowEntity, TVShow>() {
         return TVShow(
             id = entity.id,
             name = entity.name,
-            poster = "https://image.tmdb.org/t/p/w342"+ entity.posterPath,
-            backdrop = "https://image.tmdb.org/t/p/w342"+ entity.backdropPath,
+            poster = getPosterPath(entity.posterPath),
+            backdrop = getBackdropPath(entity.backdropPath),
             releaseDate = parseDate(entity.firstAirDate),
             overview = safeOverview(entity.overview),
             voteAverage = entity.voteAverage,

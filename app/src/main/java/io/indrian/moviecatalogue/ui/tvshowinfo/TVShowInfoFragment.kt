@@ -11,7 +11,7 @@ import com.github.ajalt.timberkt.d
 import io.indrian.moviecatalogue.R
 import io.indrian.moviecatalogue.data.model.TVShowDetail
 import io.indrian.moviecatalogue.utils.showToast
-import io.indrian.moviecatalogue.utils.visibility
+import io.indrian.moviecatalogue.utils.setVisibility
 import kotlinx.android.synthetic.main.fragment_tvshow_info.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -78,12 +78,12 @@ class TVShowInfoFragment : Fragment() {
 
     private fun startLoading() {
 
-        shimmer_overview.visibility()
+        shimmer_overview.setVisibility()
     }
 
     private fun stopLoading() {
 
-        shimmer_overview.visibility(false)
+        shimmer_overview.setVisibility(false)
     }
 
     private fun loadedMovieDetail(tvShowDetail: TVShowDetail) {

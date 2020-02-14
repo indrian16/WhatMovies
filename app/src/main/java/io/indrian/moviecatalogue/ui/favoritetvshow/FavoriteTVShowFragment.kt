@@ -15,7 +15,7 @@ import io.indrian.moviecatalogue.adapter.TVShowAdapter
 import io.indrian.moviecatalogue.data.model.TVShow
 import io.indrian.moviecatalogue.ui.tvshowdetail.TVShowDetailActivity
 import io.indrian.moviecatalogue.utils.showToast
-import io.indrian.moviecatalogue.utils.visibility
+import io.indrian.moviecatalogue.utils.setVisibility
 import kotlinx.android.synthetic.main.fragment_favorite_tvshow.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -60,7 +60,7 @@ class FavoriteTVShowFragment : Fragment(), TVShowAdapter.OnTVShowClickCallBack {
 
                 d { "FavoriteTVShowListState.Empty" }
                 stopShimmer()
-                empty_tv_show_state.visibility(true)
+                empty_tv_show_state.setVisibility(true)
             }
         }
     }
@@ -100,27 +100,27 @@ class FavoriteTVShowFragment : Fragment(), TVShowAdapter.OnTVShowClickCallBack {
     private fun startShimmer() {
 
         shimmer_favorite_tv_show_container.startShimmer()
-        shimmer_favorite_tv_show_container.visibility()
+        shimmer_favorite_tv_show_container.setVisibility()
 
-        rv_favorite_tv_show.visibility(visible = false)
-        empty_tv_show_state.visibility(visible = false)
+        rv_favorite_tv_show.setVisibility(visible = false)
+        empty_tv_show_state.setVisibility(visible = false)
     }
 
     private fun stopShimmer() {
 
         shimmer_favorite_tv_show_container.stopShimmer()
-        shimmer_favorite_tv_show_container.visibility(visible = false)
+        shimmer_favorite_tv_show_container.setVisibility(visible = false)
     }
 
     private fun isMoviesLoaded(movies: List<TVShow> = arrayListOf()) {
 
         if (movies.isNotEmpty()) {
 
-            rv_favorite_tv_show.visibility()
+            rv_favorite_tv_show.setVisibility()
             mAdapter.updateItem(movies)
         } else {
 
-            rv_favorite_tv_show.visibility(visible = false)
+            rv_favorite_tv_show.setVisibility(visible = false)
         }
     }
 

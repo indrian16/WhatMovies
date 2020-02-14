@@ -32,5 +32,17 @@
     <string name="favorite_movie_is_empty">Favorite movie is empty</string>
     <string name="favorite_tv_show_is_empty">Favorite tv show is empty</string>
     <string name="image_empty_favorite">Image Empty Favorite</string>
+    <string name="favorite_movie">Favorite Movie</string>
+    <string name="favorite_tv_show">Favorite TV Show</string>
+    <string name="search_hint">Look for something</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="not_found_image">Not Found Image</string>
+    <string name="no_search_found">No search found</string>
+    <string name="add_widget">Add widget</string>
+    <string name="daily_notification_remainder">Daily Notification Remainder</string>
+    <string name="daily_notification_content">Lets open the app, there are lots of interesting films</string>
+    <string name="latest_movie_reminders">Latest movie reminders</string>
+    <string name="new_movie">New Movie</string>
+    <string name="more_new_movie">More New Movie</string>
 
 </resources>

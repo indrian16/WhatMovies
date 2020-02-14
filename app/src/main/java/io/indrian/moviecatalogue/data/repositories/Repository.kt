@@ -89,4 +89,27 @@ class Repository(
      * */
     fun getFavoriteTVShow(): Observable<List<TVShow>> = localRepository.getFavoriteTVShow()
 
+    /**
+     *
+     *  Provide Search Movie ViewModel
+     * */
+    fun getSearchMovie(
+        query: String,
+        language: String
+    ): Observable<List<Movie>> = remoteRepository.getSearchMovie(query, language)
+
+    /**
+     *
+     *  Provide Search Movie ViewModel
+     * */
+    fun getSearchTVShow(
+        query: String,
+        language: String
+    ): Observable<List<TVShow>> = remoteRepository.getSearchTVShow(query, language)
+
+    /**
+     *
+     *  Provider New Movie Receiver
+     * */
+    fun getLatestMovieToday(dateGte: String, dateLte: String) = remoteRepository.getLatestMovieToday(dateGte, dateLte)
 }

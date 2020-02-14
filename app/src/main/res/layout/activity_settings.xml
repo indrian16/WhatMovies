@@ -17,7 +17,7 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
@@ -28,40 +28,73 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/change_language"
+            android:textColor="@color/colorPrimaryText"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="@color/colorPrimaryText"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <RadioGroup
             android:id="@+id/rg_language"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:layout_below="@id/tv_title_setting_language"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_setting_language">
 
             <RadioButton
                 android:id="@+id/rb_en"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/english"/>
+                android:text="@string/english" />
 
             <RadioButton
                 android:id="@+id/rb_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/indonesia"/>
+                android:text="@string/indonesia" />
 
         </RadioGroup>
 
+        <TextView
+            android:id="@+id/title_notification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/change_language"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/rg_language"/>
+
+        <Switch
+            android:id="@+id/switch_daily"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/daily_notification_remainder"
+            app:layout_constraintTop_toBottomOf="@+id/title_notification"/>
+
+        <Switch
+            android:id="@+id/switch_new_movie"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/latest_movie_reminders"
+            app:layout_constraintTop_toBottomOf="@+id/switch_daily"/>
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_restart_app"
+            style="Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:layout_below="@id/rg_language"
-            android:layout_alignParentEnd="true"
             android:text="@string/restart_app"
-            style="Colored"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/switch_new_movie" />
 
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

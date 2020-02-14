@@ -10,6 +10,7 @@ abstract class BaseViewModel : ViewModel() {
     protected val compositeDisposable = CompositeDisposable()
     private val lingver = Lingver.getInstance()
 
+
     protected fun getLanguage(): String {
 
         return when (lingver.getLanguage()) {
