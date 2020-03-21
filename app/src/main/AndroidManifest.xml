@@ -1,21 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="io.indrian.moviecatalogue">
+    package="io.indrian.whatmovies">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-    <permission
-        android:name="io.indrian.moviecatalogue.READ_DATABASE"
-        android:protectionLevel="normal" />
-    <permission
-        android:name="io.indrian.moviecatalogue.WRITE_DATABASE"
-        android:protectionLevel="normal" />
-
     <application
-        android:name=".MovieApp"
+        android:name="io.indrian.whatmovies.MovieApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -25,45 +18,25 @@
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
+
         <receiver
-            android:name=".notification.LatestMovieTodayReceiver"
+            android:name="io.indrian.whatmovies.notification.LatestMovieTodayReceiver"
             android:enabled="true"
-            android:exported="true"/>
+            android:exported="true"
+            tools:ignore="ExportedReceiver" />
         <receiver
-            android:name=".notification.DailyMovieReceiver"
+            android:name="io.indrian.whatmovies.notification.DailyMovieReceiver"
             android:enabled="true"
             android:exported="true"
             tools:ignore="ExportedReceiver" />
 
-        <provider
-            android:name=".provider.MovieFavoriteContentProvider"
-            android:authorities="io.indrian.moviecatalogue"
-            android:enabled="true"
-            android:exported="true"
-            android:readPermission="io.indrian.moviecatalogue.READ_DATABASE"
-            android:writePermission="io.indrian.moviecatalogue.WRITE_DATABASE" />
-
-        <service
-            android:name=".widget.favoritemovie.MovieStackWidgetService"
-            android:permission="android.permission.BIND_REMOTEVIEWS" />
-
-        <receiver android:name=".widget.favoritemovie.FavoriteMovieWidget">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/favorite_movie_widget_info" />
-        </receiver>
-
-        <activity android:name=".ui.search.SearchActivity" />
-        <activity android:name=".ui.favorite.FavoriteActivity" />
-        <activity android:name=".ui.settings.SettingsActivity" />
-        <activity android:name=".ui.tvshowdetail.TVShowDetailActivity" />
-        <activity android:name=".ui.moviedetail.MovieDetailActivity" />
+        <activity android:name="io.indrian.whatmovies.ui.search.SearchActivity" />
+        <activity android:name="io.indrian.whatmovies.ui.favorite.FavoriteActivity" />
+        <activity android:name="io.indrian.whatmovies.ui.settings.SettingsActivity" />
+        <activity android:name="io.indrian.whatmovies.ui.tvshowdetail.TVShowDetailActivity" />
+        <activity android:name="io.indrian.whatmovies.ui.moviedetail.MovieDetailActivity" />
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name="io.indrian.whatmovies.ui.main.MainActivity"
             android:configChanges="keyboardHidden|orientation">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

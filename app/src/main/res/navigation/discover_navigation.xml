@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/discoverFragment"
-        android:name="io.indrian.moviecatalogue.ui.discover.DiscoverFragment"
+        android:name="io.indrian.whatmovies.ui.discover.DiscoverFragment"
         android:label="@string/discover"
         tools:layout="@layout/fragment_discover" />
 </navigation>

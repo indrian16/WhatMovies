@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/TVShowFragment"
-        android:name="io.indrian.moviecatalogue.ui.tvshow.TVShowFragment"
+        android:name="io.indrian.whatmovies.ui.tvshow.TVShowFragment"
         android:label="@string/tv_show"
         tools:layout="@layout/fragment_tvshow" />
 </navigation>
