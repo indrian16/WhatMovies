@@ -1,6 +1,6 @@
 package io.indrian.whatmovies.data.repositories
 
-import io.indrian.whatmovies.data.mapper.MovieDetailMapper
+import  io.indrian.whatmovies.data.mapper.MovieDetailMapper
 import io.indrian.whatmovies.data.mapper.MovieMapper
 import io.indrian.whatmovies.data.mapper.TVShowDetailMapper
 import io.indrian.whatmovies.data.mapper.TVShowMapper

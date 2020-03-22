@@ -1,5 +1,6 @@
 package io.indrian.whatmovies.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
@@ -24,6 +25,7 @@ fun View.setVisibility(visible: Boolean = true) {
     }
 }
 
+@SuppressLint
 fun Context.isNetworkConnected(): Boolean {
 
     var result = false
